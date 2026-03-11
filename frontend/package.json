@@ -19,7 +19,6 @@
     "date-fns": "^2.30.0",
     "recharts": "^2.9.0",
     "react-dropzone": "^14.2.3",
-    "react-image-lightbox": "^5.1.4",
     "yet-another-react-lightbox": "^3.15.0",
     "zustand": "^4.4.7",
     "clsx": "^2.0.0"
