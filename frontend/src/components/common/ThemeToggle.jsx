@@ -1,34 +1,46 @@
-import { FiSun, FiMoon } from 'react-icons/fi'
+import { FiSun, FiMoon, FiMonitor } from 'react-icons/fi'
 import { clsx } from 'clsx'
 
-export default function ThemeToggle({ isDark, onToggle }) {
+const THEME_META = {
+  system: {
+    label: 'System theme',
+    Icon: FiMonitor,
+    title: 'System theme (follows OS preference)',
+  },
+  light: {
+    label: 'Light mode',
+    Icon: FiSun,
+    title: 'Light mode',
+  },
+  dark: {
+    label: 'Dark mode',
+    Icon: FiMoon,
+    title: 'Dark mode',
+  },
+}
+
+// theme: 'system' | 'light' | 'dark'
+// onCycle: () => void  – cycles system → light → dark → system
+export default function ThemeToggle({ theme = 'system', onCycle }) {
+  const current = THEME_META[theme] ?? THEME_META.system
+  const { Icon, title } = current
+
   return (
     <button
-      onClick={onToggle}
-      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      onClick={onCycle}
+      aria-label={title}
+      title={title}
       className={clsx(
-        'relative inline-flex items-center w-12 h-6 rounded-full transition-all duration-300',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-900',
-        isDark
-          ? 'bg-white/10 border border-white/15'
-          : 'bg-gray-200 border border-gray-300'
+        'relative inline-flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 focus-visible:ring-offset-2',
+        theme === 'dark'
+          ? 'bg-white/10 border border-white/15 text-white hover:bg-white/15'
+          : theme === 'light'
+          ? 'bg-gray-100 border border-gray-300 text-gray-700 hover:bg-gray-200'
+          : 'bg-white/8 border border-white/10 dark:text-white/80 text-gray-600 hover:bg-gray-100 dark:hover:bg-white/15'
       )}
     >
-      {/* Thumb */}
-      <span
-        className={clsx(
-          'absolute w-4 h-4 rounded-full shadow transition-all duration-300 flex items-center justify-center',
-          isDark
-            ? 'translate-x-[26px] bg-white'
-            : 'translate-x-[3px] bg-gray-800'
-        )}
-      >
-        {isDark
-          ? <FiMoon className="w-2.5 h-2.5 text-gray-800" />
-          : <FiSun className="w-2.5 h-2.5 text-white" />
-        }
-      </span>
+      <Icon className="w-4 h-4" />
     </button>
   )
 }

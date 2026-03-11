@@ -29,15 +29,34 @@
     scroll-behavior: smooth;
   }
 
-  /* Default to dark mode - deep midnight experience */
+  /* Dark mode (default when .dark class present) */
   body {
     @apply bg-dark-950 font-sans text-white antialiased;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  /* Light mode overrides */
+  /* Light mode overrides – white theme with relevant warm colors */
   html:not(.dark) body {
     @apply bg-white text-gray-900;
+  }
+
+  /* Light mode scrollbar */
+  html:not(.dark) ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  html:not(.dark) ::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+  }
+
+  html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+    background: #7C3AED;
+  }
+
+  /* Light mode focus ring */
+  html:not(.dark) :focus-visible {
+    outline: 2px solid rgba(244, 63, 94, 0.5);
   }
 
   * {
