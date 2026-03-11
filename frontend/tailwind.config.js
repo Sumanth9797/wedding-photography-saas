@@ -8,71 +8,87 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Primary = white spectrum (used as main accent on dark backgrounds)
+        // Primary = rose / blush pink – romantic wedding accent
         primary: {
-          DEFAULT: '#FFFFFF',
-          50: '#FFFFFF',
-          100: '#F5F5F5',
-          200: '#EBEBEB',
-          300: '#D6D6D6',
-          400: '#BDBDBD',
-          500: '#9E9E9E',
-          600: '#FFFFFF',  // Main accent: pure white
-          700: '#F0F0F0',
-          800: '#C0C0C0',
-          900: '#050505',  // Very dark for hero section backgrounds
+          DEFAULT: '#F43F5E',
+          50: '#FFF1F3',
+          100: '#FFE4E8',
+          200: '#FECDD6',
+          300: '#FCA5B4',
+          400: '#FB7191',
+          500: '#F43F5E',  // Main accent: vivid rose
+          600: '#E11D48',
+          700: '#BE123C',
+          800: '#9F1239',
+          900: '#881337',
         },
-        // Secondary = silver/gray spectrum
+        // Secondary = violet / lavender – romantic depth
         secondary: {
-          DEFAULT: '#C0C0C0',
-          50: '#FAFAFA',
-          100: '#F0F0F0',
-          200: '#E0E0E0',
-          300: '#CACACA',
-          400: '#AAAAAA',
-          500: '#888888',
-          600: '#C0C0C0',  // Silver
-          700: '#707070',
-          800: '#444444',
-          900: '#0A0A0A',  // Very dark
+          DEFAULT: '#7C3AED',
+          50: '#F5F3FF',
+          100: '#EDE9FE',
+          200: '#DDD6FE',
+          300: '#C4B5FD',
+          400: '#A78BFA',
+          500: '#8B5CF6',
+          600: '#7C3AED',  // Main violet
+          700: '#6D28D9',
+          800: '#5B21B6',
+          900: '#4C1D95',
         },
-        // Accent = silver metallic
+        // Accent = warm gold / amber – luxurious highlights
         accent: {
-          DEFAULT: '#CCCCCC',
-          50: '#FAFAFA',
-          100: '#F0F0F0',
-          200: '#E0E0E0',
-          300: '#D0D0D0',
-          400: '#BBBBBB',
-          500: '#AAAAAA',
-          600: '#CCCCCC',  // Silver accent
-          700: '#999999',
-          800: '#666666',
-          900: '#333333',
+          DEFAULT: '#F59E0B',
+          50: '#FFFBEB',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
+          500: '#F59E0B',  // Warm gold
+          600: '#D97706',
+          700: '#B45309',
+          800: '#92400E',
+          900: '#78350F',
         },
-        // "Obsidian" palette - Deeper and more professional than pure black
+        // "Obsidian" palette – deep backgrounds with a hint of purple
         dark: {
-          950: '#030303', // Primary background
-          900: '#0A0A0B', // Secondary sections
-          800: '#121214', // Card backgrounds
-          700: '#1C1C1F', // Input fields and borders
-          600: '#141414',
-          500: '#1A1A1A',
-          400: '#222222',
-          300: '#2A2A2A',
-          200: '#333333',
-          100: '#3D3D3D',
+          950: '#09090F', // Primary background
+          900: '#0F0F1A', // Secondary sections
+          800: '#16162A', // Card backgrounds
+          700: '#1E1E35', // Input fields and borders
+          600: '#1A1A2E',
+          500: '#22223B',
+          400: '#2D2D4E',
+          300: '#3A3A5C',
+          200: '#4A4A70',
+          100: '#5C5C88',
         },
-        // "Intelligence" Accents - Signifies AI features
+        // Wedding palette extras
+        rose: {
+          DEFAULT: '#F43F5E',
+          light: '#FB7191',
+          dark: '#BE123C',
+        },
+        violet: {
+          DEFAULT: '#7C3AED',
+          light: '#A78BFA',
+          dark: '#5B21B6',
+        },
+        gold: {
+          DEFAULT: '#F59E0B',
+          light: '#FCD34D',
+          dark: '#B45309',
+        },
+        // "Intelligence" Accents
         ai: {
-          glow: '#8B5CF6',     // Amethyst (AI processing)
-          electric: '#3B82F6', // Intelligence (Logic)
-          silver: '#E2E8F0',   // High-contrast text
+          glow: '#A855F7',     // Purple (AI processing)
+          electric: '#3B82F6', // Blue (Logic)
+          rose: '#F43F5E',     // Rose accent
         },
-        background: '#000000',
-        card: '#111111',
-        'text-muted': '#888888',
-        border: '#222222',
+        background: '#09090F',
+        card: '#16162A',
+        'text-muted': '#9CA3AF',
+        border: '#2D2D4E',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -198,8 +214,8 @@ export default {
           '50%': { transform: 'translateY(-10px)' },
         },
         pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(255,255,255,0.08)' },
-          '50%': { boxShadow: '0 0 60px rgba(255,255,255,0.2), 0 0 100px rgba(255,255,255,0.06)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(244, 63, 94, 0.15)' },
+          '50%': { boxShadow: '0 0 60px rgba(244, 63, 94, 0.4), 0 0 100px rgba(124, 58, 237, 0.2)' },
         },
         gradientShift: {
           '0%, 100%': { backgroundPosition: '0% 50%' },
@@ -236,23 +252,23 @@ export default {
       },
       boxShadow: {
         // Glowing shadows for AI-powered components
-        'ai-purple': '0 0 25px -5px rgba(139, 92, 246, 0.3)',
-        'ai-blue': '0 0 25px -5px rgba(59, 130, 246, 0.3)',
+        'ai-purple': '0 0 25px -5px rgba(124, 58, 237, 0.4)',
+        'ai-blue': '0 0 25px -5px rgba(59, 130, 246, 0.4)',
         'premium-card': '0 20px 50px -12px rgba(0, 0, 0, 0.8)',
         'soft': '0 2px 15px rgba(0,0,0,0.4)',
         'card': '0 4px 24px rgba(0,0,0,0.5)',
         'card-hover': '0 20px 60px rgba(0,0,0,0.7)',
-        'glow': '0 0 40px rgba(255,255,255,0.12)',
-        'glow-sm': '0 0 20px rgba(255,255,255,0.08)',
-        'glow-lg': '0 0 80px rgba(255,255,255,0.15)',
-        'glow-purple': '0 0 40px rgba(200,200,200,0.12)',
-        'glow-gold': '0 0 40px rgba(220,220,220,0.12)',
+        'glow': '0 0 40px rgba(244, 63, 94, 0.25)',
+        'glow-sm': '0 0 20px rgba(244, 63, 94, 0.15)',
+        'glow-lg': '0 0 80px rgba(244, 63, 94, 0.3)',
+        'glow-purple': '0 0 40px rgba(124, 58, 237, 0.3)',
+        'glow-gold': '0 0 40px rgba(245, 158, 11, 0.3)',
         'dark-card': '0 4px 24px rgba(0,0,0,0.6)',
         'dark-card-hover': '0 20px 60px rgba(0,0,0,0.8)',
         'glass': '0 8px 32px rgba(0,0,0,0.4)',
-        'glass-white': '0 8px 32px rgba(255,255,255,0.06)',
-        'inner-glow': 'inset 0 0 30px rgba(255,255,255,0.04)',
-        'border-glow': '0 0 0 1px rgba(255,255,255,0.15)',
+        'glass-rose': '0 8px 32px rgba(244, 63, 94, 0.15)',
+        'inner-glow': 'inset 0 0 30px rgba(244, 63, 94, 0.06)',
+        'border-glow': '0 0 0 1px rgba(244, 63, 94, 0.3)',
       },
       backdropBlur: {
         xs: '2px',
