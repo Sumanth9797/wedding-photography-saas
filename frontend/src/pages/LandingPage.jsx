@@ -126,6 +126,8 @@ const TESTIMONIALS = [
   },
 ]
 
+const USD_TO_INR_RATE = 83
+
 const PLANS = [
   {
     name: 'Starter',
@@ -456,7 +458,7 @@ export default function LandingPage() {
                 <h3 className={`text-xl font-bold mb-1 ${plan.highlighted ? 'text-white' : 'text-gray-900 dark:text-white'}`}>{plan.name}</h3>
                 <p className={`text-sm mb-6 ${plan.highlighted ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400'}`}>{plan.description}</p>
                 <div className="flex items-baseline gap-1 mb-8">
-                  <span className={`text-5xl font-bold ${plan.highlighted ? 'text-white' : 'text-gray-900 dark:text-white'}`}>₹{plan.price * 80}</span>
+                  <span className={`text-5xl font-bold ${plan.highlighted ? 'text-white' : 'text-gray-900 dark:text-white'}`}>₹{plan.price * USD_TO_INR_RATE}</span>
                   <span className={plan.highlighted ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400'}>/mo</span>
                 </div>
                 <ul className="space-y-3 mb-8">
@@ -503,7 +505,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-dark-900 dark:bg-dark-900 text-gray-400 py-12 border-t border-dark-700 transition-colors duration-300">
+      <footer className="bg-gray-900 dark:bg-dark-900 text-gray-400 py-12 border-t border-gray-800 dark:border-dark-700 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
