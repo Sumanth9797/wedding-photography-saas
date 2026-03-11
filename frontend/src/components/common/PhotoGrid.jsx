@@ -1,89 +1,85 @@
 import { useState } from 'react'
-import { FiCheck, FiHeart, FiMessageSquare } from 'react-icons/fi'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
+import { FiImage } from 'react-icons/fi'
+import { SkeletonCard } from './LoadingSpinner'
 
-export default function PhotoGrid({ photos, selectable = false, onSelectionChange, selections = {} }) {
-  const [lightbox, setLightbox] = useState(null)
+export default function PhotoGrid({
+  photos = [],
+  loading = false,
+  onPhotoClick,
+  selectable = false,
+  selectedIds = [],
+  onSelect,
+  emptyMessage = 'No photos yet',
+  cols = 4,
+}) {
+  const colsClass = {
+    2: 'grid-cols-2 sm:grid-cols-2',
+    3: 'grid-cols-2 sm:grid-cols-3',
+    4: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+  }[cols] || 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'
 
-  const handlePhotoClick = (photo) => {
-    if (selectable && onSelectionChange) {
-      const current = selections[photo.id] || {}
-      onSelectionChange(photo.id, { ...current, selected: !current.selected })
-    } else {
-      setLightbox(photo)
-    }
+  if (loading) {
+    return (
+      <div className={clsx('grid gap-3', colsClass)}>
+        {Array.from({ length: 8 }).map((_, i) => (
+          <SkeletonCard key={i} className="!p-0" />
+        ))}
+      </div>
+    )
   }
 
-  const handleAlbumToggle = (e, photoId) => {
-    e.stopPropagation()
-    const current = selections[photoId] || {}
-    onSelectionChange(photoId, { ...current, isAlbumPhoto: !current.isAlbumPhoto })
+  if (photos.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+          <FiImage className="w-8 h-8 text-gray-300" />
+        </div>
+        <h3 className="text-gray-500 font-medium mb-1">{emptyMessage}</h3>
+        <p className="text-gray-400 text-sm">Upload photos to get started</p>
+      </div>
+    )
   }
 
   return (
-    <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-        {photos.map((photo) => {
-          const sel = selections[photo.id] || {}
-          return (
-            <div
-              key={photo.id}
-              onClick={() => handlePhotoClick(photo)}
-              className={clsx(
-                'relative aspect-square rounded-xl overflow-hidden cursor-pointer photo-fade-in',
-                'hover:scale-[1.02] transition-transform',
-                sel.selected && 'ring-4 ring-accent'
-              )}
-            >
-              <img
-                src={photo.thumbnailUrl || photo.previewUrl}
-                alt={photo.fileName}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              {sel.selected && (
-                <div className="absolute top-2 right-2 bg-accent rounded-full w-7 h-7 flex items-center justify-center">
-                  <FiCheck className="w-4 h-4 text-white" />
+    <div className={clsx('grid gap-3', colsClass)}>
+      {photos.map((photo, i) => {
+        const isSelected = selectedIds.includes(photo.id)
+        return (
+          <div
+            key={photo.id || i}
+            onClick={() => {
+              if (selectable && onSelect) onSelect(photo.id)
+              else if (onPhotoClick) onPhotoClick(photo, i)
+            }}
+            className={clsx(
+              'relative group aspect-square overflow-hidden rounded-xl cursor-pointer transition-all duration-300',
+              isSelected ? 'ring-2 ring-accent-600 ring-offset-1' : 'ring-0',
+              'hover:shadow-card-hover'
+            )}
+          >
+            <img
+              src={photo.thumbnailUrl || photo.url || photo.previewUrl}
+              alt={photo.filename || `Photo ${i + 1}`}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+            {/* Hover overlay */}
+            <div className={clsx(
+              'absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center',
+              isSelected && 'bg-black/20'
+            )}>
+              {isSelected && (
+                <div className="w-8 h-8 rounded-full bg-accent-600 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
               )}
-              {selectable && sel.selected && (
-                <button
-                  onClick={(e) => handleAlbumToggle(e, photo.id)}
-                  className={clsx(
-                    'absolute bottom-2 left-2 rounded-full w-7 h-7 flex items-center justify-center transition-colors',
-                    sel.isAlbumPhoto ? 'bg-secondary text-white' : 'bg-white/80 text-gray-600'
-                  )}
-                  title="Mark as album photo"
-                >
-                  <FiHeart className="w-4 h-4" />
-                </button>
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 hover:opacity-100 transition-opacity" />
             </div>
-          )
-        })}
-      </div>
-
-      {/* Lightbox */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-          onClick={() => setLightbox(null)}
-        >
-          <img
-            src={lightbox.previewUrl}
-            alt={lightbox.fileName}
-            className="max-w-full max-h-full object-contain rounded-lg"
-            onClick={(e) => e.stopPropagation()}
-          />
-          <button
-            className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300"
-            onClick={() => setLightbox(null)}
-          >
-            ✕
-          </button>
-        </div>
-      )}
-    </>
+          </div>
+        )
+      })}
+    </div>
   )
 }
