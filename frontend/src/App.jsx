@@ -3,6 +3,9 @@ import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
 import { NotificationProvider } from './context/NotificationContext'
 
+// Landing Page
+import LandingPage from './pages/LandingPage'
+
 // Auth Pages
 import LoginPage from './pages/auth/LoginPage'
 import OtpVerifyPage from './pages/auth/OtpVerifyPage'
@@ -27,6 +30,21 @@ import DownloadPage from './pages/client/DownloadPage'
 
 import ProtectedRoute from './components/common/ProtectedRoute'
 
+function NotFoundPage() {
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="text-center">
+        <div className="text-8xl font-display font-bold gradient-text mb-4">404</div>
+        <h1 className="text-2xl font-semibold text-gray-800 mb-2">Page Not Found</h1>
+        <p className="text-text-muted mb-8">The page you're looking for doesn't exist.</p>
+        <a href="/" className="btn-primary">
+          Go Home
+        </a>
+      </div>
+    </div>
+  )
+}
+
 function App() {
   return (
     <AuthProvider>
@@ -37,19 +55,37 @@ function App() {
             toastOptions={{
               duration: 4000,
               style: {
-                background: '#1E3A5F',
+                background: '#1E40AF',
                 color: '#fff',
                 borderRadius: '12px',
+                fontFamily: 'Inter, sans-serif',
+              },
+              success: {
+                style: {
+                  background: '#059669',
+                },
+                iconTheme: {
+                  primary: '#fff',
+                  secondary: '#059669',
+                },
+              },
+              error: {
+                style: {
+                  background: '#DC2626',
+                },
               },
             }}
           />
           <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Navigate to="/login" replace />} />
+            {/* Landing */}
+            <Route path="/" element={<LandingPage />} />
+
+            {/* Auth */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/verify-otp" element={<OtpVerifyPage />} />
+            <Route path="/otp" element={<Navigate to="/verify-otp" replace />} />
 
-            {/* Client Gallery (Public) */}
+            {/* Client Gallery (Public access) */}
             <Route path="/gallery/:token" element={<GalleryAccessPage />} />
             <Route path="/gallery/:token/view" element={
               <ProtectedRoute>
@@ -111,8 +147,8 @@ function App() {
               </ProtectedRoute>
             } />
 
-            {/* Catch all */}
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            {/* 404 */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Router>
       </NotificationProvider>
