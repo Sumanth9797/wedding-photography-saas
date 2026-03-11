@@ -113,7 +113,7 @@ export default function EventDetailPage() {
           </Link>
 
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-2xl p-6 mb-6 text-white">
+          <div className="bg-gradient-to-r from-white to-white/80 rounded-2xl p-6 mb-6 text-white">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <div className="flex items-center gap-3 mb-2">
@@ -180,7 +180,7 @@ export default function EventDetailPage() {
                   </div>
                   <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full transition-all duration-300"
+                      className="h-full bg-gradient-to-r from-white/90 to-white/70 rounded-full transition-all duration-300"
                       style={{ width: `${uploadProgress}%` }}
                     />
                   </div>
@@ -266,7 +266,7 @@ export default function EventDetailPage() {
                   <p className="text-xs text-gray-400 mb-2">Progress</p>
                   <div className="w-full h-2 bg-gray-100 rounded-full">
                     <div
-                      className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"
+                      className="h-full bg-gradient-to-r from-white/90 to-white/70 rounded-full"
                       style={{ width: `${event.status === 'COMPLETED' ? 100 : event.status === 'REVIEW' ? 85 : event.status === 'EDITING' ? 65 : event.status === 'ACTIVE' ? 40 : 10}%` }}
                     />
                   </div>

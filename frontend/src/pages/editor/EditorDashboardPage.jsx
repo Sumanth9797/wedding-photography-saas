@@ -61,7 +61,7 @@ function AssignmentCard({ assignment }) {
           </div>
           <div className="w-full h-1.5 bg-gray-100 rounded-full">
             <div
-              className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-white/90 to-white/70 rounded-full transition-all duration-500"
               style={{ width: `${info.progress}%` }}
             />
           </div>
@@ -74,7 +74,7 @@ function AssignmentCard({ assignment }) {
         ) : (
           <Link
             to={`/editor/assignments/${assignment.eventId || assignment.id}`}
-            className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 text-white text-sm font-semibold hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01]"
+            className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-white to-white/80 text-white text-sm font-semibold hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01]"
           >
             Start Editing <FiArrowRight className="w-4 h-4" />
           </Link>
@@ -154,7 +154,7 @@ export default function EditorDashboardPage() {
                 className={clsx(
                   'px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all',
                   filter === tab.key
-                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-md'
+                    ? 'bg-gradient-to-r from-white to-white/80 text-white shadow-md'
                     : 'bg-white text-gray-600 hover:bg-gray-50 shadow-soft'
                 )}
               >

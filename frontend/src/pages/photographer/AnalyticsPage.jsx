@@ -157,7 +157,7 @@ export default function AnalyticsPage() {
                         <div className="flex items-center gap-2">
                           <div className="w-20 h-1.5 bg-gray-100 rounded-full">
                             <div
-                              className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"
+                              className="h-full bg-gradient-to-r from-white/90 to-white/70 rounded-full"
                               style={{ width: `${Math.round((event.selections / event.photos) * 100)}%` }}
                             />
                           </div>

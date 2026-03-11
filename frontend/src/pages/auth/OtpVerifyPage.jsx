@@ -107,16 +107,16 @@ export default function OtpVerifyPage() {
     : ''
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-900 via-secondary-800 to-primary-700 flex items-center justify-center p-4">
-      {/* Background blobs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary-600/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary-600/10 rounded-full blur-3xl" />
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      {/* Ambient glow */}
+      <div className="absolute top-1/4 left-1/3 w-80 h-80 bg-white/2 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/3 w-64 h-64 bg-white/2 rounded-full blur-3xl" />
 
       <div className={clsx('relative w-full max-w-md', shake && 'animate-shake')}>
-        <div className="glass rounded-2xl p-8 border border-white/20 shadow-2xl">
+        <div className="bg-dark-600 border border-white/8 rounded-2xl p-8 shadow-dark-card-hover">
           {/* Logo */}
           <div className="flex justify-center mb-6">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center shadow-glow">
+            <div className="w-14 h-14 rounded-2xl bg-white/8 border border-white/12 flex items-center justify-center">
               <FiCamera className="w-7 h-7 text-white" />
             </div>
           </div>
@@ -124,19 +124,19 @@ export default function OtpVerifyPage() {
           {success ? (
             /* Success state */
             <div className="text-center py-4">
-              <div className="w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mx-auto mb-4 animate-scale-in">
-                <FiCheck className="w-10 h-10 text-emerald-600 dark:text-emerald-400" />
+              <div className="w-20 h-20 rounded-full bg-white/10 border border-white/15 flex items-center justify-center mx-auto mb-4 animate-scale-in">
+                <FiCheck className="w-10 h-10 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Verified!</h2>
-              <p className="text-gray-500 dark:text-gray-400">Redirecting you now...</p>
+              <h2 className="text-2xl font-bold text-white mb-2">Verified!</h2>
+              <p className="text-white/40">Redirecting you now...</p>
             </div>
           ) : (
             <>
               <div className="text-center mb-8">
-                <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-2">Enter Verification Code</h1>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                <h1 className="text-2xl font-display font-bold text-white mb-2">Enter Verification Code</h1>
+                <p className="text-white/40 text-sm">
                   We sent a 6-digit code to{' '}
-                  <span className="font-semibold text-gray-800 dark:text-gray-200">{maskedContact}</span>
+                  <span className="font-semibold text-white/70">{maskedContact}</span>
                 </p>
               </div>
 
@@ -150,7 +150,7 @@ export default function OtpVerifyPage() {
                 />
 
                 {error && (
-                  <p className="text-center text-red-500 text-sm flex items-center justify-center gap-1">
+                  <p className="text-center text-red-400/90 text-sm flex items-center justify-center gap-1">
                     <span>⚠</span> {error}
                   </p>
                 )}
@@ -158,7 +158,7 @@ export default function OtpVerifyPage() {
                 <button
                   type="submit"
                   disabled={loading || otp.length !== 6}
-                  className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-3 rounded-xl font-semibold text-base hover:from-primary-500 hover:to-secondary-500 transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md"
+                  className="w-full bg-white text-black py-3 rounded-xl font-semibold text-base hover:bg-gray-100 transition-all hover:scale-[1.01] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <><FiLoader className="animate-spin w-5 h-5" /> Verifying...</>
@@ -173,14 +173,14 @@ export default function OtpVerifyPage() {
                 {canResend ? (
                   <button
                     onClick={handleResend}
-                    className="text-primary-600 dark:text-primary-400 font-medium hover:underline text-sm"
+                    className="text-white/60 font-medium hover:text-white transition-colors text-sm"
                   >
                     Resend OTP
                   </button>
                 ) : (
-                  <p className="text-gray-400 dark:text-gray-500 text-sm">
+                  <p className="text-white/30 text-sm">
                     Resend OTP in{' '}
-                    <span className="font-semibold text-gray-700 dark:text-gray-300 tabular-nums">{formatCountdown(countdown)}</span>
+                    <span className="font-semibold text-white/50 tabular-nums">{formatCountdown(countdown)}</span>
                   </p>
                 )}
               </div>
@@ -188,10 +188,10 @@ export default function OtpVerifyPage() {
           )}
 
           {/* Back button */}
-          <div className="mt-6 pt-4 border-t border-gray-100 dark:border-dark-600">
+          <div className="mt-6 pt-4 border-t border-white/6">
             <Link
               to="/login"
-              className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+              className="flex items-center justify-center gap-2 text-sm text-white/30 hover:text-white/70 transition-colors"
             >
               <FiArrowLeft className="w-4 h-4" /> Back to Login
             </Link>

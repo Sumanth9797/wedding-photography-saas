@@ -114,7 +114,7 @@ export default function CreateEventPage() {
             <div className="flex items-center justify-between relative">
               <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-100 z-0" />
               <div
-                className="absolute top-5 left-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 z-0 transition-all duration-500"
+                className="absolute top-5 left-0 h-0.5 bg-gradient-to-r from-white/90 to-white/70 z-0 transition-all duration-500"
                 style={{ width: `${((step - 1) / (STEPS.length - 1)) * 100}%` }}
               />
               {STEPS.map((s) => {
@@ -282,7 +282,7 @@ export default function CreateEventPage() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold text-sm hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01]"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-white to-white/80 text-white font-semibold text-sm hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01]"
               >
                 Next <FiArrowRight className="w-4 h-4" />
               </button>
