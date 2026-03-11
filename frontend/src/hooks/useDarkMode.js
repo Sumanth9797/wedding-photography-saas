@@ -1,25 +1,43 @@
 import { useState, useEffect } from 'react'
 
+export const THEME_ORDER = ['system', 'light', 'dark']
+
+// Returns [theme, setTheme]
+// theme: 'system' | 'light' | 'dark'
 export function useDarkMode() {
-  const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem('theme')
-    if (saved) return saved === 'dark'
-    // Default to dark mode for premium black experience
-    return true
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'system'
   })
+
+  const [systemDark, setSystemDark] = useState(() => {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+  })
+
+  // Listen for OS-level preference changes
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const handler = (e) => setSystemDark(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  const isDark = theme === 'dark' || (theme === 'system' && systemDark)
 
   useEffect(() => {
     const root = document.documentElement
     if (isDark) {
       root.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
     } else {
       root.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
     }
-  }, [isDark])
+    if (theme === 'system') {
+      localStorage.removeItem('theme')
+    } else {
+      localStorage.setItem('theme', theme)
+    }
+  }, [isDark, theme])
 
-  return [isDark, setIsDark]
+  return [theme, setTheme]
 }
 
 export default useDarkMode

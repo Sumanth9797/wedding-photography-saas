@@ -7,8 +7,9 @@ import {
 } from 'react-icons/fi'
 import { useCounter } from '../hooks/useCounter'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { useDarkMode } from '../hooks/useDarkMode'
+import { useDarkMode, THEME_ORDER } from '../hooks/useDarkMode'
 import ThemeToggle from '../components/common/ThemeToggle'
+
 
 const TYPEWRITER_WORDS = ['Wedding Photographers', 'Photo Editors', 'Bride & Grooms', 'Studio Owners']
 
@@ -38,7 +39,7 @@ function TypewriterText() {
   }, [displayText, isDeleting, wordIndex])
 
   return (
-    <span className="text-white cursor-blink">
+    <span className="text-gray-900 dark:text-white cursor-blink">
       {displayText}
     </span>
   )
@@ -48,10 +49,10 @@ function StatCounter({ target, suffix = '', label }) {
   const { count } = useCounter(target, 2000)
   return (
     <div className="text-center">
-      <div className="text-3xl lg:text-4xl font-bold text-white mb-1">
+      <div className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-1">
         {count.toLocaleString()}{suffix}
       </div>
-      <div className="text-white/50 text-sm uppercase tracking-wider">{label}</div>
+      <div className="text-gray-500 dark:text-white/50 text-sm uppercase tracking-wider">{label}</div>
     </div>
   )
 }
@@ -84,8 +85,12 @@ export default function LandingPage() {
   const stepsRef = useScrollReveal()
   const testimonialsRef = useScrollReveal()
   const pricingRef = useScrollReveal()
-  const [isDark, setIsDark] = useDarkMode()
+  const [theme, setTheme] = useDarkMode()
   const [scrolled, setScrolled] = useState(false)
+
+  const cycleTheme = () => {
+    setTheme(THEME_ORDER[(THEME_ORDER.indexOf(theme) + 1) % THEME_ORDER.length])
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -94,12 +99,12 @@ export default function LandingPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-dark-950 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-dark-950 font-sans overflow-x-hidden">
 
       {/* ── Navigation ── */}
       <nav className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center transition-all duration-500 ${
         scrolled
-          ? 'bg-dark-950/90 backdrop-blur-xl border-b border-violet-900/20'
+          ? 'bg-white/90 dark:bg-dark-950/90 backdrop-blur-xl border-b border-gray-200/80 dark:border-violet-900/20'
           : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
@@ -108,7 +113,7 @@ export default function LandingPage() {
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-600 flex items-center justify-center shadow-glow-sm">
               <FiCamera className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display font-bold text-white text-xl tracking-tight">WeddingSnap</span>
+            <span className="font-display font-bold text-gray-900 dark:text-white text-xl tracking-tight">WeddingSnap</span>
           </div>
 
           {/* Links */}
@@ -117,7 +122,7 @@ export default function LandingPage() {
               <a
                 key={item}
                 href={`#${item.toLowerCase().replace(/ /g, '-')}`}
-                className="text-white/50 hover:text-white text-sm font-medium transition-colors duration-200"
+                className="text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white text-sm font-medium transition-colors duration-200"
               >
                 {item}
               </a>
@@ -126,10 +131,10 @@ export default function LandingPage() {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
-            <ThemeToggle isDark={isDark} onToggle={() => setIsDark(!isDark)} />
+            <ThemeToggle theme={theme} onCycle={cycleTheme} />
             <Link
               to="/login"
-              className="text-sm font-medium text-white/50 hover:text-white transition-colors hidden sm:block"
+              className="text-sm font-medium text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white transition-colors hidden sm:block"
             >
               Sign In
             </Link>
@@ -145,8 +150,8 @@ export default function LandingPage() {
 
       {/* ── Hero Section ── */}
       <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
-        {/* Deep midnight gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950" />
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950" />
 
         {/* Colorful ambient orbs */}
         <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl animate-float" />
@@ -164,12 +169,12 @@ export default function LandingPage() {
           {/* Left: Hero copy */}
           <div className="animate-fade-in-up">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/25 text-primary-300 px-4 py-2 rounded-full text-sm font-medium mb-8">
+            <div className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/25 text-primary-600 dark:text-primary-300 px-4 py-2 rounded-full text-sm font-medium mb-8">
               <span className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-pulse-soft" />
               Trusted by 2,400+ photographers
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-display font-bold text-white leading-[1.05] mb-6 tracking-tight">
+            <h1 className="text-5xl lg:text-7xl font-display font-bold text-gray-900 dark:text-white leading-[1.05] mb-6 tracking-tight">
               Built for{' '}
               <br />
               <span className="bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent">
@@ -177,7 +182,7 @@ export default function LandingPage() {
               </span>
             </h1>
 
-            <p className="text-lg text-white/55 mb-10 leading-relaxed max-w-lg">
+            <p className="text-lg text-gray-600 dark:text-white/55 mb-10 leading-relaxed max-w-lg">
               WeddingSnap streamlines your entire wedding photography workflow — from shoot to delivery — in one elegant platform.
             </p>
 
@@ -188,7 +193,7 @@ export default function LandingPage() {
               >
                 Start Free Trial <FiArrowRight className="w-4 h-4" />
               </Link>
-              <button className="inline-flex items-center gap-3 border border-white/15 text-white px-8 py-4 rounded-xl font-semibold text-base hover:bg-white/5 hover:border-white/30 transition-all">
+              <button className="inline-flex items-center gap-3 border border-gray-300 dark:border-white/15 text-gray-700 dark:text-white px-8 py-4 rounded-xl font-semibold text-base hover:bg-gray-100 dark:hover:bg-white/5 hover:border-gray-400 dark:hover:border-white/30 transition-all">
                 <div className="w-8 h-8 rounded-full bg-primary-500/20 border border-primary-500/30 flex items-center justify-center">
                   <FiPlay className="w-3 h-3 text-primary-400 ml-0.5" />
                 </div>
@@ -197,7 +202,7 @@ export default function LandingPage() {
             </div>
 
             {/* Social proof */}
-            <div className="flex items-center gap-5 mt-10 pt-8 border-t border-violet-900/20">
+            <div className="flex items-center gap-5 mt-10 pt-8 border-t border-gray-200 dark:border-violet-900/20">
               <div className="flex -space-x-2">
                 {[
                   { initials: 'MC', color: 'from-primary-500 to-secondary-600' },
@@ -207,7 +212,7 @@ export default function LandingPage() {
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className={`w-9 h-9 rounded-full border-2 border-dark-950 bg-gradient-to-br ${item.color} flex items-center justify-center text-white text-xs font-semibold`}
+                    className={`w-9 h-9 rounded-full border-2 border-white dark:border-dark-950 bg-gradient-to-br ${item.color} flex items-center justify-center text-white text-xs font-semibold`}
                   >
                     {item.initials}
                   </div>
@@ -219,7 +224,7 @@ export default function LandingPage() {
                     <FiStar key={i} className="w-3.5 h-3.5 fill-current" />
                   ))}
                 </div>
-                <p className="text-white/40 text-xs mt-0.5">Loved by 2,400+ photographers</p>
+                <p className="text-gray-400 dark:text-white/40 text-xs mt-0.5">Loved by 2,400+ photographers</p>
               </div>
             </div>
           </div>
@@ -228,10 +233,10 @@ export default function LandingPage() {
           <div className="hidden lg:flex justify-center items-center">
             <div className="relative animate-float">
               {/* Main card */}
-              <div className="bg-dark-800 border border-violet-900/30 rounded-2xl p-6 w-80 shadow-glow-purple">
+              <div className="bg-white dark:bg-dark-800 border border-gray-200 dark:border-violet-900/30 rounded-2xl p-6 w-80 shadow-glow-purple">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-white text-sm">Smith Wedding</h3>
-                  <span className="bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 text-xs px-2 py-1 rounded-full font-medium">Active</span>
+                  <h3 className="font-semibold text-gray-800 dark:text-white text-sm">Smith Wedding</h3>
+                  <span className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 text-xs px-2 py-1 rounded-full font-medium">Active</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 mb-4">
                   {[
@@ -244,46 +249,46 @@ export default function LandingPage() {
                   ].map((gradient, i) => (
                     <div
                       key={i}
-                      className={`rounded-lg aspect-square bg-gradient-to-br ${gradient} border border-white/5`}
+                      className={`rounded-lg aspect-square bg-gradient-to-br ${gradient} border border-gray-200/50 dark:border-white/5`}
                     />
                   ))}
                 </div>
                 <div className="space-y-2.5">
                   <div className="flex justify-between text-xs">
-                    <span className="text-white/40">Photos uploaded</span>
-                    <span className="font-medium text-white/80">847 / 1200</span>
+                    <span className="text-gray-400 dark:text-white/40">Photos uploaded</span>
+                    <span className="font-medium text-gray-700 dark:text-white/80">847 / 1200</span>
                   </div>
-                  <div className="w-full bg-dark-600 rounded-full h-1.5">
+                  <div className="w-full bg-gray-200 dark:bg-dark-600 rounded-full h-1.5">
                     <div className="bg-gradient-to-r from-primary-500 to-secondary-600 h-1.5 rounded-full transition-all" style={{ width: '70%' }} />
                   </div>
                 </div>
               </div>
 
               {/* Floating badge top-right */}
-              <div className="absolute -top-4 -right-4 bg-dark-700 border border-emerald-500/25 rounded-xl p-3 shadow-dark-card animate-bounce-subtle">
+              <div className="absolute -top-4 -right-4 bg-white dark:bg-dark-700 border border-emerald-500/25 rounded-xl p-3 shadow-lg dark:shadow-dark-card animate-bounce-subtle">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                    <FiCheck className="w-3.5 h-3.5 text-emerald-400" />
+                    <FiCheck className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
                   </div>
                   <div>
-                    <p className="text-xs text-white/40">Gallery Sent</p>
-                    <p className="text-sm font-semibold text-white">2 min ago</p>
+                    <p className="text-xs text-gray-400 dark:text-white/40">Gallery Sent</p>
+                    <p className="text-sm font-semibold text-gray-800 dark:text-white">2 min ago</p>
                   </div>
                 </div>
               </div>
 
               {/* Floating badge bottom-left */}
               <div
-                className="absolute -bottom-4 -left-4 bg-dark-700 border border-accent-500/25 rounded-xl p-3 shadow-dark-card animate-bounce-subtle"
+                className="absolute -bottom-4 -left-4 bg-white dark:bg-dark-700 border border-accent-500/25 rounded-xl p-3 shadow-lg dark:shadow-dark-card animate-bounce-subtle"
                 style={{ animationDelay: '-1s' }}
               >
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-full bg-accent-500/20 flex items-center justify-center">
-                    <FiStar className="w-3.5 h-3.5 text-accent-400" />
+                    <FiStar className="w-3.5 h-3.5 text-accent-500 dark:text-accent-400" />
                   </div>
                   <div>
-                    <p className="text-xs text-white/40">New Selection</p>
-                    <p className="text-sm font-semibold text-white">127 photos</p>
+                    <p className="text-xs text-gray-400 dark:text-white/40">New Selection</p>
+                    <p className="text-sm font-semibold text-gray-800 dark:text-white">127 photos</p>
                   </div>
                 </div>
               </div>
@@ -293,30 +298,30 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats Bar ── */}
-      <section className="bg-dark-800/50 border-y border-violet-900/20 py-12">
+      <section className="bg-gray-100/80 dark:bg-dark-800/50 border-y border-gray-200 dark:border-violet-900/20 py-12">
         <div className="max-w-5xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <StatCounter target={2400} suffix="+" label="Photographers" />
             <StatCounter target={180000} suffix="+" label="Photos Delivered" />
             <StatCounter target={4850} suffix="+" label="Happy Couples" />
             <div className="text-center">
-              <div className="text-3xl lg:text-4xl font-bold text-accent-400 mb-1">4.9★</div>
-              <div className="text-white/50 text-sm uppercase tracking-wider">Average Rating</div>
+              <div className="text-3xl lg:text-4xl font-bold text-accent-500 dark:text-accent-400 mb-1">4.9★</div>
+              <div className="text-gray-500 dark:text-white/50 text-sm uppercase tracking-wider">Average Rating</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Features Section ── */}
-      <section id="features" className="py-28 bg-dark-950">
+      <section id="features" className="py-28 bg-white dark:bg-dark-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={featuresRef} className="text-center mb-16 reveal">
-            <span className="text-primary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Features</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mt-3 mb-4 tracking-tight">
+            <span className="text-primary-500/70 dark:text-primary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Features</span>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-3 mb-4 tracking-tight">
               Everything You Need to{' '}
               <span className="gradient-text-silver">Succeed</span>
             </h2>
-            <p className="text-lg text-white/40 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-gray-500 dark:text-white/40 max-w-2xl mx-auto leading-relaxed">
               A complete toolkit for wedding photographers, editors, and clients — all in one elegant platform.
             </p>
           </div>
@@ -325,25 +330,25 @@ export default function LandingPage() {
             {FEATURES.map((feature, i) => {
               const Icon = feature.icon
               const iconColors = [
-                { bg: 'bg-primary-500/15', border: 'border-primary-500/20', text: 'text-primary-400' },
-                { bg: 'bg-secondary-600/15', border: 'border-secondary-600/20', text: 'text-secondary-400' },
-                { bg: 'bg-accent-500/15', border: 'border-accent-500/20', text: 'text-accent-400' },
-                { bg: 'bg-secondary-400/15', border: 'border-secondary-400/20', text: 'text-secondary-300' },
-                { bg: 'bg-accent-400/15', border: 'border-accent-400/20', text: 'text-accent-300' },
-                { bg: 'bg-primary-400/15', border: 'border-primary-400/20', text: 'text-primary-300' },
+                { bg: 'bg-primary-500/15', border: 'border-primary-500/20', text: 'text-primary-500 dark:text-primary-400' },
+                { bg: 'bg-secondary-600/15', border: 'border-secondary-600/20', text: 'text-secondary-600 dark:text-secondary-400' },
+                { bg: 'bg-accent-500/15', border: 'border-accent-500/20', text: 'text-accent-600 dark:text-accent-400' },
+                { bg: 'bg-secondary-400/15', border: 'border-secondary-400/20', text: 'text-secondary-600 dark:text-secondary-300' },
+                { bg: 'bg-accent-400/15', border: 'border-accent-400/20', text: 'text-accent-600 dark:text-accent-300' },
+                { bg: 'bg-primary-400/15', border: 'border-primary-400/20', text: 'text-primary-600 dark:text-primary-300' },
               ]
               const colors = iconColors[i % iconColors.length]
               return (
                 <div
                   key={i}
-                  className="reveal group p-6 rounded-2xl bg-dark-800 border border-violet-900/20 hover:border-violet-700/40 hover:bg-dark-700 hover:-translate-y-1 transition-all duration-300 cursor-default"
+                  className="reveal group p-6 rounded-2xl bg-gray-50 dark:bg-dark-800 border border-gray-200 dark:border-violet-900/20 hover:border-violet-400/40 dark:hover:border-violet-700/40 hover:bg-gray-100 dark:hover:bg-dark-700 hover:-translate-y-1 transition-all duration-300 cursor-default"
                   style={{ transitionDelay: `${i * 60}ms` }}
                 >
                   <div className={`w-11 h-11 rounded-xl ${colors.bg} border ${colors.border} flex items-center justify-center mb-4 transition-colors`}>
                     <Icon className={`w-5 h-5 ${colors.text}`} />
                   </div>
-                  <h3 className="text-base font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-white/40 text-sm leading-relaxed">{feature.description}</p>
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
+                  <p className="text-gray-500 dark:text-white/40 text-sm leading-relaxed">{feature.description}</p>
                 </div>
               )
             })}
@@ -352,14 +357,14 @@ export default function LandingPage() {
       </section>
 
       {/* ── How It Works ── */}
-      <section id="how-it-works" className="py-28 bg-dark-900 border-y border-violet-900/15">
+      <section id="how-it-works" className="py-28 bg-gray-50 dark:bg-dark-900 border-y border-gray-200 dark:border-violet-900/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={stepsRef} className="text-center mb-16 reveal">
-            <span className="text-secondary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Process</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mt-3 mb-4 tracking-tight">
+            <span className="text-secondary-600/70 dark:text-secondary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Process</span>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-3 mb-4 tracking-tight">
               How It <span className="gradient-text-white">Works</span>
             </h2>
-            <p className="text-lg text-white/40 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-500 dark:text-white/40 max-w-2xl mx-auto">
               From shoot to delivery in 3 simple steps
             </p>
           </div>
@@ -376,14 +381,14 @@ export default function LandingPage() {
               <div key={step} className="text-center reveal" style={{ transitionDelay: `${(step - 1) * 120}ms` }}>
                 <div className="relative inline-flex">
                   <div className={`w-20 h-20 rounded-full ${bg} border ${border} flex items-center justify-center mx-auto mb-6`}>
-                    <Icon className="w-8 h-8 text-white/70" />
+                    <Icon className="w-8 h-8 text-gray-600 dark:text-white/70" />
                   </div>
                   <span className={`absolute -top-1 -right-1 w-7 h-7 rounded-full bg-gradient-to-br ${stepGrad} flex items-center justify-center text-xs font-bold text-white shadow-sm`}>
                     {step}
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-3">{title}</h3>
-                <p className="text-white/40 text-sm leading-relaxed">{desc}</p>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{title}</h3>
+                <p className="text-gray-500 dark:text-white/40 text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -391,11 +396,11 @@ export default function LandingPage() {
       </section>
 
       {/* ── Testimonials ── */}
-      <section className="py-28 bg-dark-950">
+      <section className="py-28 bg-white dark:bg-dark-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={testimonialsRef} className="text-center mb-16 reveal">
-            <span className="text-accent-400/70 font-medium text-xs uppercase tracking-[0.25em]">Testimonials</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mt-3 mb-4 tracking-tight">
+            <span className="text-accent-600/70 dark:text-accent-400/70 font-medium text-xs uppercase tracking-[0.25em]">Testimonials</span>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-3 mb-4 tracking-tight">
               Loved by <span className="gradient-text-silver">Thousands</span>
             </h2>
           </div>
@@ -404,15 +409,15 @@ export default function LandingPage() {
             {TESTIMONIALS.map((t, i) => (
               <div
                 key={i}
-                className="reveal p-6 rounded-2xl bg-dark-800 border border-violet-900/20 hover:border-violet-700/35 hover:-translate-y-1 transition-all duration-300"
+                className="reveal p-6 rounded-2xl bg-gray-50 dark:bg-dark-800 border border-gray-200 dark:border-violet-900/20 hover:border-violet-400/35 dark:hover:border-violet-700/35 hover:-translate-y-1 transition-all duration-300"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <div className="flex text-accent-400 mb-4 gap-0.5">
+                <div className="flex text-accent-500 dark:text-accent-400 mb-4 gap-0.5">
                   {[...Array(t.rating)].map((_, j) => (
                     <FiStar key={j} className="w-3.5 h-3.5 fill-current" />
                   ))}
                 </div>
-                <p className="text-white/55 text-sm leading-relaxed mb-6 italic">"{t.quote}"</p>
+                <p className="text-gray-600 dark:text-white/55 text-sm leading-relaxed mb-6 italic">"{t.quote}"</p>
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${
                     i === 0 ? 'from-primary-500 to-secondary-600' :
@@ -422,8 +427,8 @@ export default function LandingPage() {
                     {t.initials}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-white">{t.name}</p>
-                    <p className="text-xs text-white/35 mt-0.5">{t.role || 'Client'} · {t.location}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">{t.name}</p>
+                    <p className="text-xs text-gray-400 dark:text-white/35 mt-0.5">{t.role || 'Client'} · {t.location}</p>
                   </div>
                 </div>
               </div>
@@ -433,14 +438,14 @@ export default function LandingPage() {
       </section>
 
       {/* ── Pricing ── */}
-      <section id="pricing" className="py-28 bg-dark-900 border-t border-violet-900/15">
+      <section id="pricing" className="py-28 bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-violet-900/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={pricingRef} className="text-center mb-16 reveal">
-            <span className="text-secondary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Pricing</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mt-3 mb-4 tracking-tight">
+            <span className="text-secondary-600/70 dark:text-secondary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Pricing</span>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-3 mb-4 tracking-tight">
               Simple, <span className="gradient-text-white">Transparent</span> Pricing
             </h2>
-            <p className="text-lg text-white/40">Start free, scale as you grow. Cancel anytime.</p>
+            <p className="text-lg text-gray-500 dark:text-white/40">Start free, scale as you grow. Cancel anytime.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
@@ -450,7 +455,7 @@ export default function LandingPage() {
                 className={`reveal relative rounded-2xl p-8 transition-all duration-300 ${
                   plan.highlighted
                     ? 'bg-gradient-to-br from-primary-500 to-secondary-600 scale-[1.03] shadow-glow'
-                    : 'bg-dark-800 border border-violet-900/25 hover:border-violet-700/40 hover:-translate-y-1'
+                    : 'bg-white dark:bg-dark-800 border border-gray-200 dark:border-violet-900/25 hover:border-violet-400/40 dark:hover:border-violet-700/40 hover:-translate-y-1'
                 }`}
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
@@ -459,23 +464,23 @@ export default function LandingPage() {
                     Most Popular
                   </div>
                 )}
-                <h3 className="text-lg font-bold mb-1 text-white">
+                <h3 className={`text-lg font-bold mb-1 ${plan.highlighted ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                   {plan.name}
                 </h3>
-                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-white/70' : 'text-white/35'}`}>
+                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-white/70' : 'text-gray-500 dark:text-white/35'}`}>
                   {plan.description}
                 </p>
                 <div className="flex items-baseline gap-1 mb-8">
-                  <span className="text-4xl font-bold text-white">
+                  <span className={`text-4xl font-bold ${plan.highlighted ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                     ₹{plan.price * USD_TO_INR_RATE}
                   </span>
-                  <span className={`text-sm ${plan.highlighted ? 'text-white/60' : 'text-white/35'}`}>/mo</span>
+                  <span className={`text-sm ${plan.highlighted ? 'text-white/60' : 'text-gray-400 dark:text-white/35'}`}>/mo</span>
                 </div>
                 <ul className="space-y-2.5 mb-8">
                   {plan.features.map((f, j) => (
                     <li key={j} className="flex items-center gap-2">
-                      <FiCheck className={`w-4 h-4 flex-shrink-0 ${plan.highlighted ? 'text-white' : 'text-primary-400'}`} />
-                      <span className={`text-sm ${plan.highlighted ? 'text-white/80' : 'text-white/50'}`}>{f}</span>
+                      <FiCheck className={`w-4 h-4 flex-shrink-0 ${plan.highlighted ? 'text-white' : 'text-primary-500 dark:text-primary-400'}`} />
+                      <span className={`text-sm ${plan.highlighted ? 'text-white/80' : 'text-gray-600 dark:text-white/50'}`}>{f}</span>
                     </li>
                   ))}
                 </ul>
@@ -484,7 +489,7 @@ export default function LandingPage() {
                   className={`block text-center px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:scale-[1.02] ${
                     plan.highlighted
                       ? 'bg-white text-primary-600 hover:bg-gray-50'
-                      : 'bg-gradient-to-r from-primary-500/15 to-secondary-600/15 text-white border border-primary-500/30 hover:from-primary-500/25 hover:to-secondary-600/25'
+                      : 'bg-gradient-to-r from-primary-500/15 to-secondary-600/15 text-primary-600 dark:text-white border border-primary-500/30 hover:from-primary-500/25 hover:to-secondary-600/25'
                   }`}
                 >
                   {plan.cta}
@@ -496,20 +501,20 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="py-24 bg-dark-950 border-t border-violet-900/15 relative overflow-hidden">
+      <section className="py-24 bg-white dark:bg-dark-950 border-t border-gray-200 dark:border-violet-900/15 relative overflow-hidden">
         {/* Background orbs */}
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-primary-500/8 rounded-full blur-3xl" />
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-secondary-600/8 rounded-full blur-3xl" />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <div className="reveal">
-            <h2 className="text-4xl lg:text-6xl font-display font-bold text-white mb-6 tracking-tight leading-tight">
+            <h2 className="text-4xl lg:text-6xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
               Ready to Transform
               <br />
               <span className="bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent">
                 Your Photography Business?
               </span>
             </h2>
-            <p className="text-lg text-white/40 mb-10">
+            <p className="text-lg text-gray-500 dark:text-white/40 mb-10">
               Join 2,400+ photographers who've already switched to WeddingSnap.
             </p>
             <Link
@@ -518,43 +523,43 @@ export default function LandingPage() {
             >
               Start Your Free Trial <FiArrowRight className="w-4 h-4" />
             </Link>
-            <p className="text-white/25 text-sm mt-4">No credit card required. 14-day free trial.</p>
+            <p className="text-gray-400 dark:text-white/25 text-sm mt-4">No credit card required. 14-day free trial.</p>
           </div>
         </div>
       </section>
 
       {/* ── Footer ── */}
-      <footer className="bg-dark-900 border-t border-violet-900/15 py-12">
+      <footer className="bg-gray-100 dark:bg-dark-900 border-t border-gray-200 dark:border-violet-900/15 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-600 flex items-center justify-center">
                 <FiCamera className="w-4 h-4 text-white" />
               </div>
-              <span className="font-display font-bold text-white text-lg">WeddingSnap</span>
+              <span className="font-display font-bold text-gray-900 dark:text-white text-lg">WeddingSnap</span>
             </div>
             <div className="flex flex-wrap gap-6 text-sm">
               {['Features', 'Pricing', 'Privacy', 'Terms'].map((item) => (
-                <a key={item} href="#" className="text-white/35 hover:text-white transition-colors duration-200">
+                <a key={item} href="#" className="text-gray-400 dark:text-white/35 hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
                   {item}
                 </a>
               ))}
-              <Link to="/login" className="text-white/35 hover:text-white transition-colors duration-200">Sign In</Link>
+              <Link to="/login" className="text-gray-400 dark:text-white/35 hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Sign In</Link>
             </div>
             <div className="flex items-center gap-4">
               {[
-                { Icon: FiInstagram, color: 'hover:text-primary-400' },
-                { Icon: FiTwitter, color: 'hover:text-secondary-400' },
-                { Icon: FiFacebook, color: 'hover:text-secondary-300' },
+                { Icon: FiInstagram, color: 'hover:text-primary-500 dark:hover:text-primary-400' },
+                { Icon: FiTwitter, color: 'hover:text-secondary-600 dark:hover:text-secondary-400' },
+                { Icon: FiFacebook, color: 'hover:text-secondary-500 dark:hover:text-secondary-300' },
               ].map(({ Icon, color }, i) => (
-                <a key={i} href="#" className={`text-white/30 ${color} transition-colors duration-200`}>
+                <a key={i} href="#" className={`text-gray-400 dark:text-white/30 ${color} transition-colors duration-200`}>
                   <Icon className="w-4 h-4" />
                 </a>
               ))}
             </div>
           </div>
           <div className="line-divider mt-8 mb-6" />
-          <p className="text-center text-white/25 text-xs tracking-wide">
+          <p className="text-center text-gray-400 dark:text-white/25 text-xs tracking-wide">
             © {new Date().getFullYear()} WeddingSnap. All rights reserved.
           </p>
         </div>
