@@ -106,20 +106,20 @@ export default function LoginPage() {
       </div>
 
       {/* Right Panel - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-6 lg:p-12 bg-gray-50">
+      <div className="flex-1 flex items-center justify-center p-6 lg:p-12 bg-gray-50 dark:bg-dark-900 transition-colors duration-300">
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center">
               <FiCamera className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display font-bold text-gray-900 text-xl">WeddingSnap</span>
+            <span className="font-display font-bold text-gray-900 dark:text-white text-xl">WeddingSnap</span>
           </Link>
 
-          <div className={clsx('bg-white rounded-2xl shadow-card p-8', shake && 'animate-shake')}>
+          <div className={clsx('bg-white dark:bg-dark-700 rounded-2xl shadow-card dark:shadow-dark-card p-8 transition-colors duration-300', shake && 'animate-shake')}>
             <div className="mb-8">
-              <h1 className="text-3xl font-display font-bold text-gray-900 mb-2">Welcome back</h1>
-              <p className="text-gray-500">Sign in to your account with OTP</p>
+              <h1 className="text-3xl font-display font-bold text-gray-900 dark:text-white mb-2">Welcome back</h1>
+              <p className="text-gray-500 dark:text-gray-400">Sign in to your account with OTP</p>
             </div>
 
             {/* Role selection */}
@@ -134,13 +134,13 @@ export default function LoginPage() {
                     className={clsx(
                       'flex flex-col items-center p-3 rounded-xl border-2 text-center transition-all duration-200',
                       role === r.value
-                        ? 'border-primary-500 bg-primary-50 text-primary-700'
-                        : 'border-gray-200 hover:border-gray-300 text-gray-600'
+                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
+                        : 'border-gray-200 dark:border-dark-500 hover:border-gray-300 dark:hover:border-dark-400 text-gray-600 dark:text-gray-300'
                     )}
                   >
                     <span className="text-2xl mb-1">{r.emoji}</span>
                     <span className="text-xs font-semibold">{r.label}</span>
-                    <span className="text-xs text-gray-400 hidden md:block">{r.desc}</span>
+                    <span className="text-xs text-gray-400 dark:text-gray-500 hidden md:block">{r.desc}</span>
                   </button>
                 ))}
               </div>
@@ -151,7 +151,7 @@ export default function LoginPage() {
               <div>
                 <label className="label">Phone or Email</label>
                 <div className="relative">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
                     {isEmail ? <FiMail className="w-5 h-5" /> : <FiPhone className="w-5 h-5" />}
                   </div>
                   <input
@@ -176,7 +176,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-3 rounded-xl font-semibold text-base hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md"
+                className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-3 rounded-xl font-semibold text-base hover:from-primary-500 hover:to-secondary-500 transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md"
               >
                 {loading ? (
                   <><FiLoader className="animate-spin w-5 h-5" /> Sending OTP...</>
@@ -186,18 +186,18 @@ export default function LoginPage() {
               </button>
             </form>
 
-            <p className="text-center text-sm text-gray-500 mt-6">
+            <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
               New here?{' '}
-              <Link to="/" className="text-primary-600 font-medium hover:underline">
+              <Link to="/" className="text-primary-600 dark:text-primary-400 font-medium hover:underline">
                 Learn more about WeddingSnap
               </Link>
             </p>
           </div>
 
-          <p className="text-center text-xs text-gray-400 mt-6">
+          <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-6">
             By continuing you agree to our{' '}
-            <a href="#" className="hover:text-gray-600 underline">Terms</a> and{' '}
-            <a href="#" className="hover:text-gray-600 underline">Privacy Policy</a>
+            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-300 underline">Terms</a> and{' '}
+            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-300 underline">Privacy Policy</a>
           </p>
         </div>
       </div>
