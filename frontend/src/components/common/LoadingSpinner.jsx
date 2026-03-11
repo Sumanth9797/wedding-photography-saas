@@ -1,28 +1,55 @@
 import { clsx } from 'clsx'
 
-export default function LoadingSpinner({ size = 'md', fullScreen = false, className = '' }) {
+/**
+ * Premium monochrome loading spinner
+ */
+export default function LoadingSpinner({ size = 'md', fullScreen = false, text = '', className = '' }) {
   const sizes = {
-    sm: 'w-4 h-4 border-2',
-    md: 'w-8 h-8 border-2',
-    lg: 'w-12 h-12 border-4',
-    xl: 'w-16 h-16 border-4',
+    sm: 'w-5 h-5',
+    md: 'w-9 h-9',
+    lg: 'w-14 h-14',
+    xl: 'w-20 h-20',
+  }
+
+  const strokeSizes = {
+    sm: 'border',
+    md: 'border-2',
+    lg: 'border-2',
+    xl: 'border-[3px]',
   }
 
   const spinner = (
-    <div className={clsx(
-      'rounded-full border-gray-200 animate-spin',
-      'border-t-primary-600 border-r-secondary-500',
-      sizes[size] || sizes.md,
-      className
-    )} />
+    <div
+      className={clsx(
+        'rounded-full',
+        'border-white/10',
+        'border-t-white/90 border-r-white/30',
+        'animate-spin',
+        sizes[size] || sizes.md,
+        strokeSizes[size] || strokeSizes.md,
+        className
+      )}
+    />
   )
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm z-50">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 rounded-full border-4 border-gray-100 border-t-primary-600 border-r-secondary-500 animate-spin" />
-          <p className="text-text-muted text-sm font-medium">Loading...</p>
+      <div className="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-md z-50">
+        <div className="flex flex-col items-center gap-5">
+          {/* Dual-ring premium loader */}
+          <div className="relative w-16 h-16">
+            <div className="absolute inset-0 rounded-full border-2 border-white/8 border-t-white/70 animate-spin" />
+            <div
+              className="absolute inset-2 rounded-full border border-white/5 border-b-white/40 animate-spin"
+              style={{ animationDuration: '1.4s', animationDirection: 'reverse' }}
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-2 h-2 bg-white rounded-full animate-pulse-soft" />
+            </div>
+          </div>
+          <p className="text-white/50 text-sm font-medium tracking-widest uppercase">
+            {text || 'Loading'}
+          </p>
         </div>
       </div>
     )
@@ -31,9 +58,28 @@ export default function LoadingSpinner({ size = 'md', fullScreen = false, classN
   return spinner
 }
 
+/**
+ * Inline dual-ring spinner
+ */
+export function SpinnerInline({ size = 'sm', className = '' }) {
+  const sizes = { xs: 'w-3 h-3 border', sm: 'w-4 h-4 border', md: 'w-5 h-5 border-2' }
+  return (
+    <div
+      className={clsx(
+        'rounded-full border-white/15 border-t-white/80 animate-spin',
+        sizes[size] || sizes.sm,
+        className
+      )}
+    />
+  )
+}
+
+/**
+ * Skeleton card (dark monochrome)
+ */
 export function SkeletonCard({ className = '' }) {
   return (
-    <div className={clsx('bg-white rounded-2xl shadow-card overflow-hidden', className)}>
+    <div className={clsx('bg-dark-600 rounded-2xl border border-white/5 overflow-hidden', className)}>
       <div className="skeleton h-48 w-full" />
       <div className="p-4 space-y-3">
         <div className="skeleton h-5 w-3/4 rounded-lg" />
@@ -47,7 +93,7 @@ export function SkeletonCard({ className = '' }) {
 
 export function SkeletonText({ lines = 3, className = '' }) {
   return (
-    <div className={clsx('space-y-2', className)}>
+    <div className={clsx('space-y-2.5', className)}>
       {Array.from({ length: lines }).map((_, i) => (
         <div
           key={i}
@@ -59,6 +105,11 @@ export function SkeletonText({ lines = 3, className = '' }) {
 }
 
 export function SkeletonAvatar({ size = 'md', className = '' }) {
-  const sizes = { sm: 'w-8 h-8', md: 'w-10 h-10', lg: 'w-14 h-14' }
+  const sizes = { sm: 'w-8 h-8', md: 'w-10 h-10', lg: 'w-14 h-14', xl: 'w-20 h-20' }
   return <div className={clsx('skeleton rounded-full flex-shrink-0', sizes[size], className)} />
 }
+
+export function SkeletonLine({ width = 'w-full', height = 'h-4', className = '' }) {
+  return <div className={clsx('skeleton rounded-lg', width, height, className)} />
+}
+

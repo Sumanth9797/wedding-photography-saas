@@ -18,7 +18,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [shake, setShake] = useState(false)
-  const [inputType, setInputType] = useState('phone') // phone or email
 
   const isEmail = contact.includes('@')
   const isPhone = /^\d{10,15}$/.test(contact.replace(/[\s\-+]/g, ''))
@@ -38,7 +37,6 @@ export default function LoginPage() {
       setTimeout(() => setShake(false), 500)
       return
     }
-
     setError('')
     setLoading(true)
     try {
@@ -57,69 +55,80 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left Panel - Decorative (hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-primary-900 via-secondary-800 to-primary-700">
-        {/* Background blobs */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-primary-600/30 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-secondary-600/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
+    <div className="min-h-screen flex bg-black">
+      {/* Left panel — decorative (desktop only) */}
+      <div className="hidden lg:flex lg:w-[52%] relative overflow-hidden bg-dark-700 border-r border-white/5">
+        {/* Ambient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-white/2 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-white/2 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
 
         <div className="relative z-10 flex flex-col justify-between p-12 w-full">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-white/8 border border-white/12 flex items-center justify-center">
               <FiCamera className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display font-bold text-white text-2xl">WeddingSnap</span>
+            <span className="font-display font-bold text-white text-2xl tracking-tight">WeddingSnap</span>
           </Link>
 
-          {/* Content */}
+          {/* Hero copy */}
           <div>
-            <h2 className="text-5xl font-display font-bold text-white mb-6 leading-tight">
+            <h2 className="text-5xl font-display font-bold text-white mb-6 leading-tight tracking-tight">
               Capture Every<br />Perfect Moment
             </h2>
-            <p className="text-blue-200 text-lg leading-relaxed mb-10">
+            <p className="text-white/40 text-base leading-relaxed mb-10 max-w-sm">
               The all-in-one platform for wedding photographers to manage events, collaborate with editors, and delight clients.
             </p>
 
-            {/* Testimonial */}
-            <div className="glass rounded-2xl p-6 border border-white/20">
-              <div className="flex text-amber-400 mb-3">
+            {/* Testimonial card */}
+            <div className="bg-white/4 border border-white/8 rounded-2xl p-6 backdrop-blur-sm">
+              <div className="flex text-white/60 mb-3 gap-0.5">
                 {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                  <svg key={i} className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
                 ))}
               </div>
-              <p className="text-white italic text-sm leading-relaxed">
+              <p className="text-white/60 italic text-sm leading-relaxed">
                 "WeddingSnap transformed my workflow completely. My clients love the gallery experience!"
               </p>
-              <p className="text-blue-300 text-xs mt-3 font-medium">— Marcus Chen, Professional Photographer</p>
+              <p className="text-white/30 text-xs mt-3 font-medium">— Marcus Chen, Professional Photographer</p>
             </div>
           </div>
 
-          {/* Decorative photos grid */}
+          {/* Monochrome photo grid */}
           <div className="grid grid-cols-4 gap-2">
-            {['bg-primary-400/30', 'bg-secondary-400/30', 'bg-pink-400/30', 'bg-amber-400/30'].map((c, i) => (
-              <div key={i} className={`${c} backdrop-blur-sm rounded-lg aspect-square`} />
+            {[0.06, 0.09, 0.07, 0.05].map((opacity, i) => (
+              <div
+                key={i}
+                className="rounded-lg aspect-square"
+                style={{ background: `rgba(255,255,255,${opacity})`, border: '1px solid rgba(255,255,255,0.06)' }}
+              />
             ))}
           </div>
         </div>
       </div>
 
-      {/* Right Panel - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-6 lg:p-12 bg-gray-50 dark:bg-dark-900 transition-colors duration-300">
+      {/* Right panel — login form */}
+      <div className="flex-1 flex items-center justify-center p-6 lg:p-12 bg-black">
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center">
               <FiCamera className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display font-bold text-gray-900 dark:text-white text-xl">WeddingSnap</span>
+            <span className="font-display font-bold text-white text-xl">WeddingSnap</span>
           </Link>
 
-          <div className={clsx('bg-white dark:bg-dark-700 rounded-2xl shadow-card dark:shadow-dark-card p-8 transition-colors duration-300', shake && 'animate-shake')}>
+          <div
+            className={clsx(
+              'bg-dark-600 border border-white/8 rounded-2xl shadow-dark-card p-8',
+              shake && 'animate-shake'
+            )}
+          >
             <div className="mb-8">
-              <h1 className="text-3xl font-display font-bold text-gray-900 dark:text-white mb-2">Welcome back</h1>
-              <p className="text-gray-500 dark:text-gray-400">Sign in to your account with OTP</p>
+              <h1 className="text-3xl font-display font-bold text-white mb-2">Welcome back</h1>
+              <p className="text-white/40">Sign in to your account with OTP</p>
             </div>
 
             {/* Role selection */}
@@ -132,42 +141,39 @@ export default function LoginPage() {
                     type="button"
                     onClick={() => setRole(r.value)}
                     className={clsx(
-                      'flex flex-col items-center p-3 rounded-xl border-2 text-center transition-all duration-200',
+                      'flex flex-col items-center p-3 rounded-xl border text-center transition-all duration-200',
                       role === r.value
-                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
-                        : 'border-gray-200 dark:border-dark-500 hover:border-gray-300 dark:hover:border-dark-400 text-gray-600 dark:text-gray-300'
+                        ? 'border-white/30 bg-white/10 text-white'
+                        : 'border-white/8 hover:border-white/20 text-white/45 hover:text-white/70'
                     )}
                   >
-                    <span className="text-2xl mb-1">{r.emoji}</span>
+                    <span className="text-xl mb-1">{r.emoji}</span>
                     <span className="text-xs font-semibold">{r.label}</span>
-                    <span className="text-xs text-gray-400 dark:text-gray-500 hidden md:block">{r.desc}</span>
+                    <span className="text-xs text-white/30 hidden md:block mt-0.5">{r.desc}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Contact input */}
               <div>
                 <label className="label">Phone or Email</label>
                 <div className="relative">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
-                    {isEmail ? <FiMail className="w-5 h-5" /> : <FiPhone className="w-5 h-5" />}
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30">
+                    {isEmail ? <FiMail className="w-4 h-4" /> : <FiPhone className="w-4 h-4" />}
                   </div>
                   <input
                     type="text"
                     value={contact}
                     onChange={(e) => { setContact(e.target.value); setError('') }}
                     placeholder="Enter phone or email"
-                    className={clsx(
-                      'input pl-10',
-                      error && 'border-red-400 focus:ring-red-300'
-                    )}
+                    className={clsx('input pl-10', error && 'input-error')}
                     autoComplete="off"
                   />
                 </div>
                 {error && (
-                  <p className="text-red-500 text-sm mt-1.5 flex items-center gap-1">
+                  <p className="text-red-400/90 text-xs mt-1.5 flex items-center gap-1">
                     <span>⚠</span> {error}
                   </p>
                 )}
@@ -176,7 +182,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-3 rounded-xl font-semibold text-base hover:from-primary-500 hover:to-secondary-500 transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md"
+                className="w-full bg-white text-black py-3 rounded-xl font-semibold text-base hover:bg-gray-100 transition-all hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-glow"
               >
                 {loading ? (
                   <><FiLoader className="animate-spin w-5 h-5" /> Sending OTP...</>
@@ -186,18 +192,19 @@ export default function LoginPage() {
               </button>
             </form>
 
-            <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
+            <p className="text-center text-sm text-white/30 mt-6">
               New here?{' '}
-              <Link to="/" className="text-primary-600 dark:text-primary-400 font-medium hover:underline">
+              <Link to="/" className="text-white/60 hover:text-white font-medium transition-colors">
                 Learn more about WeddingSnap
               </Link>
             </p>
           </div>
 
-          <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-6">
+          <p className="text-center text-xs text-white/20 mt-6">
             By continuing you agree to our{' '}
-            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-300 underline">Terms</a> and{' '}
-            <a href="#" className="hover:text-gray-600 dark:hover:text-gray-300 underline">Privacy Policy</a>
+            <a href="#" className="hover:text-white/40 underline transition-colors">Terms</a>{' '}
+            and{' '}
+            <a href="#" className="hover:text-white/40 underline transition-colors">Privacy Policy</a>
           </p>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { AnimatePresence } from 'framer-motion'
 import { AuthProvider } from './context/AuthContext'
@@ -34,12 +35,12 @@ import ProtectedRoute from './components/common/ProtectedRoute'
 
 function NotFoundPage() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
+    <div className="min-h-screen bg-dark-900 flex items-center justify-center">
       <div className="text-center">
-        <div className="text-8xl font-display font-bold gradient-text mb-4">404</div>
-        <h1 className="text-2xl font-semibold text-gray-800 mb-2">Page Not Found</h1>
-        <p className="text-text-muted mb-8">The page you're looking for doesn't exist.</p>
-        <a href="/" className="btn-primary">
+        <div className="text-8xl font-display font-bold text-white/10 mb-4">404</div>
+        <h1 className="text-2xl font-semibold text-white mb-2">Page Not Found</h1>
+        <p className="text-white/40 mb-8">The page you're looking for doesn't exist.</p>
+        <a href="/" className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium">
           Go Home
         </a>
       </div>
@@ -61,6 +62,47 @@ function App() {
 
 function AppRoutes() {
   const location = useLocation()
+
+  // Global scroll-reveal observer for all .reveal/* elements on any page
+  useEffect(() => {
+    const SELECTORS = '.reveal, .reveal-left, .reveal-right, .reveal-scale, .animate-on-scroll'
+
+    const observe = () => {
+      const elements = document.querySelectorAll(SELECTORS)
+      elements.forEach((el) => {
+        if (!el._revealObserver) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry, idx) => {
+                if (entry.isIntersecting) {
+                  // Stagger siblings at 60ms intervals based on DOM position
+                  const siblings = entry.target.parentElement
+                    ? Array.from(entry.target.parentElement.querySelectorAll(SELECTORS))
+                    : [entry.target]
+                  const delay = siblings.indexOf(entry.target) * 60
+                  setTimeout(() => {
+                    entry.target.classList.add('visible')
+                    entry.target.style.opacity = '1'
+                  }, delay)
+                  observer.unobserve(entry.target)
+                  el._revealObserver = null
+                }
+              })
+            },
+            { threshold: 0.06, rootMargin: '0px 0px -30px 0px' }
+          )
+          observer.observe(el)
+          el._revealObserver = observer
+        }
+      })
+    }
+
+    // Observe immediately + after short delay for dynamic content
+    observe()
+    const t = setTimeout(observe, 200)
+    return () => clearTimeout(t)
+  }, [location.pathname])
+
   return (
     <>
           <Toaster
@@ -68,23 +110,34 @@ function AppRoutes() {
             toastOptions={{
               duration: 4000,
               style: {
-                background: '#1E40AF',
-                color: '#fff',
+                background: '#1A1A1A',
+                color: '#FFFFFF',
                 borderRadius: '12px',
+                border: '1px solid rgba(255,255,255,0.08)',
                 fontFamily: 'Inter, sans-serif',
+                fontSize: '14px',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
               },
               success: {
                 style: {
-                  background: '#059669',
+                  background: '#111111',
+                  color: '#FFFFFF',
+                  border: '1px solid rgba(255,255,255,0.12)',
                 },
                 iconTheme: {
-                  primary: '#fff',
-                  secondary: '#059669',
+                  primary: '#FFFFFF',
+                  secondary: '#111111',
                 },
               },
               error: {
                 style: {
-                  background: '#DC2626',
+                  background: '#1A0A0A',
+                  color: '#FFFFFF',
+                  border: '1px solid rgba(220,80,80,0.25)',
+                },
+                iconTheme: {
+                  primary: '#ef4444',
+                  secondary: '#1A0A0A',
                 },
               },
             }}

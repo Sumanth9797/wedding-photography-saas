@@ -61,20 +61,20 @@ function AssignmentCard({ assignment }) {
           </div>
           <div className="w-full h-1.5 bg-gray-100 rounded-full">
             <div
-              className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-white/90 to-white/70 rounded-full transition-all duration-500"
               style={{ width: `${info.progress}%` }}
             />
           </div>
         </div>
 
         {status === 'COMPLETED' ? (
-          <div className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-purple-50 text-purple-600 text-sm font-medium">
+          <div className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/8 text-white/50 text-sm font-medium">
             <FiCheckCircle className="w-4 h-4" /> Completed
           </div>
         ) : (
           <Link
             to={`/editor/assignments/${assignment.eventId || assignment.id}`}
-            className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 text-white text-sm font-semibold hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01]"
+            className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white text-black text-sm font-semibold hover:bg-gray-100 transition-all hover:scale-[1.01]"
           >
             Start Editing <FiArrowRight className="w-4 h-4" />
           </Link>
@@ -130,8 +130,8 @@ export default function EditorDashboardPage() {
           <div className="grid grid-cols-3 gap-4 mb-8">
             {[
               { label: 'Total', value: assignments.length, color: 'text-gray-700', bg: 'bg-gray-50' },
-              { label: 'Active', value: activeCount, color: 'text-emerald-700', bg: 'bg-emerald-50' },
-              { label: 'Completed', value: completedCount, color: 'text-purple-700', bg: 'bg-purple-50' },
+              { label: 'Active', value: activeCount, color: 'text-white/65', bg: 'bg-white/8' },
+              { label: 'Completed', value: completedCount, color: 'text-white/65', bg: 'bg-white/8' },
             ].map((s, i) => (
               <div key={i} className={`${s.bg} rounded-2xl p-4 text-center`}>
                 <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
@@ -154,8 +154,8 @@ export default function EditorDashboardPage() {
                 className={clsx(
                   'px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all',
                   filter === tab.key
-                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-md'
-                    : 'bg-white text-gray-600 hover:bg-gray-50 shadow-soft'
+                    ? 'bg-white text-black shadow-md'
+                    : 'bg-white/6 text-white/50 hover:bg-white/10 hover:text-white border border-white/8'
                 )}
               >
                 {tab.label}

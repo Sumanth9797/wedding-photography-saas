@@ -93,9 +93,9 @@ export default function ReviewPage() {
                 <div key={photo.id || i} className={clsx('bg-white rounded-2xl overflow-hidden shadow-card transition-all duration-300', r.approved === true && 'ring-2 ring-emerald-400', r.approved === false && 'ring-2 ring-red-400')}>
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img src={photo.editedUrl || photo.url || photo.thumbnailUrl} alt="" className="w-full h-full object-cover" loading="lazy" />
-                    <div className="absolute top-2 left-2"><span className="bg-secondary-600/90 text-white text-xs px-2 py-0.5 rounded-full font-medium">Edited</span></div>
+                    <div className="absolute top-2 left-2"><span className="bg-white/8/90 text-white text-xs px-2 py-0.5 rounded-full font-medium">Edited</span></div>
                     {r.approved !== null && (
-                      <div className={clsx('absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center', r.approved ? 'bg-emerald-500' : 'bg-red-500')}>
+                      <div className={clsx('absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center', r.approved ? 'bg-white/8' : 'bg-red-500')}>
                         {r.approved ? <FiCheck className="w-3.5 h-3.5 text-white" /> : <FiX className="w-3.5 h-3.5 text-white" />}
                       </div>
                     )}
@@ -107,7 +107,7 @@ export default function ReviewPage() {
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <button onClick={() => setReview(photo.id, 'approved', true)}
-                        className={clsx('flex items-center justify-center gap-1.5 py-2 rounded-xl text-sm font-medium transition-all', r.approved === true ? 'bg-emerald-500 text-white' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100')}>
+                        className={clsx('flex items-center justify-center gap-1.5 py-2 rounded-xl text-sm font-medium transition-all', r.approved === true ? 'bg-white/8 text-white' : 'bg-white/8 text-white/65 hover:bg-white/8')}>
                         <FiCheck className="w-3.5 h-3.5" /> Approve
                       </button>
                       <button onClick={() => { setReview(photo.id, 'approved', false); setReview(photo.id, 'showComment', true) }}
@@ -131,7 +131,7 @@ export default function ReviewPage() {
         {!loading && photos.length > 0 && (
           <div className="mt-8 flex justify-center">
             <button onClick={handleSubmit} disabled={submitting || reviewedCount === 0}
-              className="flex items-center gap-2 bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-10 py-4 rounded-xl font-bold text-base hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.02] disabled:opacity-50 shadow-lg">
+              className="flex items-center gap-2 bg-gradient-to-r from-white to-white/80 text-white px-10 py-4 rounded-xl font-bold text-base hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.02] disabled:opacity-50 shadow-lg">
               {submitting ? <FiLoader className="animate-spin w-5 h-5" /> : <FiCheck className="w-5 h-5" />}
               Submit Final Approval ({approvedCount}/{photos.length} approved)
             </button>

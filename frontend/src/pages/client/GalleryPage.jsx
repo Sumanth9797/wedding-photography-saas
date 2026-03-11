@@ -61,7 +61,7 @@ export default function GalleryPage() {
               </div>
             )}
             <button onClick={handleSubmit} disabled={submitting || selectedIds.length === 0}
-              className="flex items-center gap-2 bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:from-primary-700 hover:to-secondary-700 transition-all disabled:opacity-50">
+              className="flex items-center gap-2 bg-gradient-to-r from-white to-white/80 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:from-primary-700 hover:to-secondary-700 transition-all disabled:opacity-50">
               {submitting ? 'Saving...' : <><FiArrowRight className="w-4 h-4" /> Confirm Selection</>}
             </button>
           </div>
@@ -73,7 +73,7 @@ export default function GalleryPage() {
           {TABS.map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
               className={clsx('px-4 py-2 rounded-xl text-sm font-medium transition-all',
-                activeTab === tab ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 shadow-soft border border-gray-100')}>
+                activeTab === tab ? 'bg-gradient-to-r from-white to-white/80 text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 shadow-soft border border-gray-100')}>
               {tab}{tab === 'Selected' && selectedIds.length > 0 && <span className="ml-2 bg-white/30 text-xs px-1.5 py-0.5 rounded-full">{selectedIds.length}</span>}
             </button>
           ))}
@@ -87,7 +87,7 @@ export default function GalleryPage() {
           <div className="text-center py-20">
             <FiImage className="w-16 h-16 text-gray-200 mx-auto mb-4" />
             <h3 className="text-gray-500 font-medium text-lg">{activeTab === 'Selected' ? 'No photos selected yet' : 'No photos in gallery'}</h3>
-            {activeTab === 'Selected' && <button onClick={() => setActiveTab('All')} className="mt-4 text-primary-600 text-sm hover:underline">Browse all photos</button>}
+            {activeTab === 'Selected' && <button onClick={() => setActiveTab('All')} className="mt-4 text-white/70 text-sm hover:underline">Browse all photos</button>}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -114,7 +114,7 @@ export default function GalleryPage() {
             <FiHeart className="w-5 h-5 text-accent-600" />
             <span className="font-semibold text-gray-900">{selectedIds.length} photos selected</span>
             <button onClick={handleSubmit} disabled={submitting}
-              className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:from-primary-700 hover:to-secondary-700 transition-all flex items-center gap-1.5">
+              className="bg-gradient-to-r from-white to-white/80 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:from-primary-700 hover:to-secondary-700 transition-all flex items-center gap-1.5">
               Confirm <FiArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

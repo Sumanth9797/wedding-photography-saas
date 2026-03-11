@@ -114,7 +114,7 @@ export default function CreateEventPage() {
             <div className="flex items-center justify-between relative">
               <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-100 z-0" />
               <div
-                className="absolute top-5 left-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 z-0 transition-all duration-500"
+                className="absolute top-5 left-0 h-0.5 bg-gradient-to-r from-white/90 to-white/70 z-0 transition-all duration-500"
                 style={{ width: `${((step - 1) / (STEPS.length - 1)) * 100}%` }}
               />
               {STEPS.map((s) => {
@@ -125,18 +125,18 @@ export default function CreateEventPage() {
                   <div key={s.id} className="relative z-10 flex flex-col items-center gap-2">
                     <div className={clsx(
                       'w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300',
-                      isCompleted ? 'bg-primary-600 border-primary-600' :
-                      isCurrent ? 'bg-white border-primary-600' :
+                      isCompleted ? 'bg-white/10 border-white/25' :
+                      isCurrent ? 'bg-white border-white/25' :
                       'bg-white border-gray-200'
                     )}>
                       {isCompleted
                         ? <FiCheck className="w-5 h-5 text-white" />
-                        : <Icon className={clsx('w-4 h-4', isCurrent ? 'text-primary-600' : 'text-gray-300')} />
+                        : <Icon className={clsx('w-4 h-4', isCurrent ? 'text-white/70' : 'text-gray-300')} />
                       }
                     </div>
                     <span className={clsx(
                       'text-xs font-medium hidden sm:block',
-                      isCurrent ? 'text-primary-600' : isCompleted ? 'text-gray-700' : 'text-gray-400'
+                      isCurrent ? 'text-white/70' : isCompleted ? 'text-gray-700' : 'text-gray-400'
                     )}>
                       {s.label}
                     </span>
@@ -203,7 +203,7 @@ export default function CreateEventPage() {
                     onClick={() => set('isPrivate', !form.isPrivate)}
                     className={clsx(
                       'relative w-12 h-6 rounded-full transition-colors duration-200',
-                      form.isPrivate ? 'bg-primary-600' : 'bg-gray-300'
+                      form.isPrivate ? 'bg-white/10' : 'bg-gray-300'
                     )}
                   >
                     <div className={clsx(
@@ -231,9 +231,9 @@ export default function CreateEventPage() {
                   <h2 className="text-xl font-bold text-gray-900 mb-1">Confirm & Create</h2>
                   <p className="text-gray-500 text-sm">Review your event details before creating</p>
                 </div>
-                <div className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-xl p-5 border border-primary-100">
+                <div className="bg-gradient-to-br from-white to-white/80 rounded-xl p-5 border border-white/25">
                   <h3 className="font-bold text-gray-900 text-lg mb-4 flex items-center gap-2">
-                    <FiCamera className="text-primary-600" /> {form.title}
+                    <FiCamera className="text-white/70" /> {form.title}
                   </h3>
                   <div className="grid sm:grid-cols-2 gap-4 text-sm">
                     <div>
@@ -282,7 +282,7 @@ export default function CreateEventPage() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold text-sm hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01]"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-white text-black font-semibold text-sm hover:bg-gray-100 transition-all hover:scale-[1.01]"
               >
                 Next <FiArrowRight className="w-4 h-4" />
               </button>

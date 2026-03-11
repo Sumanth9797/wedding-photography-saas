@@ -37,35 +37,42 @@ export default function Sidebar({ role }) {
   return (
     <>
       {/* Mobile overlay */}
-      <div className={clsx(
-        'fixed inset-0 bg-black/40 z-20 lg:hidden transition-opacity',
-        collapsed ? 'opacity-0 pointer-events-none' : 'opacity-100'
-      )} onClick={() => setCollapsed(true)} />
+      <div
+        className={clsx(
+          'fixed inset-0 bg-black/60 backdrop-blur-sm z-20 lg:hidden transition-opacity duration-300',
+          collapsed ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        )}
+        onClick={() => setCollapsed(true)}
+      />
 
       {/* Sidebar */}
-      <aside className={clsx(
-        'fixed top-0 left-0 h-full z-30 bg-white dark:bg-dark-800 border-r border-gray-100 dark:border-dark-600 shadow-soft',
-        'flex flex-col transition-all duration-300 ease-in-out',
-        collapsed ? 'w-16' : 'w-64',
-        // Mobile: hide when collapsed
-        'lg:translate-x-0',
-        collapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'
-      )}>
+      <aside
+        className={clsx(
+          'fixed top-0 left-0 h-full z-30',
+          'bg-dark-800 border-r border-white/5',
+          'flex flex-col transition-all duration-300 ease-spring',
+          collapsed ? 'w-16' : 'w-64',
+          'lg:translate-x-0',
+          collapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'
+        )}
+      >
         {/* Logo */}
-        <div className={clsx(
-          'flex items-center h-16 border-b border-gray-100 dark:border-dark-700 px-4',
-          collapsed ? 'justify-center' : 'gap-3'
-        )}>
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center flex-shrink-0">
+        <div
+          className={clsx(
+            'flex items-center h-16 border-b border-white/5 px-4',
+            collapsed ? 'justify-center' : 'gap-3'
+          )}
+        >
+          <div className="w-9 h-9 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center flex-shrink-0">
             <FiCamera className="w-5 h-5 text-white" />
           </div>
           {!collapsed && (
-            <span className="font-display font-bold text-gray-900 dark:text-white text-lg truncate">WeddingSnap</span>
+            <span className="font-display font-bold text-white text-lg truncate">WeddingSnap</span>
           )}
         </div>
 
         {/* Nav items */}
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
           {navItems.map((item) => {
             const Icon = item.icon
             return (
@@ -73,13 +80,15 @@ export default function Sidebar({ role }) {
                 key={item.path}
                 to={item.path}
                 end={item.exact}
-                className={({ isActive }) => clsx(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-200',
-                  isActive
-                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-md'
-                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-700 hover:text-primary-600 dark:hover:text-primary-400',
-                  collapsed && 'justify-center'
-                )}
+                className={({ isActive }) =>
+                  clsx(
+                    'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200',
+                    isActive
+                      ? 'bg-white text-black shadow-md'
+                      : 'text-white/50 hover:bg-white/6 hover:text-white',
+                    collapsed && 'justify-center'
+                  )
+                }
                 title={collapsed ? item.label : undefined}
               >
                 <Icon className={clsx('flex-shrink-0', collapsed ? 'w-5 h-5' : 'w-4 h-4')} />
@@ -90,22 +99,23 @@ export default function Sidebar({ role }) {
         </nav>
 
         {/* User + Logout */}
-        <div className="border-t border-gray-100 dark:border-dark-700 p-3 space-y-2">
+        <div className="border-t border-white/5 p-3 space-y-1">
           {!collapsed && user && (
-            <div className="flex items-center gap-3 px-3 py-2">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+            <div className="flex items-center gap-3 px-3 py-2.5">
+              <div className="w-8 h-8 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white text-xs font-semibold flex-shrink-0">
                 {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
               </div>
               <div className="overflow-hidden">
-                <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{user.name || 'User'}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user.role}</p>
+                <p className="text-sm font-medium text-white truncate">{user.name || 'User'}</p>
+                <p className="text-xs text-white/35 truncate">{user.role}</p>
               </div>
             </div>
           )}
           <button
             onClick={handleLogout}
             className={clsx(
-              'flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all',
+              'flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium',
+              'text-white/40 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200',
               collapsed && 'justify-center'
             )}
             title={collapsed ? 'Logout' : undefined}
@@ -118,11 +128,15 @@ export default function Sidebar({ role }) {
         {/* Collapse toggle (desktop only) */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="absolute -right-3 top-20 w-6 h-6 bg-white dark:bg-dark-700 border border-gray-200 dark:border-dark-500 rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hidden lg:flex"
+          className="absolute -right-3.5 top-20 w-7 h-7 bg-dark-600 border border-white/8 rounded-full flex items-center justify-center shadow-dark-card hover:bg-dark-500 transition-colors text-white/40 hover:text-white hidden lg:flex"
         >
-          {collapsed ? <FiChevronRight className="w-3 h-3" /> : <FiChevronLeft className="w-3 h-3" />}
+          {collapsed
+            ? <FiChevronRight className="w-3 h-3" />
+            : <FiChevronLeft className="w-3 h-3" />
+          }
         </button>
       </aside>
     </>
   )
 }
+
