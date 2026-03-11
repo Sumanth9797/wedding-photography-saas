@@ -94,18 +94,18 @@ export default function LandingPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-black font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-dark-950 font-sans overflow-x-hidden">
 
       {/* ── Navigation ── */}
       <nav className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center transition-all duration-500 ${
         scrolled
-          ? 'bg-black/85 backdrop-blur-xl border-b border-white/6'
+          ? 'bg-dark-950/90 backdrop-blur-xl border-b border-violet-900/20'
           : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-white/8 border border-white/12 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-600 flex items-center justify-center shadow-glow-sm">
               <FiCamera className="w-5 h-5 text-white" />
             </div>
             <span className="font-display font-bold text-white text-xl tracking-tight">WeddingSnap</span>
@@ -135,7 +135,7 @@ export default function LandingPage() {
             </Link>
             <Link
               to="/login"
-              className="bg-white text-black px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-100 transition-all hover:scale-[1.02] shadow-glow-sm"
+              className="bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] shadow-glow-sm"
             >
               Get Started
             </Link>
@@ -145,68 +145,76 @@ export default function LandingPage() {
 
       {/* ── Hero Section ── */}
       <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
-        {/* Dark gradient background */}
-        <div className="absolute inset-0 bg-black" />
+        {/* Deep midnight gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950" />
+
+        {/* Colorful ambient orbs */}
+        <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/6 w-80 h-80 bg-secondary-600/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '-1.5s' }} />
 
         {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-30"
+        <div className="absolute inset-0 opacity-20"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")`,
           }}
         />
 
-        {/* Ambient glow orbs */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-white/2 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
-
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center w-full py-24">
           {/* Left: Hero copy */}
           <div className="animate-fade-in-up">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 text-white/70 px-4 py-2 rounded-full text-sm font-medium mb-8">
-              <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse-soft" />
+            <div className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/25 text-primary-300 px-4 py-2 rounded-full text-sm font-medium mb-8">
+              <span className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-pulse-soft" />
               Trusted by 2,400+ photographers
             </div>
 
             <h1 className="text-5xl lg:text-7xl font-display font-bold text-white leading-[1.05] mb-6 tracking-tight">
               Built for{' '}
               <br />
-              <TypewriterText />
+              <span className="bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent">
+                <TypewriterText />
+              </span>
             </h1>
 
-            <p className="text-lg text-white/45 mb-10 leading-relaxed max-w-lg">
+            <p className="text-lg text-white/55 mb-10 leading-relaxed max-w-lg">
               WeddingSnap streamlines your entire wedding photography workflow — from shoot to delivery — in one elegant platform.
             </p>
 
             <div className="flex flex-wrap gap-4">
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 bg-white text-black px-8 py-4 rounded-xl font-semibold text-base hover:bg-gray-100 transition-all hover:scale-[1.02] shadow-glow"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-8 py-4 rounded-xl font-semibold text-base hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] shadow-glow"
               >
                 Start Free Trial <FiArrowRight className="w-4 h-4" />
               </Link>
               <button className="inline-flex items-center gap-3 border border-white/15 text-white px-8 py-4 rounded-xl font-semibold text-base hover:bg-white/5 hover:border-white/30 transition-all">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  <FiPlay className="w-3 h-3 text-white ml-0.5" />
+                <div className="w-8 h-8 rounded-full bg-primary-500/20 border border-primary-500/30 flex items-center justify-center">
+                  <FiPlay className="w-3 h-3 text-primary-400 ml-0.5" />
                 </div>
                 Watch Demo
               </button>
             </div>
 
             {/* Social proof */}
-            <div className="flex items-center gap-5 mt-10 pt-8 border-t border-white/6">
+            <div className="flex items-center gap-5 mt-10 pt-8 border-t border-violet-900/20">
               <div className="flex -space-x-2">
-                {['MC', 'SR', 'LK', 'PD'].map((initials, i) => (
+                {[
+                  { initials: 'MC', color: 'from-primary-500 to-secondary-600' },
+                  { initials: 'SR', color: 'from-secondary-600 to-secondary-800' },
+                  { initials: 'LK', color: 'from-accent-500 to-primary-500' },
+                  { initials: 'PD', color: 'from-secondary-500 to-primary-600' },
+                ].map((item, i) => (
                   <div
                     key={i}
-                    className="w-9 h-9 rounded-full border-2 border-white/15 bg-white/8 flex items-center justify-center text-white text-xs font-semibold"
+                    className={`w-9 h-9 rounded-full border-2 border-dark-950 bg-gradient-to-br ${item.color} flex items-center justify-center text-white text-xs font-semibold`}
                   >
-                    {initials}
+                    {item.initials}
                   </div>
                 ))}
               </div>
               <div>
-                <div className="flex text-white gap-0.5">
+                <div className="flex text-accent-400 gap-0.5">
                   {[...Array(5)].map((_, i) => (
                     <FiStar key={i} className="w-3.5 h-3.5 fill-current" />
                   ))}
@@ -220,20 +228,23 @@ export default function LandingPage() {
           <div className="hidden lg:flex justify-center items-center">
             <div className="relative animate-float">
               {/* Main card */}
-              <div className="bg-dark-600 border border-white/8 rounded-2xl p-6 w-80 shadow-dark-card-hover">
+              <div className="bg-dark-800 border border-violet-900/30 rounded-2xl p-6 w-80 shadow-glow-purple">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-white text-sm">Smith Wedding</h3>
-                  <span className="bg-white/10 text-white/70 border border-white/10 text-xs px-2 py-1 rounded-full font-medium">Active</span>
+                  <span className="bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 text-xs px-2 py-1 rounded-full font-medium">Active</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 mb-4">
-                  {[...Array(6)].map((_, i) => (
+                  {[
+                    'from-primary-500/20 to-secondary-600/20',
+                    'from-secondary-600/20 to-secondary-800/20',
+                    'from-accent-500/20 to-primary-500/20',
+                    'from-secondary-500/20 to-primary-600/20',
+                    'from-primary-500/15 to-accent-500/15',
+                    'from-secondary-600/15 to-primary-500/15',
+                  ].map((gradient, i) => (
                     <div
                       key={i}
-                      className="rounded-lg aspect-square"
-                      style={{
-                        background: `rgba(255,255,255,${0.04 + i * 0.015})`,
-                        border: '1px solid rgba(255,255,255,0.06)',
-                      }}
+                      className={`rounded-lg aspect-square bg-gradient-to-br ${gradient} border border-white/5`}
                     />
                   ))}
                 </div>
@@ -242,17 +253,17 @@ export default function LandingPage() {
                     <span className="text-white/40">Photos uploaded</span>
                     <span className="font-medium text-white/80">847 / 1200</span>
                   </div>
-                  <div className="w-full bg-white/5 rounded-full h-1.5">
-                    <div className="bg-white/60 h-1.5 rounded-full transition-all" style={{ width: '70%' }} />
+                  <div className="w-full bg-dark-600 rounded-full h-1.5">
+                    <div className="bg-gradient-to-r from-primary-500 to-secondary-600 h-1.5 rounded-full transition-all" style={{ width: '70%' }} />
                   </div>
                 </div>
               </div>
 
               {/* Floating badge top-right */}
-              <div className="absolute -top-4 -right-4 bg-dark-500 border border-white/8 rounded-xl p-3 shadow-dark-card animate-bounce-subtle">
+              <div className="absolute -top-4 -right-4 bg-dark-700 border border-emerald-500/25 rounded-xl p-3 shadow-dark-card animate-bounce-subtle">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
-                    <FiCheck className="w-3.5 h-3.5 text-white" />
+                  <div className="w-7 h-7 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                    <FiCheck className="w-3.5 h-3.5 text-emerald-400" />
                   </div>
                   <div>
                     <p className="text-xs text-white/40">Gallery Sent</p>
@@ -263,12 +274,12 @@ export default function LandingPage() {
 
               {/* Floating badge bottom-left */}
               <div
-                className="absolute -bottom-4 -left-4 bg-dark-500 border border-white/8 rounded-xl p-3 shadow-dark-card animate-bounce-subtle"
+                className="absolute -bottom-4 -left-4 bg-dark-700 border border-accent-500/25 rounded-xl p-3 shadow-dark-card animate-bounce-subtle"
                 style={{ animationDelay: '-1s' }}
               >
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
-                    <FiStar className="w-3.5 h-3.5 text-white" />
+                  <div className="w-7 h-7 rounded-full bg-accent-500/20 flex items-center justify-center">
+                    <FiStar className="w-3.5 h-3.5 text-accent-400" />
                   </div>
                   <div>
                     <p className="text-xs text-white/40">New Selection</p>
@@ -282,14 +293,14 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats Bar ── */}
-      <section className="bg-dark-600 border-y border-white/5 py-12">
+      <section className="bg-dark-800/50 border-y border-violet-900/20 py-12">
         <div className="max-w-5xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <StatCounter target={2400} suffix="+" label="Photographers" />
             <StatCounter target={180000} suffix="+" label="Photos Delivered" />
             <StatCounter target={4850} suffix="+" label="Happy Couples" />
             <div className="text-center">
-              <div className="text-3xl lg:text-4xl font-bold text-white mb-1">4.9★</div>
+              <div className="text-3xl lg:text-4xl font-bold text-accent-400 mb-1">4.9★</div>
               <div className="text-white/50 text-sm uppercase tracking-wider">Average Rating</div>
             </div>
           </div>
@@ -297,10 +308,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features Section ── */}
-      <section id="features" className="py-28 bg-black">
+      <section id="features" className="py-28 bg-dark-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={featuresRef} className="text-center mb-16 reveal">
-            <span className="text-white/35 font-medium text-xs uppercase tracking-[0.25em]">Features</span>
+            <span className="text-primary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Features</span>
             <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mt-3 mb-4 tracking-tight">
               Everything You Need to{' '}
               <span className="gradient-text-silver">Succeed</span>
@@ -313,14 +324,23 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {FEATURES.map((feature, i) => {
               const Icon = feature.icon
+              const iconColors = [
+                { bg: 'bg-primary-500/15', border: 'border-primary-500/20', text: 'text-primary-400' },
+                { bg: 'bg-secondary-600/15', border: 'border-secondary-600/20', text: 'text-secondary-400' },
+                { bg: 'bg-accent-500/15', border: 'border-accent-500/20', text: 'text-accent-400' },
+                { bg: 'bg-secondary-400/15', border: 'border-secondary-400/20', text: 'text-secondary-300' },
+                { bg: 'bg-accent-400/15', border: 'border-accent-400/20', text: 'text-accent-300' },
+                { bg: 'bg-primary-400/15', border: 'border-primary-400/20', text: 'text-primary-300' },
+              ]
+              const colors = iconColors[i % iconColors.length]
               return (
                 <div
                   key={i}
-                  className="reveal group p-6 rounded-2xl bg-dark-600 border border-white/5 hover:border-white/12 hover:bg-dark-500 hover:-translate-y-1 transition-all duration-300 cursor-default"
+                  className="reveal group p-6 rounded-2xl bg-dark-800 border border-violet-900/20 hover:border-violet-700/40 hover:bg-dark-700 hover:-translate-y-1 transition-all duration-300 cursor-default"
                   style={{ transitionDelay: `${i * 60}ms` }}
                 >
-                  <div className="w-11 h-11 rounded-xl bg-white/6 border border-white/8 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-colors">
-                    <Icon className="w-5 h-5 text-white/70" />
+                  <div className={`w-11 h-11 rounded-xl ${colors.bg} border ${colors.border} flex items-center justify-center mb-4 transition-colors`}>
+                    <Icon className={`w-5 h-5 ${colors.text}`} />
                   </div>
                   <h3 className="text-base font-semibold text-white mb-2">{feature.title}</h3>
                   <p className="text-white/40 text-sm leading-relaxed">{feature.description}</p>
@@ -332,10 +352,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── How It Works ── */}
-      <section id="how-it-works" className="py-28 bg-dark-700 border-y border-white/4">
+      <section id="how-it-works" className="py-28 bg-dark-900 border-y border-violet-900/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={stepsRef} className="text-center mb-16 reveal">
-            <span className="text-white/35 font-medium text-xs uppercase tracking-[0.25em]">Process</span>
+            <span className="text-secondary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Process</span>
             <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mt-3 mb-4 tracking-tight">
               How It <span className="gradient-text-white">Works</span>
             </h2>
@@ -346,19 +366,19 @@ export default function LandingPage() {
 
           <div className="grid md:grid-cols-3 gap-12 relative">
             {/* Connecting line */}
-            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-px bg-gradient-to-r from-primary-500/30 via-secondary-600/30 to-transparent" />
 
             {[
-              { step: 1, title: 'Create Event & Upload', desc: 'Create a wedding event, upload your photos, and assign editors — all from one dashboard.', icon: FiCamera },
-              { step: 2, title: 'Edit & Curate', desc: 'Your editor processes the photos while the couple selects their favorites from the gallery.', icon: FiEdit3 },
-              { step: 3, title: 'Deliver & Delight', desc: 'Send a beautiful private gallery link. Clients download their memories in full resolution.', icon: FiStar },
-            ].map(({ step, title, desc, icon: Icon }) => (
+              { step: 1, title: 'Create Event & Upload', desc: 'Create a wedding event, upload your photos, and assign editors — all from one dashboard.', icon: FiCamera, bg: 'bg-primary-500/10', border: 'border-primary-500/25', stepGrad: 'from-primary-500 to-primary-600' },
+              { step: 2, title: 'Edit & Curate', desc: 'Your editor processes the photos while the couple selects their favorites from the gallery.', icon: FiEdit3, bg: 'bg-secondary-600/10', border: 'border-secondary-600/25', stepGrad: 'from-secondary-600 to-secondary-700' },
+              { step: 3, title: 'Deliver & Delight', desc: 'Send a beautiful private gallery link. Clients download their memories in full resolution.', icon: FiStar, bg: 'bg-accent-500/10', border: 'border-accent-500/25', stepGrad: 'from-accent-500 to-accent-600' },
+            ].map(({ step, title, desc, icon: Icon, bg, border, stepGrad }) => (
               <div key={step} className="text-center reveal" style={{ transitionDelay: `${(step - 1) * 120}ms` }}>
                 <div className="relative inline-flex">
-                  <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-6">
-                    <Icon className="w-8 h-8 text-white/60" />
+                  <div className={`w-20 h-20 rounded-full ${bg} border ${border} flex items-center justify-center mx-auto mb-6`}>
+                    <Icon className="w-8 h-8 text-white/70" />
                   </div>
-                  <span className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-dark-400 border border-white/12 flex items-center justify-center text-xs font-bold text-white/80">
+                  <span className={`absolute -top-1 -right-1 w-7 h-7 rounded-full bg-gradient-to-br ${stepGrad} flex items-center justify-center text-xs font-bold text-white shadow-sm`}>
                     {step}
                   </span>
                 </div>
@@ -371,10 +391,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── Testimonials ── */}
-      <section className="py-28 bg-black">
+      <section className="py-28 bg-dark-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={testimonialsRef} className="text-center mb-16 reveal">
-            <span className="text-white/35 font-medium text-xs uppercase tracking-[0.25em]">Testimonials</span>
+            <span className="text-accent-400/70 font-medium text-xs uppercase tracking-[0.25em]">Testimonials</span>
             <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mt-3 mb-4 tracking-tight">
               Loved by <span className="gradient-text-silver">Thousands</span>
             </h2>
@@ -384,17 +404,21 @@ export default function LandingPage() {
             {TESTIMONIALS.map((t, i) => (
               <div
                 key={i}
-                className="reveal p-6 rounded-2xl bg-dark-600 border border-white/5 hover:border-white/12 hover:-translate-y-1 transition-all duration-300"
+                className="reveal p-6 rounded-2xl bg-dark-800 border border-violet-900/20 hover:border-violet-700/35 hover:-translate-y-1 transition-all duration-300"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <div className="flex text-white/70 mb-4 gap-0.5">
+                <div className="flex text-accent-400 mb-4 gap-0.5">
                   {[...Array(t.rating)].map((_, j) => (
                     <FiStar key={j} className="w-3.5 h-3.5 fill-current" />
                   ))}
                 </div>
                 <p className="text-white/55 text-sm leading-relaxed mb-6 italic">"{t.quote}"</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-white/8 border border-white/10 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
+                  <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${
+                    i === 0 ? 'from-primary-500 to-secondary-600' :
+                    i === 1 ? 'from-secondary-600 to-secondary-800' :
+                    'from-accent-500 to-primary-500'
+                  } flex items-center justify-center text-white text-sm font-semibold flex-shrink-0`}>
                     {t.initials}
                   </div>
                   <div>
@@ -409,10 +433,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── Pricing ── */}
-      <section id="pricing" className="py-28 bg-dark-700 border-t border-white/4">
+      <section id="pricing" className="py-28 bg-dark-900 border-t border-violet-900/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={pricingRef} className="text-center mb-16 reveal">
-            <span className="text-white/35 font-medium text-xs uppercase tracking-[0.25em]">Pricing</span>
+            <span className="text-secondary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Pricing</span>
             <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mt-3 mb-4 tracking-tight">
               Simple, <span className="gradient-text-white">Transparent</span> Pricing
             </h2>
@@ -425,33 +449,33 @@ export default function LandingPage() {
                 key={i}
                 className={`reveal relative rounded-2xl p-8 transition-all duration-300 ${
                   plan.highlighted
-                    ? 'bg-white text-black scale-[1.03] shadow-glow'
-                    : 'bg-dark-600 border border-white/8 hover:border-white/15 hover:-translate-y-1'
+                    ? 'bg-gradient-to-br from-primary-500 to-secondary-600 scale-[1.03] shadow-glow'
+                    : 'bg-dark-800 border border-violet-900/25 hover:border-violet-700/40 hover:-translate-y-1'
                 }`}
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
                 {plan.highlighted && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-1 rounded-full text-xs font-semibold tracking-wide border border-white/10">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-500 text-white px-4 py-1 rounded-full text-xs font-semibold tracking-wide shadow-glow-gold">
                     Most Popular
                   </div>
                 )}
-                <h3 className={`text-lg font-bold mb-1 ${plan.highlighted ? 'text-black' : 'text-white'}`}>
+                <h3 className="text-lg font-bold mb-1 text-white">
                   {plan.name}
                 </h3>
-                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-black/50' : 'text-white/35'}`}>
+                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-white/70' : 'text-white/35'}`}>
                   {plan.description}
                 </p>
                 <div className="flex items-baseline gap-1 mb-8">
-                  <span className={`text-4xl font-bold ${plan.highlighted ? 'text-black' : 'text-white'}`}>
+                  <span className="text-4xl font-bold text-white">
                     ₹{plan.price * USD_TO_INR_RATE}
                   </span>
-                  <span className={plan.highlighted ? 'text-black/40 text-sm' : 'text-white/35 text-sm'}>/mo</span>
+                  <span className={`text-sm ${plan.highlighted ? 'text-white/60' : 'text-white/35'}`}>/mo</span>
                 </div>
                 <ul className="space-y-2.5 mb-8">
                   {plan.features.map((f, j) => (
                     <li key={j} className="flex items-center gap-2">
-                      <FiCheck className={`w-4 h-4 flex-shrink-0 ${plan.highlighted ? 'text-black' : 'text-white/50'}`} />
-                      <span className={`text-sm ${plan.highlighted ? 'text-black/70' : 'text-white/50'}`}>{f}</span>
+                      <FiCheck className={`w-4 h-4 flex-shrink-0 ${plan.highlighted ? 'text-white' : 'text-primary-400'}`} />
+                      <span className={`text-sm ${plan.highlighted ? 'text-white/80' : 'text-white/50'}`}>{f}</span>
                     </li>
                   ))}
                 </ul>
@@ -459,8 +483,8 @@ export default function LandingPage() {
                   to="/login"
                   className={`block text-center px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:scale-[1.02] ${
                     plan.highlighted
-                      ? 'bg-black text-white hover:bg-gray-900'
-                      : 'bg-white/8 text-white border border-white/10 hover:bg-white/15'
+                      ? 'bg-white text-primary-600 hover:bg-gray-50'
+                      : 'bg-gradient-to-r from-primary-500/15 to-secondary-600/15 text-white border border-primary-500/30 hover:from-primary-500/25 hover:to-secondary-600/25'
                   }`}
                 >
                   {plan.cta}
@@ -472,20 +496,25 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="py-24 bg-black border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+      <section className="py-24 bg-dark-950 border-t border-violet-900/15 relative overflow-hidden">
+        {/* Background orbs */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-primary-500/8 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-secondary-600/8 rounded-full blur-3xl" />
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <div className="reveal">
             <h2 className="text-4xl lg:text-6xl font-display font-bold text-white mb-6 tracking-tight leading-tight">
               Ready to Transform
               <br />
-              Your Photography Business?
+              <span className="bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent">
+                Your Photography Business?
+              </span>
             </h2>
             <p className="text-lg text-white/40 mb-10">
               Join 2,400+ photographers who've already switched to WeddingSnap.
             </p>
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 bg-white text-black px-10 py-4 rounded-xl font-bold text-base hover:bg-gray-100 transition-all hover:scale-[1.02] shadow-glow"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-10 py-4 rounded-xl font-bold text-base hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] shadow-glow"
             >
               Start Your Free Trial <FiArrowRight className="w-4 h-4" />
             </Link>
@@ -495,12 +524,12 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="bg-dark-700 border-t border-white/5 py-12">
+      <footer className="bg-dark-900 border-t border-violet-900/15 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center">
-                <FiCamera className="w-4 h-4 text-white/70" />
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-600 flex items-center justify-center">
+                <FiCamera className="w-4 h-4 text-white" />
               </div>
               <span className="font-display font-bold text-white text-lg">WeddingSnap</span>
             </div>
@@ -513,8 +542,12 @@ export default function LandingPage() {
               <Link to="/login" className="text-white/35 hover:text-white transition-colors duration-200">Sign In</Link>
             </div>
             <div className="flex items-center gap-4">
-              {[FiInstagram, FiTwitter, FiFacebook].map((Icon, i) => (
-                <a key={i} href="#" className="text-white/30 hover:text-white transition-colors duration-200">
+              {[
+                { Icon: FiInstagram, color: 'hover:text-primary-400' },
+                { Icon: FiTwitter, color: 'hover:text-secondary-400' },
+                { Icon: FiFacebook, color: 'hover:text-secondary-300' },
+              ].map(({ Icon, color }, i) => (
+                <a key={i} href="#" className={`text-white/30 ${color} transition-colors duration-200`}>
                   <Icon className="w-4 h-4" />
                 </a>
               ))}
