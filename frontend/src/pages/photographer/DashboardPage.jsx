@@ -115,7 +115,7 @@ export default function DashboardPage() {
             <div className="lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold text-white">Recent Events</h2>
-                <Link to="/photographer/events" className="text-sm text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1">
+                <Link to="/photographer/events" className="text-sm text-white/70 dark:text-white/70 hover:underline flex items-center gap-1">
                   View all <FiArrowRight className="w-3 h-3" />
                 </Link>
               </div>

@@ -76,13 +76,13 @@ export default function GalleryAccessPage() {
       style={{ background: 'linear-gradient(135deg, #1E3A8A 0%, #4C1D95 50%, #1D4ED8 100%)' }}
     >
       {/* Background blobs */}
-      <div className="absolute top-20 left-20 w-80 h-80 bg-primary-600/20 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary-600/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
+      <div className="absolute top-20 left-20 w-80 h-80 bg-white/10/20 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-white/8/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
 
       <div className={clsx('relative w-full max-w-sm', shake && 'animate-shake')}>
         <div className="glass rounded-3xl p-8 border border-white/20 shadow-2xl text-center">
           {/* Icon */}
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center mx-auto mb-6 shadow-glow">
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-white to-white/80 flex items-center justify-center mx-auto mb-6 shadow-glow">
             <FiCamera className="w-10 h-10 text-white" />
           </div>
 
@@ -105,11 +105,11 @@ export default function GalleryAccessPage() {
                   onKeyDown={e => handleKeyDown(i, e)}
                   className={clsx(
                     'w-14 h-16 text-center text-2xl font-bold rounded-2xl border-2 outline-none transition-all duration-200',
-                    'focus:border-primary-500 focus:ring-2 focus:ring-primary-200',
+                    'focus:border-white/25 focus:ring-2 focus:ring-primary-200',
                     error
                       ? 'border-red-400 bg-red-50 text-red-600'
                       : digit
-                      ? 'border-primary-400 bg-primary-50 text-primary-700'
+                      ? 'border-white/25 bg-white/10 text-white/70'
                       : 'border-gray-200 bg-white text-gray-900'
                   )}
                 />
@@ -125,7 +125,7 @@ export default function GalleryAccessPage() {
             <button
               type="submit"
               disabled={loading || pin.join('').length < 4}
-              className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-3.5 rounded-xl font-semibold text-base hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md"
+              className="w-full bg-gradient-to-r from-white to-white/80 text-white py-3.5 rounded-xl font-semibold text-base hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md"
             >
               {loading ? (
                 <><FiLoader className="animate-spin w-5 h-5" /> Verifying...</>

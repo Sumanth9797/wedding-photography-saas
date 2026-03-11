@@ -185,12 +185,12 @@ export default function AssignmentDetailPage() {
                   className={clsx(
                     'border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all',
                     isDragActive
-                      ? 'border-secondary-500 bg-secondary-50'
+                      ? 'border-secondary-500 bg-white/8'
                       : 'border-gray-200 hover:border-secondary-400 hover:bg-gray-50'
                   )}
                 >
                   <input {...getInputProps()} />
-                  <FiUpload className={clsx('w-8 h-8 mx-auto mb-2', isDragActive ? 'text-secondary-500' : 'text-gray-300')} />
+                  <FiUpload className={clsx('w-8 h-8 mx-auto mb-2', isDragActive ? 'text-white/60' : 'text-gray-300')} />
                   <p className="font-medium text-gray-700 text-sm">
                     {isDragActive ? 'Drop here!' : 'Drag & drop edited photos'}
                   </p>
@@ -215,7 +215,7 @@ export default function AssignmentDetailPage() {
                             </div>
                           )}
                         </div>
-                        {f.done && <FiCheck className="w-4 h-4 text-emerald-500 flex-shrink-0" />}
+                        {f.done && <FiCheck className="w-4 h-4 text-white/65 flex-shrink-0" />}
                         {f.error && <FiX className="w-4 h-4 text-red-500 flex-shrink-0" />}
                         {!f.done && !f.error && <FiLoader className="w-4 h-4 text-gray-400 animate-spin flex-shrink-0" />}
                       </div>
@@ -275,7 +275,7 @@ export default function AssignmentDetailPage() {
                 </button>
               )}
               {(assignment.status === 'REVIEW' || assignment.status === 'COMPLETED') && (
-                <div className="flex items-center justify-center gap-2 py-3 rounded-xl bg-purple-50 text-purple-600 font-medium text-sm border border-purple-200">
+                <div className="flex items-center justify-center gap-2 py-3 rounded-xl bg-white/8 text-white/65 font-medium text-sm border border-white/15">
                   <FiCheckCircle className="w-4 h-4" /> Submitted for Review
                 </div>
               )}

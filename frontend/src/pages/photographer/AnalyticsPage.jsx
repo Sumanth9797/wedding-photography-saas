@@ -24,7 +24,7 @@ function AnimatedStat({ label, value, suffix = '', icon: Icon, color }) {
           <p className="text-3xl font-bold text-gray-900">
             {count.toLocaleString()}{suffix}
           </p>
-          <div className="flex items-center gap-1 text-emerald-600 text-xs mt-1">
+          <div className="flex items-center gap-1 text-white/65 text-xs mt-1">
             <FiArrowUp className="w-3 h-3" /> <span>12% vs last month</span>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default function AnalyticsPage() {
                     <tr key={i} className="hover:bg-gray-50 transition-colors">
                       <td className="py-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center text-primary-600 text-xs font-bold">
+                          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-white to-white/80 flex items-center justify-center text-white/70 text-xs font-bold">
                             {i + 1}
                           </div>
                           <span className="font-medium text-gray-900">{event.title}</span>

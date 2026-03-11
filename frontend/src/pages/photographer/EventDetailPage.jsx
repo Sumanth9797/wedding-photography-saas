@@ -113,7 +113,7 @@ export default function EventDetailPage() {
           </Link>
 
           {/* Header */}
-          <div className="bg-gradient-to-r from-white to-white/80 rounded-2xl p-6 mb-6 text-white">
+          <div className="bg-dark-500 border border-white/8 rounded-2xl p-6 mb-6 text-white">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <div className="flex items-center gap-3 mb-2">
@@ -160,12 +160,12 @@ export default function EventDetailPage() {
                 className={clsx(
                   'border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200',
                   isDragActive
-                    ? 'border-primary-500 bg-primary-50'
-                    : 'border-gray-200 hover:border-primary-400 hover:bg-gray-50'
+                    ? 'border-white/25 bg-white/10'
+                    : 'border-gray-200 hover:border-white/25 hover:bg-gray-50'
                 )}
               >
                 <input {...getInputProps()} />
-                <FiUpload className={clsx('w-10 h-10 mx-auto mb-3', isDragActive ? 'text-primary-500' : 'text-gray-300')} />
+                <FiUpload className={clsx('w-10 h-10 mx-auto mb-3', isDragActive ? 'text-white/70' : 'text-gray-300')} />
                 <p className="font-semibold text-gray-700 mb-1">
                   {isDragActive ? 'Drop photos here!' : 'Upload Photos'}
                 </p>
@@ -176,7 +176,7 @@ export default function EventDetailPage() {
                 <div className="bg-white rounded-xl p-4 shadow-card">
                   <div className="flex items-center justify-between text-sm mb-2">
                     <span className="text-gray-600 font-medium">Uploading...</span>
-                    <span className="text-primary-600 font-semibold">{uploadProgress}%</span>
+                    <span className="text-white/70 font-semibold">{uploadProgress}%</span>
                   </div>
                   <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
@@ -192,7 +192,7 @@ export default function EventDetailPage() {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-bold text-gray-900">Photos ({photos.length})</h2>
                   {selectedPhotos.length > 0 && (
-                    <span className="text-sm text-primary-600 font-medium">{selectedPhotos.length} selected</span>
+                    <span className="text-sm text-white/70 font-medium">{selectedPhotos.length} selected</span>
                   )}
                 </div>
 
@@ -283,7 +283,7 @@ export default function EventDetailPage() {
                   </div>
                   <button
                     onClick={copyGalleryLink}
-                    className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 transition-colors"
+                    className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-white/10 text-white text-sm font-medium hover:bg-white/10 transition-colors"
                   >
                     <FiSend className="w-4 h-4" /> Copy & Share
                   </button>
