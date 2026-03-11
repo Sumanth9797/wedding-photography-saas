@@ -83,6 +83,26 @@ public class EditorController {
         ));
     }
 
+    @GetMapping("/assignments/{eventId}")
+    public ResponseEntity<EditorDTOs.AssignmentResponse> getAssignment(
+            @PathVariable Long eventId, Authentication auth) {
+        Long editorId = (Long) auth.getPrincipal();
+        List<EventAssignment> assignments = editorService.getEditorAssignments(editorId);
+        return assignments.stream()
+            .filter(a -> a.getEvent().getId().equals(eventId))
+            .findFirst()
+            .map(a -> ResponseEntity.ok(toAssignmentResponse(a)))
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/assignments/{eventId}/complete")
+    public ResponseEntity<Map<String, Object>> markComplete(
+            @PathVariable Long eventId, Authentication auth) {
+        Long editorId = (Long) auth.getPrincipal();
+        editorService.markAssignmentComplete(eventId, editorId);
+        return ResponseEntity.ok(Map.of("message", "Assignment marked as complete"));
+    }
+
     private EditorDTOs.AssignmentResponse toAssignmentResponse(EventAssignment assignment) {
         EditorDTOs.AssignmentResponse response = new EditorDTOs.AssignmentResponse();
         response.setId(assignment.getId());

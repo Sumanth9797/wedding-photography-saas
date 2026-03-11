@@ -34,6 +34,9 @@ public class NotificationService {
     @Value("${app.gallery-url:http://localhost:3000/gallery}")
     private String galleryUrl;
 
+    @Value("${notification.console.enabled:false}")
+    private boolean consoleEnabled;
+
     public Notification createNotification(User user, Event event,
                                            Notification.NotificationType type, String message) {
         Notification notification = Notification.builder()
@@ -65,6 +68,10 @@ public class NotificationService {
 
     @Async
     public void sendEmail(String to, String subject, String body) {
+        if (consoleEnabled) {
+            logger.info("=== DEV EMAIL ===\nTo: {}\nSubject: {}\n{}\n================", to, subject, body);
+            return;
+        }
         if (mailSender == null) {
             logger.warn("Mail sender not configured. Skipping email to: {}", to);
             return;
@@ -84,13 +91,19 @@ public class NotificationService {
 
     @Async
     public void sendSms(String phone, String message) {
-        // Twilio SMS integration - logged when not configured
+        if (consoleEnabled) {
+            logger.info("=== DEV SMS ===\nTo: {}\n{}\n===============", phone, message);
+            return;
+        }
         logger.info("SMS to {}: {}", phone, message);
     }
 
     @Async
     public void sendWhatsApp(String phone, String message) {
-        // Twilio WhatsApp integration - logged when not configured
+        if (consoleEnabled) {
+            logger.info("=== DEV WHATSAPP ===\nTo: {}\n{}\n====================", phone, message);
+            return;
+        }
         logger.info("WhatsApp to {}: {}", phone, message);
     }
 

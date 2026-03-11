@@ -125,4 +125,26 @@ public class EditorService {
 
         return saved;
     }
+
+    public void markAssignmentComplete(Long eventId, Long editorId) {
+        User editor = userRepository.findById(editorId)
+            .orElseThrow(() -> new com.weddingphotography.exception.ResourceNotFoundException("User", editorId));
+        Event event = eventRepository.findById(eventId)
+            .orElseThrow(() -> new com.weddingphotography.exception.ResourceNotFoundException("Event", eventId));
+
+        EventAssignment assignment = assignmentRepository.findByEventAndEditor(event, editor)
+            .orElseThrow(() -> new com.weddingphotography.exception.UnauthorizedException("Not assigned to this event"));
+
+        assignment.setStatus(EventAssignment.AssignmentStatus.COMPLETED);
+        assignmentRepository.save(assignment);
+
+        event.setStatus(Event.EventStatus.REVIEW);
+        eventRepository.save(event);
+
+        notificationService.createNotification(
+            event.getPhotographer(), event,
+            Notification.NotificationType.EDITING_COMPLETE,
+            "Editing marked complete for: " + event.getTitle()
+        );
+    }
 }
