@@ -49,7 +49,37 @@ wedding-photography-saas/
     └── s3-structure.md          # AWS S3 layout
 ```
 
-## Quick Start
+## Quick Start (Local Dev — No AWS or MySQL Required)
+
+### Prerequisites
+- Java 17+, Maven 3.8+
+- Node.js 18+
+
+### Backend (Dev Profile — Uses H2 in-memory DB + local file storage)
+```bash
+cd backend
+mvn spring-boot:run -Dspring.profiles.active=dev
+# Runs at http://localhost:8080
+# H2 console at http://localhost:8080/h2-console
+# Demo seed data is created automatically
+```
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+# Runs at http://localhost:5173
+```
+
+### Demo Login (after starting backend with dev profile)
+- **Photographer**: `demo@photographer.com` → send OTP → check backend console for OTP code
+- **Editor**: `demo@editor.com` → send OTP → check backend console for OTP code
+- **Client Gallery**: http://localhost:5173/gallery/demo-gallery-token-001 → PIN: `1234`
+
+---
+
+## Full Setup (Production)
 
 ### Prerequisites
 - Java 17+, Maven 3.8+
@@ -79,7 +109,7 @@ mvn spring-boot:run
 cd frontend
 npm install
 npm run dev
-# Runs at http://localhost:3000
+# Runs at http://localhost:5173
 ```
 
 ### Flutter App

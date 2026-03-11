@@ -41,11 +41,15 @@ public class SecurityConfig {
                 // Public endpoints
                 .requestMatchers(HttpMethod.POST, "/api/auth/send-otp").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/verify-otp").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth/gallery-access/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/gallery/{token}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/gallery/{token}/verify").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/files/**").permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
                 // All other endpoints require authentication
                 .anyRequest().authenticated()
             )
+            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

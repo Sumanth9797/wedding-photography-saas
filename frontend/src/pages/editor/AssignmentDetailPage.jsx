@@ -9,7 +9,6 @@ import Sidebar from '../../components/common/Sidebar'
 import Navbar from '../../components/common/Navbar'
 import { SkeletonCard } from '../../components/common/LoadingSpinner'
 import { editorService } from '../../services/editorService'
-import { photoService } from '../../services/photoService'
 import { formatDate, formatFileSize, truncate } from '../../utils/helpers'
 import { clsx } from 'clsx'
 import toast from 'react-hot-toast'
@@ -26,7 +25,7 @@ export default function AssignmentDetailPage() {
   useEffect(() => {
     Promise.all([
       editorService.getAssignment(eventId),
-      photoService.list(eventId).catch(() => ({ data: [] })),
+      editorService.getAssignmentPhotos(eventId).catch(() => ({ data: [] })),
     ]).then(([assignRes, photosRes]) => {
       setAssignment(assignRes.data)
       setPhotos(photosRes.data || [])
@@ -78,7 +77,7 @@ export default function AssignmentDetailPage() {
   const handleMarkComplete = async () => {
     setMarking(true)
     try {
-      await editorService.markComplete?.(eventId)
+      await editorService.markComplete(eventId)
       toast.success('Assignment marked as complete!')
       setAssignment(prev => ({ ...prev, status: 'REVIEW' }))
     } catch {

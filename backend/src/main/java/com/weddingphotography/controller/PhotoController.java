@@ -34,6 +34,21 @@ public class PhotoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(photo));
     }
 
+    @PostMapping("/upload")
+    @PreAuthorize("hasRole('PHOTOGRAPHER')")
+    public ResponseEntity<List<PhotoDTOs.PhotoResponse>> uploadMultiple(
+            @PathVariable Long eventId,
+            @RequestParam("photos") List<MultipartFile> photos,
+            Authentication auth) throws IOException {
+        Long photographerId = (Long) auth.getPrincipal();
+        List<PhotoDTOs.PhotoResponse> responses = new java.util.ArrayList<>();
+        for (MultipartFile file : photos) {
+            Photo photo = photoService.uploadPreview(eventId, photographerId, file, null);
+            responses.add(toResponse(photo));
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(responses);
+    }
+
     @GetMapping
     public ResponseEntity<List<PhotoDTOs.PhotoResponse>> getPhotos(
             @PathVariable Long eventId, Authentication auth) {

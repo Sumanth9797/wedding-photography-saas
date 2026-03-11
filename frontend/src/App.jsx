@@ -1,7 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
+import { AnimatePresence } from 'framer-motion'
 import { AuthProvider } from './context/AuthContext'
 import { NotificationProvider } from './context/NotificationContext'
+import PageTransition from './components/common/PageTransition'
 
 // Landing Page
 import LandingPage from './pages/LandingPage'
@@ -50,6 +52,17 @@ function App() {
     <AuthProvider>
       <NotificationProvider>
         <Router>
+          <AppRoutes />
+        </Router>
+      </NotificationProvider>
+    </AuthProvider>
+  )
+}
+
+function AppRoutes() {
+  const location = useLocation()
+  return (
+    <>
           <Toaster
             position="top-right"
             toastOptions={{
@@ -76,83 +89,83 @@ function App() {
               },
             }}
           />
-          <Routes>
+          <AnimatePresence mode="wait" initial={false}>
+          <Routes location={location} key={location.pathname}>
             {/* Landing */}
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
 
             {/* Auth */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/verify-otp" element={<OtpVerifyPage />} />
+            <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
+            <Route path="/verify-otp" element={<PageTransition><OtpVerifyPage /></PageTransition>} />
             <Route path="/otp" element={<Navigate to="/verify-otp" replace />} />
 
             {/* Client Gallery (Public access) */}
-            <Route path="/gallery/:token" element={<GalleryAccessPage />} />
+            <Route path="/gallery/:token" element={<PageTransition><GalleryAccessPage /></PageTransition>} />
             <Route path="/gallery/:token/view" element={
               <ProtectedRoute>
-                <GalleryPage />
+                <PageTransition><GalleryPage /></PageTransition>
               </ProtectedRoute>
             } />
             <Route path="/gallery/:token/review" element={
               <ProtectedRoute>
-                <ReviewPage />
+                <PageTransition><ReviewPage /></PageTransition>
               </ProtectedRoute>
             } />
             <Route path="/gallery/:token/download" element={
               <ProtectedRoute>
-                <DownloadPage />
+                <PageTransition><DownloadPage /></PageTransition>
               </ProtectedRoute>
             } />
 
             {/* Photographer Routes */}
             <Route path="/photographer" element={
               <ProtectedRoute requiredRole="PHOTOGRAPHER">
-                <DashboardPage />
+                <PageTransition><DashboardPage /></PageTransition>
               </ProtectedRoute>
             } />
             <Route path="/photographer/events" element={
               <ProtectedRoute requiredRole="PHOTOGRAPHER">
-                <EventsPage />
+                <PageTransition><EventsPage /></PageTransition>
               </ProtectedRoute>
             } />
             <Route path="/photographer/events/new" element={
               <ProtectedRoute requiredRole="PHOTOGRAPHER">
-                <CreateEventPage />
+                <PageTransition><CreateEventPage /></PageTransition>
               </ProtectedRoute>
             } />
             <Route path="/photographer/events/:id" element={
               <ProtectedRoute requiredRole="PHOTOGRAPHER">
-                <EventDetailPage />
+                <PageTransition><EventDetailPage /></PageTransition>
               </ProtectedRoute>
             } />
             <Route path="/photographer/events/:id/photos" element={
               <ProtectedRoute requiredRole="PHOTOGRAPHER">
-                <PhotosPage />
+                <PageTransition><PhotosPage /></PageTransition>
               </ProtectedRoute>
             } />
             <Route path="/photographer/analytics" element={
               <ProtectedRoute requiredRole="PHOTOGRAPHER">
-                <AnalyticsPage />
+                <PageTransition><AnalyticsPage /></PageTransition>
               </ProtectedRoute>
             } />
 
             {/* Editor Routes */}
             <Route path="/editor" element={
               <ProtectedRoute requiredRole="EDITOR">
-                <EditorDashboardPage />
+                <PageTransition><EditorDashboardPage /></PageTransition>
               </ProtectedRoute>
             } />
             <Route path="/editor/assignments/:eventId" element={
               <ProtectedRoute requiredRole="EDITOR">
-                <AssignmentDetailPage />
+                <PageTransition><AssignmentDetailPage /></PageTransition>
               </ProtectedRoute>
             } />
 
             {/* 404 */}
-            <Route path="*" element={<NotFoundPage />} />
+            <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
           </Routes>
-        </Router>
-      </NotificationProvider>
-    </AuthProvider>
+          </AnimatePresence>
+    </>
   )
 }
 
