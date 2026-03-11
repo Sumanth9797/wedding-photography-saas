@@ -34,8 +34,9 @@ public class AnalyticsService {
         // Events by status
         Map<String, Long> eventsByStatus = new HashMap<>();
         for (Event.EventStatus status : Event.EventStatus.values()) {
+            // Cast int (List.size()) to Long explicitly
             eventsByStatus.put(status.name(),
-                eventRepository.findByPhotographerAndStatus(photographer, status).size());
+                (long) eventRepository.findByPhotographerAndStatus(photographer, status).size());
         }
         stats.put("eventsByStatus", eventsByStatus);
 
@@ -86,8 +87,9 @@ public class AnalyticsService {
 
         // Selections
         stats.put("totalSelections", selectionRepository.countByEvent(event));
+        // Cast int (List.size()) to Long explicitly
         stats.put("albumPhotos",
-            selectionRepository.findByEventAndIsAlbumPhoto(event, true).size());
+            (long) selectionRepository.findByEventAndIsAlbumPhoto(event, true).size());
 
         // Reviews
         Double avgRating = reviewRepository.avgRatingByEvent(event);
