@@ -50,17 +50,24 @@ export default {
           800: '#666666',
           900: '#333333',
         },
-        // Dark shades for backgrounds (pure premium black)
+        // "Obsidian" palette - Deeper and more professional than pure black
         dark: {
-          900: '#000000',
-          800: '#080808',
-          700: '#0D0D0D',
+          950: '#030303', // Primary background
+          900: '#0A0A0B', // Secondary sections
+          800: '#121214', // Card backgrounds
+          700: '#1C1C1F', // Input fields and borders
           600: '#141414',
           500: '#1A1A1A',
           400: '#222222',
           300: '#2A2A2A',
           200: '#333333',
           100: '#3D3D3D',
+        },
+        // "Intelligence" Accents - Signifies AI features
+        ai: {
+          glow: '#8B5CF6',     // Amethyst (AI processing)
+          electric: '#3B82F6', // Intelligence (Logic)
+          silver: '#E2E8F0',   // High-contrast text
         },
         background: '#000000',
         card: '#111111',
@@ -95,7 +102,8 @@ export default {
         'skeleton': 'skeletonWave 1.6s ease-in-out infinite',
         // Motion
         'float': 'float 6s ease-in-out infinite',
-        'float-slow': 'float 9s ease-in-out infinite',
+        'ai-pulse': 'aiPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float-slow': 'float 8s ease-in-out infinite',
         'float-delayed': 'float 6s ease-in-out 2s infinite',
         'bounce-subtle': 'bounceSubtle 2s ease-in-out infinite',
         'bounce-subtle-delayed': 'bounceSubtle 2s ease-in-out 0.4s infinite',
@@ -121,6 +129,10 @@ export default {
         'stagger-5': 'fadeInUp 0.7s ease-out 0.5s forwards',
       },
       keyframes: {
+        aiPulse: {
+          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+          '50%': { opacity: '0.8', transform: 'scale(1.05)', filter: 'blur(8px)' },
+        },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
@@ -223,6 +235,10 @@ export default {
         },
       },
       boxShadow: {
+        // Glowing shadows for AI-powered components
+        'ai-purple': '0 0 25px -5px rgba(139, 92, 246, 0.3)',
+        'ai-blue': '0 0 25px -5px rgba(59, 130, 246, 0.3)',
+        'premium-card': '0 20px 50px -12px rgba(0, 0, 0, 0.8)',
         'soft': '0 2px 15px rgba(0,0,0,0.4)',
         'card': '0 4px 24px rgba(0,0,0,0.5)',
         'card-hover': '0 20px 60px rgba(0,0,0,0.7)',
