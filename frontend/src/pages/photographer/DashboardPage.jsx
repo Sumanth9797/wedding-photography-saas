@@ -31,13 +31,13 @@ const STATUS_PROGRESS = {
 function StatCard({ icon: Icon, label, value, change, color, loading }) {
   if (loading) return <SkeletonCard className="h-28" />
   return (
-    <div className="bg-white rounded-2xl shadow-card p-5 hover:shadow-card-hover transition-shadow">
+    <div className="bg-white dark:bg-dark-700 rounded-2xl shadow-card dark:shadow-dark-card p-5 hover:shadow-card-hover dark:hover:shadow-dark-card-hover transition-shadow border border-gray-100 dark:border-dark-500">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm text-gray-500 mb-1">{label}</p>
-          <p className="text-3xl font-bold text-gray-900">{value}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{label}</p>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">{value}</p>
           {change !== undefined && (
-            <p className={clsx('text-xs mt-1 flex items-center gap-1', change >= 0 ? 'text-emerald-600' : 'text-red-500')}>
+            <p className={clsx('text-xs mt-1 flex items-center gap-1', change >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500 dark:text-red-400')}>
               <FiTrendingUp className="w-3 h-3" />
               {change >= 0 ? '+' : ''}{change}% this month
             </p>
@@ -79,7 +79,7 @@ export default function DashboardPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50 dark:bg-dark-900 transition-colors duration-300">
       <Sidebar role="PHOTOGRAPHER" />
       <Navbar title="Dashboard" />
 
@@ -114,8 +114,8 @@ export default function DashboardPage() {
             {/* Recent Events (2/3 width) */}
             <div className="lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-gray-900">Recent Events</h2>
-                <Link to="/photographer/events" className="text-sm text-primary-600 hover:underline flex items-center gap-1">
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white">Recent Events</h2>
+                <Link to="/photographer/events" className="text-sm text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1">
                   View all <FiArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -125,34 +125,34 @@ export default function DashboardPage() {
                   {[1, 2, 3].map(i => <SkeletonCard key={i} className="h-24" />)}
                 </div>
               ) : recentEvents.length === 0 ? (
-                <div className="bg-white rounded-2xl shadow-card p-12 text-center">
-                  <FiCalendar className="w-12 h-12 text-gray-200 mx-auto mb-3" />
-                  <h3 className="font-semibold text-gray-500 mb-1">No events yet</h3>
-                  <p className="text-sm text-gray-400 mb-4">Create your first event to get started</p>
+                <div className="bg-white dark:bg-dark-700 rounded-2xl shadow-card dark:shadow-dark-card p-12 text-center border border-gray-100 dark:border-dark-500">
+                  <FiCalendar className="w-12 h-12 text-gray-200 dark:text-dark-500 mx-auto mb-3" />
+                  <h3 className="font-semibold text-gray-500 dark:text-gray-400 mb-1">No events yet</h3>
+                  <p className="text-sm text-gray-400 dark:text-gray-500 mb-4">Create your first event to get started</p>
                   <Link to="/photographer/events/new">
                     <button className="btn-primary text-sm px-4 py-2">Create Event</button>
                   </Link>
                 </div>
               ) : (
-                <div className="bg-white rounded-2xl shadow-card overflow-hidden">
+                <div className="bg-white dark:bg-dark-700 rounded-2xl shadow-card dark:shadow-dark-card overflow-hidden border border-gray-100 dark:border-dark-500">
                   <table className="w-full">
-                    <thead className="bg-gray-50 border-b border-gray-100">
+                    <thead className="bg-gray-50 dark:bg-dark-800 border-b border-gray-100 dark:border-dark-600">
                       <tr>
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3">Event</th>
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3 hidden md:table-cell">Date</th>
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3">Status</th>
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3 hidden lg:table-cell">Progress</th>
+                        <th className="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-5 py-3">Event</th>
+                        <th className="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-5 py-3 hidden md:table-cell">Date</th>
+                        <th className="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-5 py-3">Status</th>
+                        <th className="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-5 py-3 hidden lg:table-cell">Progress</th>
                         <th className="px-5 py-3" />
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-50">
+                    <tbody className="divide-y divide-gray-50 dark:divide-dark-600">
                       {recentEvents.map((event) => (
-                        <tr key={event.id} className="hover:bg-gray-50 transition-colors">
+                        <tr key={event.id} className="hover:bg-gray-50 dark:hover:bg-dark-600 transition-colors">
                           <td className="px-5 py-4">
-                            <p className="font-semibold text-gray-900 text-sm">{event.title}</p>
-                            <p className="text-xs text-gray-400">{event.photoCount || 0} photos</p>
+                            <p className="font-semibold text-gray-900 dark:text-white text-sm">{event.title}</p>
+                            <p className="text-xs text-gray-400 dark:text-gray-500">{event.photoCount || 0} photos</p>
                           </td>
-                          <td className="px-5 py-4 text-sm text-gray-500 hidden md:table-cell">
+                          <td className="px-5 py-4 text-sm text-gray-500 dark:text-gray-400 hidden md:table-cell">
                             {event.eventDate ? formatDate(event.eventDate) : 'TBD'}
                           </td>
                           <td className="px-5 py-4">
@@ -162,19 +162,19 @@ export default function DashboardPage() {
                           </td>
                           <td className="px-5 py-4 hidden lg:table-cell">
                             <div className="w-24">
-                              <div className="w-full h-1.5 bg-gray-100 rounded-full">
+                              <div className="w-full h-1.5 bg-gray-100 dark:bg-dark-600 rounded-full">
                                 <div
                                   className="h-full rounded-full bg-gradient-to-r from-primary-500 to-secondary-500"
                                   style={{ width: `${STATUS_PROGRESS[event.status] || 10}%` }}
                                 />
                               </div>
-                              <p className="text-xs text-gray-400 mt-1">{STATUS_PROGRESS[event.status] || 10}%</p>
+                              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{STATUS_PROGRESS[event.status] || 10}%</p>
                             </div>
                           </td>
                           <td className="px-5 py-4">
                             <Link
                               to={`/photographer/events/${event.id}`}
-                              className="p-1.5 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
+                              className="p-1.5 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
                             >
                               <FiEye className="w-4 h-4" />
                             </Link>
@@ -189,33 +189,33 @@ export default function DashboardPage() {
 
             {/* Quick Actions (1/3 width) */}
             <div>
-              <h2 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h2>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
               <div className="space-y-3">
                 {[
-                  { icon: FiPlus, label: 'Create New Event', desc: 'Start a new wedding event', to: '/photographer/events/new', color: 'bg-primary-50 text-primary-600' },
-                  { icon: FiCalendar, label: 'View All Events', desc: 'Manage your events', to: '/photographer/events', color: 'bg-secondary-50 text-secondary-600' },
-                  { icon: FiTrendingUp, label: 'Analytics', desc: 'View performance stats', to: '/photographer/analytics', color: 'bg-emerald-50 text-emerald-600' },
+                  { icon: FiPlus, label: 'Create New Event', desc: 'Start a new wedding event', to: '/photographer/events/new', color: 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400' },
+                  { icon: FiCalendar, label: 'View All Events', desc: 'Manage your events', to: '/photographer/events', color: 'bg-secondary-50 dark:bg-secondary-900/20 text-secondary-600 dark:text-secondary-400' },
+                  { icon: FiTrendingUp, label: 'Analytics', desc: 'View performance stats', to: '/photographer/analytics', color: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400' },
                 ].map((action) => (
                   <Link
                     key={action.to}
                     to={action.to}
-                    className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-soft hover:shadow-card transition-all hover:-translate-y-0.5"
+                    className="flex items-center gap-4 p-4 bg-white dark:bg-dark-700 rounded-xl shadow-soft dark:shadow-dark-card hover:shadow-card dark:hover:shadow-dark-card-hover transition-all hover:-translate-y-0.5 border border-gray-100 dark:border-dark-500"
                   >
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${action.color}`}>
                       <action.icon className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900 text-sm">{action.label}</p>
-                      <p className="text-xs text-gray-400">{action.desc}</p>
+                      <p className="font-semibold text-gray-900 dark:text-white text-sm">{action.label}</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500">{action.desc}</p>
                     </div>
-                    <FiArrowRight className="w-4 h-4 text-gray-300 ml-auto" />
+                    <FiArrowRight className="w-4 h-4 text-gray-300 dark:text-gray-600 ml-auto" />
                   </Link>
                 ))}
               </div>
 
               {/* Recent activity placeholder */}
-              <div className="mt-6 bg-white rounded-2xl shadow-card p-5">
-                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Recent Activity</h3>
+              <div className="mt-6 bg-white dark:bg-dark-700 rounded-2xl shadow-card dark:shadow-dark-card p-5 border border-gray-100 dark:border-dark-500">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-3 text-sm">Recent Activity</h3>
                 <div className="space-y-3">
                   {[
                     { text: 'Gallery link sent', time: '2m ago', dot: 'bg-emerald-500' },
@@ -224,8 +224,8 @@ export default function DashboardPage() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <div className={`w-2 h-2 rounded-full flex-shrink-0 ${item.dot}`} />
-                      <span className="text-sm text-gray-600 flex-1">{item.text}</span>
-                      <span className="text-xs text-gray-400">{item.time}</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-300 flex-1">{item.text}</span>
+                      <span className="text-xs text-gray-400 dark:text-gray-500">{item.time}</span>
                     </div>
                   ))}
                 </div>
