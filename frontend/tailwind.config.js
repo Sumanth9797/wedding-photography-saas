@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -46,6 +47,15 @@ export default {
           800: '#854D0E',
           900: '#713F12',
         },
+        dark: {
+          900: '#0A0A0A',
+          800: '#111111',
+          700: '#1A1A1A',
+          600: '#222222',
+          500: '#2A2A2A',
+          400: '#333333',
+          300: '#444444',
+        },
         background: '#F9FAFB',
         card: '#FFFFFF',
         'text-muted': '#6B7280',
@@ -54,33 +64,53 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Playfair Display', 'Georgia', 'serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       animation: {
-        'fade-in': 'fadeIn 0.6s ease-out',
-        'slide-up': 'slideUp 0.6s ease-out',
+        'fade-in': 'fadeIn 0.6s ease-out forwards',
+        'fade-in-up': 'fadeInUp 0.7s ease-out forwards',
+        'slide-up': 'slideUp 0.6s ease-out forwards',
         'slide-in': 'slideIn 0.5s ease-out',
-        'scale-in': 'scaleIn 0.4s ease-out',
-        'shimmer': 'shimmer 2s infinite',
+        'slide-in-left': 'slideInLeft 0.5s ease-out forwards',
+        'slide-in-right': 'slideInRight 0.5s ease-out forwards',
+        'scale-in': 'scaleIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards',
+        'shimmer': 'shimmer 2.5s linear infinite',
         'float': 'float 6s ease-in-out infinite',
+        'float-delayed': 'float 6s ease-in-out 2s infinite',
         'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-        'spin-slow': 'spin 3s linear infinite',
+        'spin-slow': 'spin 8s linear infinite',
         'bounce-subtle': 'bounceSubtle 2s ease-in-out infinite',
+        'gradient-shift': 'gradientShift 4s ease infinite',
+        'blink': 'blink 1s infinite',
+        'glow-pulse': 'glowPulse 3s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(30px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(40px)' },
+          '0%': { opacity: '0', transform: 'translateY(50px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         slideIn: {
           '0%': { opacity: '0', transform: 'translateX(-20px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
+        slideInLeft: {
+          '0%': { opacity: '0', transform: 'translateX(-30px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideInRight: {
+          '0%': { opacity: '0', transform: 'translateX(30px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
         scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.9)' },
+          '0%': { opacity: '0', transform: 'scale(0.8)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
         shimmer: {
@@ -92,22 +122,37 @@ export default {
           '50%': { transform: 'translateY(-20px)' },
         },
         pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(37, 99, 235, 0.4)' },
-          '50%': { boxShadow: '0 0 40px rgba(37, 99, 235, 0.8)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(37,99,235,0.3)' },
+          '50%': { boxShadow: '0 0 60px rgba(124,58,237,0.6)' },
         },
         bounceSubtle: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-5px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        gradientShift: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        blink: {
+          '0%, 50%': { opacity: '1' },
+          '51%, 100%': { opacity: '0' },
+        },
+        glowPulse: {
+          '0%, 100%': { opacity: '0.5' },
+          '50%': { opacity: '1' },
         },
       },
       boxShadow: {
-        'soft': '0 2px 15px rgba(0, 0, 0, 0.06)',
-        'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
-        'card-hover': '0 12px 40px rgba(0, 0, 0, 0.15)',
-        'glow': '0 0 30px rgba(37, 99, 235, 0.3)',
-        'glow-purple': '0 0 30px rgba(124, 58, 237, 0.3)',
-        'glow-gold': '0 0 30px rgba(212, 175, 55, 0.3)',
-        'glass': '0 8px 32px rgba(0, 0, 0, 0.12)',
+        'soft': '0 2px 15px rgba(0,0,0,0.06)',
+        'card': '0 4px 20px rgba(0,0,0,0.08)',
+        'card-hover': '0 20px 60px rgba(0,0,0,0.15)',
+        'glow': '0 0 40px rgba(37,99,235,0.4)',
+        'glow-purple': '0 0 40px rgba(124,58,237,0.4)',
+        'glow-gold': '0 0 40px rgba(212,175,55,0.4)',
+        'dark-card': '0 4px 20px rgba(0,0,0,0.4)',
+        'dark-card-hover': '0 20px 60px rgba(0,0,0,0.6)',
+        'glass': '0 8px 32px rgba(0,0,0,0.12)',
+        'inner-glow': 'inset 0 0 30px rgba(37,99,235,0.1)',
       },
       backdropBlur: {
         xs: '2px',

@@ -62,15 +62,13 @@ export default function CreateEventPage() {
     try {
       const payload = {
         title: form.title,
-        eventDate: form.eventDate,
-        location: form.location,
+        weddingDate: form.eventDate,
+        venue: form.location,
         description: form.description,
         brideName: form.brideName,
+        brideEmail: form.clientEmail,
+        bridePhone: form.clientPhone,
         groomName: form.groomName,
-        clientEmail: form.clientEmail,
-        clientPhone: form.clientPhone,
-        isPrivate: form.isPrivate,
-        pin: form.isPrivate ? form.pin : undefined,
       }
       const res = await eventService.create(payload)
       toast.success('Event created successfully!')

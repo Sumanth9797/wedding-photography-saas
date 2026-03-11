@@ -14,6 +14,10 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.UUID;
 
@@ -22,8 +26,17 @@ public class S3Service {
 
     private static final Logger logger = LoggerFactory.getLogger(S3Service.class);
 
-    @Autowired private S3Client s3Client;
-    @Autowired private S3Presigner s3Presigner;
+    @Autowired(required = false)
+    private S3Client s3Client;
+
+    @Autowired(required = false)
+    private S3Presigner s3Presigner;
+
+    @Value("${storage.local.enabled:false}")
+    private boolean localEnabled;
+
+    @Value("${storage.local.path:./uploads}")
+    private String localStoragePath;
 
     @Value("${aws.s3.bucket-name:wedding-photography-bucket}")
     private String bucketName;
@@ -34,12 +47,24 @@ public class S3Service {
     @Value("${aws.s3.presigned-url-expiry-minutes:60}")
     private int presignedUrlExpiry;
 
+    @Value("${app.base-url:http://localhost:8080}")
+    private String baseUrl;
+
     /**
-     * Upload a file to S3 and return the S3 key.
+     * Upload a file and return a storage key.
+     * Uses local filesystem when storage.local.enabled=true, otherwise S3.
      */
     public String uploadFile(MultipartFile file, String keyPrefix) throws IOException {
         String extension = getFileExtension(file.getOriginalFilename());
         String key = keyPrefix + "/" + UUID.randomUUID() + extension;
+
+        if (localEnabled) {
+            Path filePath = Paths.get(localStoragePath, key);
+            Files.createDirectories(filePath.getParent());
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            logger.info("Saved file locally: {}", filePath);
+            return key;
+        }
 
         PutObjectRequest putRequest = PutObjectRequest.builder()
             .bucket(bucketName)
@@ -57,6 +82,10 @@ public class S3Service {
      * Generate a pre-signed URL for direct client upload.
      */
     public String generatePresignedUploadUrl(String key, String contentType) {
+        if (localEnabled) {
+            return baseUrl + "/api/files/" + key;
+        }
+
         PutObjectRequest putRequest = PutObjectRequest.builder()
             .bucket(bucketName)
             .key(key)
@@ -72,9 +101,14 @@ public class S3Service {
     }
 
     /**
-     * Generate a pre-signed download URL.
+     * Generate a download URL.
+     * Returns local serve URL when storage.local.enabled=true, otherwise S3 presigned URL.
      */
     public String generatePresignedDownloadUrl(String key) {
+        if (localEnabled) {
+            return baseUrl + "/api/files/" + key;
+        }
+
         if (cloudfrontDomain != null && !cloudfrontDomain.isEmpty()) {
             return "https://" + cloudfrontDomain + "/" + key;
         }
@@ -93,9 +127,20 @@ public class S3Service {
     }
 
     /**
-     * Delete a file from S3.
+     * Delete a file from storage.
      */
     public void deleteFile(String key) {
+        if (localEnabled) {
+            try {
+                Path filePath = Paths.get(localStoragePath, key);
+                Files.deleteIfExists(filePath);
+                logger.info("Deleted local file: {}", filePath);
+            } catch (IOException e) {
+                logger.error("Failed to delete local file: {}", key, e);
+            }
+            return;
+        }
+
         try {
             DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
                 .bucket(bucketName)
@@ -108,32 +153,31 @@ public class S3Service {
         }
     }
 
-    /**
-     * Build event preview S3 key path.
-     */
     public String buildPreviewKey(Long eventId, Long photoId) {
         return "events/" + eventId + "/previews/" + photoId + "_preview.jpg";
     }
 
-    /**
-     * Build event thumbnail S3 key path.
-     */
+    /** Build event thumbnail storage key path. */
     public String buildThumbnailKey(Long eventId, Long photoId) {
         return "events/" + eventId + "/previews/" + photoId + "_thumb.jpg";
     }
 
-    /**
-     * Build edited photo S3 key path.
-     */
+    /** Build edited photo storage key path. */
     public String buildEditedKey(Long eventId, Long photoId) {
         return "events/" + eventId + "/edited/" + photoId + "_edited.jpg";
     }
 
-    /**
-     * Build album preview S3 key path.
-     */
+    /** Build album preview storage key path. */
     public String buildAlbumKey(Long eventId, String filename) {
         return "events/" + eventId + "/album/" + filename;
+    }
+
+    public boolean isLocalEnabled() {
+        return localEnabled;
+    }
+
+    public String getLocalStoragePath() {
+        return localStoragePath;
     }
 
     private String getFileExtension(String filename) {

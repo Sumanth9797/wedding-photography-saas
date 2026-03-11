@@ -63,6 +63,7 @@ public class AuthService {
         }
 
         logger.info("OTP sent to: {}", contact);
+        logger.info(">>> DEV: OTP for {} is: {} <<<", contact, otp);
     }
 
     /**
@@ -101,8 +102,10 @@ public class AuthService {
             throw new IllegalArgumentException("Invalid PIN");
         }
 
-        // Find or create client user based on bride/groom email
-        String clientEmail = event.getBrideEmail() != null ? event.getBrideEmail() : event.getGroomEmail();
+        // Find or create client user based on bride/groom email or create anonymous client
+        String clientEmail = event.getBrideEmail() != null ? event.getBrideEmail() :
+                             event.getGroomEmail() != null ? event.getGroomEmail() :
+                             "client-" + event.getId() + "@gallery.local";
         User client = userRepository.findByEmailOrPhone(clientEmail, clientEmail)
             .orElseGet(() -> {
                 User newClient = User.builder()

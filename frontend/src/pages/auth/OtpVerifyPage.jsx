@@ -124,19 +124,19 @@ export default function OtpVerifyPage() {
           {success ? (
             /* Success state */
             <div className="text-center py-4">
-              <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4 animate-scale-in">
-                <FiCheck className="w-10 h-10 text-emerald-600" />
+              <div className="w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mx-auto mb-4 animate-scale-in">
+                <FiCheck className="w-10 h-10 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Verified!</h2>
-              <p className="text-gray-500">Redirecting you now...</p>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Verified!</h2>
+              <p className="text-gray-500 dark:text-gray-400">Redirecting you now...</p>
             </div>
           ) : (
             <>
               <div className="text-center mb-8">
-                <h1 className="text-2xl font-display font-bold text-gray-900 mb-2">Enter Verification Code</h1>
-                <p className="text-gray-500 text-sm">
+                <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-2">Enter Verification Code</h1>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">
                   We sent a 6-digit code to{' '}
-                  <span className="font-semibold text-gray-800">{maskedContact}</span>
+                  <span className="font-semibold text-gray-800 dark:text-gray-200">{maskedContact}</span>
                 </p>
               </div>
 
@@ -158,7 +158,7 @@ export default function OtpVerifyPage() {
                 <button
                   type="submit"
                   disabled={loading || otp.length !== 6}
-                  className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-3 rounded-xl font-semibold text-base hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md"
+                  className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-3 rounded-xl font-semibold text-base hover:from-primary-500 hover:to-secondary-500 transition-all hover:scale-[1.01] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md"
                 >
                   {loading ? (
                     <><FiLoader className="animate-spin w-5 h-5" /> Verifying...</>
@@ -173,14 +173,14 @@ export default function OtpVerifyPage() {
                 {canResend ? (
                   <button
                     onClick={handleResend}
-                    className="text-primary-600 font-medium hover:underline text-sm"
+                    className="text-primary-600 dark:text-primary-400 font-medium hover:underline text-sm"
                   >
                     Resend OTP
                   </button>
                 ) : (
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-gray-400 dark:text-gray-500 text-sm">
                     Resend OTP in{' '}
-                    <span className="font-semibold text-gray-700 tabular-nums">{formatCountdown(countdown)}</span>
+                    <span className="font-semibold text-gray-700 dark:text-gray-300 tabular-nums">{formatCountdown(countdown)}</span>
                   </p>
                 )}
               </div>
@@ -188,10 +188,10 @@ export default function OtpVerifyPage() {
           )}
 
           {/* Back button */}
-          <div className="mt-6 pt-4 border-t border-gray-100">
+          <div className="mt-6 pt-4 border-t border-gray-100 dark:border-dark-600">
             <Link
               to="/login"
-              className="flex items-center justify-center gap-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
             >
               <FiArrowLeft className="w-4 h-4" /> Back to Login
             </Link>

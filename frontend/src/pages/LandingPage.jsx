@@ -7,6 +7,8 @@ import {
 } from 'react-icons/fi'
 import { useCounter } from '../hooks/useCounter'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import { useDarkMode } from '../hooks/useDarkMode'
+import ThemeToggle from '../components/common/ThemeToggle'
 
 const TYPEWRITER_WORDS = ['Wedding Photographers', 'Photo Editors', 'Bride & Grooms', 'Studio Owners']
 
@@ -124,6 +126,8 @@ const TESTIMONIALS = [
   },
 ]
 
+const USD_TO_INR_RATE = 83
+
 const PLANS = [
   {
     name: 'Starter',
@@ -156,28 +160,30 @@ export default function LandingPage() {
   const stepsRef = useScrollReveal()
   const testimonialsRef = useScrollReveal()
   const pricingRef = useScrollReveal()
+  const [isDark, setIsDark] = useDarkMode()
 
   return (
-    <div className="min-h-screen bg-white font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-dark-900 font-sans overflow-x-hidden transition-colors duration-300">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/20">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-dark-800/90 backdrop-blur-xl border-b border-gray-200 dark:border-dark-600 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center">
               <FiCamera className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display font-bold text-gray-900 text-xl">WeddingSnap</span>
+            <span className="font-display font-bold text-gray-900 dark:text-white text-xl">WeddingSnap</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Features</a>
-            <a href="#how-it-works" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">How It Works</a>
-            <a href="#pricing" className="text-gray-600 hover:text-primary-600 text-sm font-medium transition-colors">Pricing</a>
+            <a href="#features" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm font-medium transition-colors">Features</a>
+            <a href="#how-it-works" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm font-medium transition-colors">How It Works</a>
+            <a href="#pricing" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm font-medium transition-colors">Pricing</a>
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Sign In</Link>
+            <ThemeToggle isDark={isDark} onToggle={() => setIsDark(!isDark)} />
+            <Link to="/login" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Sign In</Link>
             <Link
               to="/login"
-              className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-5 py-2 rounded-xl text-sm font-medium hover:from-primary-700 hover:to-secondary-700 transition-all hover:scale-[1.02] shadow-md"
+              className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-5 py-2 rounded-xl text-sm font-medium hover:from-primary-500 hover:to-secondary-500 transition-all hover:scale-[1.02] shadow-md"
             >
               Get Started
             </Link>
@@ -320,15 +326,15 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 bg-white">
+      <section id="features" className="py-24 bg-white dark:bg-dark-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={featuresRef} className="text-center mb-16">
-            <span className="text-primary-600 font-semibold text-sm uppercase tracking-wider">Features</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 mt-2 mb-4">
+            <span className="text-primary-600 dark:text-primary-400 font-semibold text-sm uppercase tracking-wider">Features</span>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-2 mb-4">
               Everything You Need to{' '}
               <span className="gradient-text">Succeed</span>
             </h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
               A complete toolkit for wedding photographers, editors, and clients — all in one beautiful platform.
             </p>
           </div>
@@ -339,14 +345,14 @@ export default function LandingPage() {
               return (
                 <div
                   key={i}
-                  className="group p-6 rounded-2xl border border-gray-100 hover:border-primary-100 hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300"
+                  className="group p-6 rounded-2xl border border-gray-100 dark:border-dark-600 bg-white dark:bg-dark-700 hover:border-primary-100 dark:hover:border-dark-500 hover:shadow-card-hover dark:hover:shadow-dark-card-hover hover:-translate-y-1 transition-all duration-300"
                   style={{ animationDelay: `${i * 100}ms` }}
                 >
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                     <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-500 leading-relaxed">{feature.description}</p>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
+                  <p className="text-gray-500 dark:text-gray-400 leading-relaxed">{feature.description}</p>
                 </div>
               )
             })}
@@ -355,14 +361,14 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-24 bg-gray-50">
+      <section id="how-it-works" className="py-24 bg-gray-50 dark:bg-dark-800 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={stepsRef} className="text-center mb-16">
-            <span className="text-secondary-600 font-semibold text-sm uppercase tracking-wider">Process</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 mt-2 mb-4">
+            <span className="text-secondary-600 dark:text-secondary-400 font-semibold text-sm uppercase tracking-wider">Process</span>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-2 mb-4">
               How It <span className="gradient-text">Works</span>
             </h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
               Get from shoot to delivery in 3 simple steps
             </p>
           </div>
@@ -379,10 +385,10 @@ export default function LandingPage() {
               <div key={step} className="text-center relative">
                 <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${color} flex items-center justify-center mx-auto mb-6 shadow-lg`}>
                   <Icon className="w-10 h-10 text-white" />
-                  <span className="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center text-sm font-bold text-gray-700">{step}</span>
+                  <span className="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-white dark:bg-dark-700 border-2 border-gray-200 dark:border-dark-500 flex items-center justify-center text-sm font-bold text-gray-700 dark:text-white">{step}</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
-                <p className="text-gray-500 leading-relaxed">{desc}</p>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{title}</h3>
+                <p className="text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -390,31 +396,31 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white dark:bg-dark-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={testimonialsRef} className="text-center mb-16">
-            <span className="text-accent-600 font-semibold text-sm uppercase tracking-wider">Testimonials</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 mt-2 mb-4">
+            <span className="text-accent-600 dark:text-accent-400 font-semibold text-sm uppercase tracking-wider">Testimonials</span>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-2 mb-4">
               Loved by <span className="gradient-text">Thousands</span>
             </h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-gray-100 hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
+              <div key={i} className="p-6 rounded-2xl border border-gray-100 dark:border-dark-600 bg-white dark:bg-dark-700 hover:shadow-card-hover dark:hover:shadow-dark-card-hover hover:-translate-y-1 transition-all duration-300">
                 <div className="flex text-amber-400 mb-4">
                   {[...Array(t.rating)].map((_, j) => (
                     <FiStar key={j} className="w-4 h-4 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-600 leading-relaxed mb-6 italic">"{t.quote}"</p>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 italic">"{t.quote}"</p>
                 <div className="flex items-center gap-3">
-                  <div className={`w-11 h-11 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold ring-2 ring-white ring-offset-1`}>
+                  <div className={`w-11 h-11 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold ring-2 ring-white dark:ring-dark-700 ring-offset-1`}>
                     {t.initials}
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">{t.name}</p>
-                    <p className="text-sm text-gray-500">{t.role || 'Client'} · {t.location}</p>
+                    <p className="font-semibold text-gray-900 dark:text-white">{t.name}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{t.role || 'Client'} · {t.location}</p>
                   </div>
                 </div>
               </div>
@@ -424,14 +430,14 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-24 bg-gray-50">
+      <section id="pricing" className="py-24 bg-gray-50 dark:bg-dark-800 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={pricingRef} className="text-center mb-16">
-            <span className="text-primary-600 font-semibold text-sm uppercase tracking-wider">Pricing</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 mt-2 mb-4">
+            <span className="text-primary-600 dark:text-primary-400 font-semibold text-sm uppercase tracking-wider">Pricing</span>
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-2 mb-4">
               Simple, <span className="gradient-text">Transparent</span> Pricing
             </h2>
-            <p className="text-xl text-gray-500">Start free, scale as you grow. Cancel anytime.</p>
+            <p className="text-xl text-gray-500 dark:text-gray-400">Start free, scale as you grow. Cancel anytime.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -441,25 +447,25 @@ export default function LandingPage() {
                 className={`relative rounded-2xl p-8 transition-all duration-300 ${
                   plan.highlighted
                     ? 'bg-gradient-to-br from-primary-600 to-secondary-600 text-white shadow-glow scale-105'
-                    : 'bg-white border border-gray-200 hover:shadow-card-hover hover:-translate-y-1'
+                    : 'bg-white dark:bg-dark-700 border border-gray-200 dark:border-dark-500 hover:shadow-card-hover dark:hover:shadow-dark-card-hover hover:-translate-y-1'
                 }`}
               >
                 {plan.highlighted && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-glow-gold">
                     Most Popular
                   </div>
                 )}
-                <h3 className={`text-xl font-bold mb-1 ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}>{plan.name}</h3>
-                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-blue-200' : 'text-gray-500'}`}>{plan.description}</p>
+                <h3 className={`text-xl font-bold mb-1 ${plan.highlighted ? 'text-white' : 'text-gray-900 dark:text-white'}`}>{plan.name}</h3>
+                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400'}`}>{plan.description}</p>
                 <div className="flex items-baseline gap-1 mb-8">
-                  <span className={`text-5xl font-bold ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}>${plan.price}</span>
-                  <span className={plan.highlighted ? 'text-blue-200' : 'text-gray-500'}>/mo</span>
+                  <span className={`text-5xl font-bold ${plan.highlighted ? 'text-white' : 'text-gray-900 dark:text-white'}`}>₹{plan.price * USD_TO_INR_RATE}</span>
+                  <span className={plan.highlighted ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400'}>/mo</span>
                 </div>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((f, j) => (
                     <li key={j} className="flex items-center gap-2">
-                      <FiCheck className={`w-4 h-4 flex-shrink-0 ${plan.highlighted ? 'text-blue-200' : 'text-primary-600'}`} />
-                      <span className={`text-sm ${plan.highlighted ? 'text-blue-100' : 'text-gray-600'}`}>{f}</span>
+                      <FiCheck className={`w-4 h-4 flex-shrink-0 ${plan.highlighted ? 'text-blue-200' : 'text-primary-600 dark:text-primary-400'}`} />
+                      <span className={`text-sm ${plan.highlighted ? 'text-blue-100' : 'text-gray-600 dark:text-gray-300'}`}>{f}</span>
                     </li>
                   ))}
                 </ul>
@@ -468,7 +474,7 @@ export default function LandingPage() {
                   className={`block text-center px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:scale-[1.02] ${
                     plan.highlighted
                       ? 'bg-white text-primary-700 hover:bg-blue-50'
-                      : 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white hover:from-primary-700 hover:to-secondary-700 shadow-md'
+                      : 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white hover:from-primary-500 hover:to-secondary-500 shadow-md'
                   }`}
                 >
                   {plan.cta}
@@ -499,7 +505,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12">
+      <footer className="bg-gray-900 dark:bg-dark-900 text-gray-400 py-12 border-t border-gray-800 dark:border-dark-700 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
