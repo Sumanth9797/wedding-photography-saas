@@ -130,11 +130,28 @@ Set variables in the platform dashboard or via their CLI (e.g. `heroku config:se
 
 ## Troubleshooting
 
+### Root Cause: "Server error. Please try again later."
+
+This generic error used to appear when OTP delivery failed, because the backend was returning HTTP 500 (internal server error) instead of a more specific error code. The fix:
+
+- `NotificationService.sendOtpSms` now wraps **all** exceptions (including unexpected ones) into `OtpDeliveryException`.
+- `GlobalExceptionHandler` maps `OtpDeliveryException` → **HTTP 503** with an actionable user message.
+- The frontend handles HTTP 503 specifically and shows the descriptive message from the server.
+
+**Most common root causes and fixes:**
+
 | Symptom | Likely cause | Fix |
 |---|---|---|
 | OTP displayed in console instead of delivered | `notification.console.enabled=true` | Run without `dev` profile and set SMTP/Twilio vars |
+| "SMS delivery is not configured on this server" (503) | `TWILIO_PHONE_NUMBER` missing | Buy a Twilio phone number and set the env var (see **SMS via Twilio** section above) |
 | "Mail sender not configured" in logs | SMTP env vars not set | Set `MAIL_HOST`, `MAIL_USERNAME`, `MAIL_PASSWORD` |
-| "Twilio not configured" in logs | Twilio env vars missing | Set `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER` |
-| Twilio error 21211 | Invalid phone number format | Use E.164 format: `+15551234567` |
-| Twilio error 21608 | Trial account: unverified number | Verify the recipient number in Twilio Console, or upgrade account |
+| "Twilio not configured" in logs | `TWILIO_ACCOUNT_SID` or `TWILIO_AUTH_TOKEN` missing | Set all three Twilio env vars |
+| Twilio error 21211 (503) | Invalid phone number format | Use E.164 format: `+15551234567` |
+| Twilio error 21608 (503) | Trial account: unverified number | Verify the recipient number in Twilio Console, or upgrade account |
+| Twilio error 20003 (503) | Invalid Twilio credentials | Rotate and re-enter `TWILIO_ACCOUNT_SID` / `TWILIO_AUTH_TOKEN` |
 | Email not received | Spam filter or wrong credentials | Check spam folder, verify App Password is correct |
+| Still seeing generic "Server error" (500) | Unexpected exception in delivery path | Check backend logs (`ERROR` level) for the full stack trace |
+
+### Security Note
+
+If you accidentally shared your Twilio `TWILIO_AUTH_TOKEN` publicly, **rotate it immediately** in the [Twilio Console](https://console.twilio.com) under Account → API Keys & Tokens → Auth Token → Rotate.

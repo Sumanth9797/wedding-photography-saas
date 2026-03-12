@@ -38,6 +38,7 @@ Send OTP to user's phone or email.
 **Error Responses:**
 - `400`: Invalid contact or role
 - `404`: User not found
+- `503`: OTP delivery failed (Twilio/SMTP misconfiguration or unreachable). Response body includes a user-facing `message` field.
 
 ---
 
