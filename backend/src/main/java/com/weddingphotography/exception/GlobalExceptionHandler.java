@@ -49,6 +49,12 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    @ExceptionHandler(OtpDeliveryException.class)
+    public ResponseEntity<Map<String, Object>> handleOtpDelivery(OtpDeliveryException ex) {
+        logger.warn("OTP delivery failed: {}", ex.getMessage());
+        return buildErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
         logger.error("Unexpected error occurred", ex);

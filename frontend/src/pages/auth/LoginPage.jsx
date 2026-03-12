@@ -48,6 +48,8 @@ export default function LoginPage() {
       if (!msg) {
         if (err.response?.status === 429) {
           msg = 'Too many attempts. Please wait and try again.'
+        } else if (err.response?.status === 503) {
+          msg = 'OTP delivery failed. Please use an email address or try again later.'
         } else if (err.response?.status >= 500) {
           msg = 'Server error. Please try again later.'
         } else {
