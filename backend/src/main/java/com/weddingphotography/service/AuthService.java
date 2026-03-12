@@ -58,12 +58,12 @@ public class AuthService {
             notificationService.sendEmail(contact, "Your OTP Code",
                 "Your verification code is: " + otp + ". Valid for 10 minutes.");
         } else {
-            notificationService.sendSms(contact,
+            notificationService.sendOtpSms(contact,
                 "Your Wedding Photography verification code is: " + otp + ". Valid for 10 minutes.");
         }
 
         logger.info("OTP sent to: {}", contact);
-        logger.info(">>> DEV: OTP for {} is: {} <<<", contact, otp);
+        logger.debug(">>> DEV: OTP for {} is: {} <<<", contact, otp);
     }
 
     /**

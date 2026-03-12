@@ -97,7 +97,11 @@ export default function OtpVerifyPage() {
       setOtp('')
       setError('')
     } catch (err) {
-      const msg = err.response?.data?.message || 'Failed to resend OTP. Please check your contact and try again.'
+      const msg =
+        err.response?.data?.message ||
+        (err.response?.status === 503
+          ? 'OTP delivery failed. Please use an email address or try again later.'
+          : 'Failed to resend OTP. Please check your contact and try again.')
       toast.error(msg)
     }
   }

@@ -1,8 +1,12 @@
 package com.weddingphotography.service;
 
 import com.twilio.Twilio;
+import com.twilio.exception.ApiConnectionException;
+import com.twilio.exception.ApiException;
+import com.twilio.exception.TwilioException;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import com.weddingphotography.exception.OtpDeliveryException;
 import com.weddingphotography.model.Event;
 import com.weddingphotography.model.Notification;
 import com.weddingphotography.model.User;
@@ -142,6 +146,42 @@ public class NotificationService {
             }
         } else {
             logger.warn("Twilio not configured. Cannot send SMS to: {}. Set TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_PHONE_NUMBER.", phone);
+        }
+    }
+
+    /**
+     * Synchronous OTP SMS delivery — throws {@link OtpDeliveryException} on failure so the
+     * caller (and ultimately the HTTP client) receives an actionable error message.
+     */
+    public void sendOtpSms(String phone, String message) {
+        if (consoleEnabled) {
+            logger.debug("=== DEV SMS ===\nTo: {}\n{}\n===============", phone, message);
+            return;
+        }
+        if (!twilioEnabled || twilioPhoneNumber == null || twilioPhoneNumber.isBlank()) {
+            logger.error("Twilio not configured. Cannot send OTP SMS to: {}", phone);
+            throw new OtpDeliveryException(
+                "SMS delivery is not configured on this server. Please use an email address to receive your OTP.");
+        }
+        try {
+            Message.creator(
+                new PhoneNumber(phone),
+                new PhoneNumber(twilioPhoneNumber),
+                message
+            ).create();
+            logger.info("OTP SMS sent via Twilio to: {}", phone);
+        } catch (ApiException e) {
+            logger.error("Twilio API error sending OTP SMS to {}: [{}] {}", phone, e.getCode(), e.getMessage());
+            throw new OtpDeliveryException(
+                "Failed to deliver OTP via SMS (Twilio error " + e.getCode() + "). Please try again or use an email address.", e);
+        } catch (ApiConnectionException e) {
+            logger.error("Twilio connection error sending OTP SMS to {}: {}", phone, e.getMessage());
+            throw new OtpDeliveryException(
+                "Could not reach the SMS service. Please check your connection and try again, or use an email address.", e);
+        } catch (TwilioException e) {
+            logger.error("Twilio error sending OTP SMS to {}: {}", phone, e.getMessage());
+            throw new OtpDeliveryException(
+                "Failed to deliver OTP via SMS. Please try again or use an email address.", e);
         }
     }
 
