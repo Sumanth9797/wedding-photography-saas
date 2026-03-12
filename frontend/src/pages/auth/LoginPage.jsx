@@ -44,7 +44,16 @@ export default function LoginPage() {
       toast.success('OTP sent successfully!')
       navigate('/verify-otp', { state: { contact: contact.trim(), role } })
     } catch (err) {
-      const msg = err.response?.data?.message || 'Failed to send OTP. Please try again.'
+      let msg = err.response?.data?.message
+      if (!msg) {
+        if (err.response?.status === 429) {
+          msg = 'Too many attempts. Please wait and try again.'
+        } else if (err.response?.status >= 500) {
+          msg = 'Server error. Please try again later.'
+        } else {
+          msg = 'Failed to send OTP. Please check your contact and try again.'
+        }
+      }
       setError(msg)
       toast.error(msg)
       setShake(true)
