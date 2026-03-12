@@ -547,6 +547,19 @@
     opacity: 0.4;
   }
 
+  /* ─── AI Feature Badge ─── */
+  .ai-badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(59, 130, 246, 0.15));
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    color: #A78BFA;
+  }
+
+  .ai-badge-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-secondary-400;
+    animation: aiDotPulse 2s ease-in-out infinite;
+  }
+
   /* ─── Horizontal line divider with fade ─── */
   .line-divider {
     height: 1px;
@@ -555,6 +568,18 @@
 }
 
 /* ─── Extra animations ─── */
+@keyframes aiDotPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-badge-dot {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }

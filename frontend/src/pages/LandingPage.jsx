@@ -4,6 +4,7 @@ import {
   FiGrid, FiSmartphone, FiEdit3, FiLock, FiBarChart2, FiCloud,
   FiPlay, FiArrowRight, FiCheck, FiStar, FiCamera,
   FiInstagram, FiTwitter, FiFacebook,
+  FiZap, FiUsers, FiBookOpen, FiMessageSquare, FiX, FiThumbsUp, FiThumbsDown,
 } from 'react-icons/fi'
 import { useCounter } from '../hooks/useCounter'
 import { useScrollReveal } from '../hooks/useScrollReveal'
@@ -58,11 +59,14 @@ function StatCounter({ target, suffix = '', label }) {
 }
 
 const FEATURES = [
+  { icon: FiZap, title: 'AI Smart Culling', description: 'Automatically removes blurry photos, closed eyes, and duplicates — delivering a flawless gallery in seconds.', ai: true },
+  { icon: FiUsers, title: 'FaceID Guest Access', description: 'Guests instantly find every photo they appear in using just a selfie — no sign-up required.', ai: true },
+  { icon: FiBookOpen, title: 'Auto-Storytelling Albums', description: 'AI generates beautifully-sequenced album layouts that capture the unique vibe and emotion of each wedding.', ai: true },
   { icon: FiGrid, title: 'Smart Gallery Management', description: 'Organize thousands of wedding photos with intelligent tagging, albums, and instant search.' },
-  { icon: FiSmartphone, title: 'Mobile Client Experience', description: 'Couples access their gallery anywhere with a beautiful mobile-first interface.' },
   { icon: FiEdit3, title: 'Editor Workflow Tools', description: 'Streamline editing assignments with deadline tracking and collaborative tools.' },
   { icon: FiLock, title: 'Secure Private Galleries', description: 'PIN-protected galleries ensure only the right people access precious memories.' },
   { icon: FiBarChart2, title: 'Analytics Dashboard', description: 'Track your business growth with elegant charts and actionable insights.' },
+  { icon: FiSmartphone, title: 'Mobile-First Experience', description: 'Couples access their gallery anywhere with a beautiful, responsive mobile interface.' },
   { icon: FiCloud, title: 'Cloud Storage', description: 'Unlimited secure cloud storage with automatic backups and instant delivery.' },
 ]
 
@@ -75,10 +79,117 @@ const TESTIMONIALS = [
 const USD_TO_INR_RATE = 83
 
 const PLANS = [
-  { name: 'Starter', price: 29, description: 'Perfect for new photographers', features: ['5 Active Events', '10GB Storage', 'Client Galleries', 'Email Support', 'Basic Analytics'], cta: 'Start Free Trial', highlighted: false },
-  { name: 'Professional', price: 79, description: 'For growing studios', features: ['Unlimited Events', '100GB Storage', 'Editor Collaboration', 'Priority Support', 'Advanced Analytics', 'Custom Branding', 'WhatsApp Notifications'], cta: 'Start Free Trial', highlighted: true },
-  { name: 'Studio', price: 149, description: 'For large photography studios', features: ['Unlimited Everything', '1TB Storage', 'Multiple Editors', 'Dedicated Support', 'White-label Solution', 'API Access', 'Custom Domain'], cta: 'Contact Sales', highlighted: false },
+  { name: 'Starter', price: 29, description: 'Perfect for new photographers', features: ['5 Active Events', '10GB Storage', 'Client Galleries', 'Email Support', 'Basic Analytics', 'AI Smart Culling (50 photos/mo)'], cta: 'Start Free Trial', highlighted: false },
+  { name: 'Professional', price: 79, description: 'For growing studios', features: ['Unlimited Events', '100GB Storage', 'Editor Collaboration', 'Priority Support', 'Advanced Analytics', 'Custom Branding', 'WhatsApp Notifications', 'Unlimited AI Smart Culling', 'FaceID Guest Access'], cta: 'Start Free Trial', highlighted: true },
+  { name: 'Studio', price: 149, description: 'For large photography studios', features: ['Unlimited Everything', '1TB Storage', 'Multiple Editors', 'Dedicated Support', 'White-label Solution', 'API Access', 'Custom Domain', 'All AI Features', 'Auto-Storytelling Albums'], cta: 'Contact Sales', highlighted: false },
 ]
+
+function FeedbackWidget() {
+  const [open, setOpen] = useState(false)
+  const [step, setStep] = useState('prompt') // 'prompt' | 'comment' | 'done'
+  const [rating, setRating] = useState(null)
+  const [comment, setComment] = useState('')
+
+  const handleRating = (value) => {
+    setRating(value)
+    setStep('comment')
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setStep('done')
+    const t = setTimeout(() => { setOpen(false); setStep('prompt'); setRating(null); setComment('') }, 2500)
+    return () => clearTimeout(t)
+  }
+
+  return (
+    <>
+      {/* Trigger button */}
+      <button
+        onClick={() => setOpen(true)}
+        aria-label="Share feedback"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-4 py-3 rounded-full shadow-glow text-sm font-semibold hover:from-primary-400 hover:to-secondary-500 hover:scale-105 active:scale-95 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950"
+      >
+        <FiMessageSquare className="w-4 h-4" aria-hidden="true" />
+        <span className="hidden sm:inline">Feedback</span>
+      </button>
+
+      {/* Panel */}
+      {open && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Share your feedback"
+          className="fixed bottom-20 right-6 z-50 w-80 bg-white dark:bg-dark-800 border border-gray-200 dark:border-violet-900/30 rounded-2xl shadow-card p-5 animate-fade-in-up"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-gray-900 dark:text-white text-sm">How are we doing?</h3>
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Close feedback panel"
+              className="text-gray-400 dark:text-white/40 hover:text-gray-600 dark:hover:text-white transition-colors p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-white/8 focus-visible:ring-2 focus-visible:ring-primary-400"
+            >
+              <FiX className="w-4 h-4" aria-hidden="true" />
+            </button>
+          </div>
+
+          {step === 'prompt' && (
+            <div className="flex items-center justify-center gap-4 py-2">
+              <button
+                onClick={() => handleRating('positive')}
+                aria-label="Thumbs up — positive feedback"
+                className="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-200 dark:border-violet-900/25 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all hover:scale-105 active:scale-95 focus-visible:ring-2 focus-visible:ring-emerald-400"
+              >
+                <FiThumbsUp className="w-6 h-6 text-emerald-500" aria-hidden="true" />
+                <span className="text-xs text-gray-500 dark:text-white/40">Great!</span>
+              </button>
+              <button
+                onClick={() => handleRating('negative')}
+                aria-label="Thumbs down — needs improvement"
+                className="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-200 dark:border-violet-900/25 hover:border-red-500/40 hover:bg-red-500/5 transition-all hover:scale-105 active:scale-95 focus-visible:ring-2 focus-visible:ring-red-400"
+              >
+                <FiThumbsDown className="w-6 h-6 text-red-400" aria-hidden="true" />
+                <span className="text-xs text-gray-500 dark:text-white/40">Needs work</span>
+              </button>
+            </div>
+          )}
+
+          {step === 'comment' && (
+            <form onSubmit={handleSubmit}>
+              <p className="text-xs text-gray-500 dark:text-white/40 mb-3">
+                {rating === 'positive' ? '🎉 Glad to hear it! Any details to share?' : '😔 Sorry about that. What can we improve?'}
+              </p>
+              <textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Your thoughts..."
+                aria-label="Feedback comment"
+                rows={3}
+                className="input text-sm resize-none mb-3"
+              />
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-primary-500 to-secondary-600 text-white py-2.5 rounded-xl text-sm font-semibold hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary-400"
+              >
+                Send Feedback
+              </button>
+            </form>
+          )}
+
+          {step === 'done' && (
+            <div className="text-center py-4">
+              <div className="w-12 h-12 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center mx-auto mb-3">
+                <FiCheck className="w-6 h-6 text-emerald-500" aria-hidden="true" />
+              </div>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">Thank you!</p>
+              <p className="text-xs text-gray-400 dark:text-white/35 mt-1">Your feedback helps us improve.</p>
+            </div>
+          )}
+        </div>
+      )}
+    </>
+  )
+}
 
 export default function LandingPage() {
   const featuresRef = useScrollReveal()
@@ -102,7 +213,10 @@ export default function LandingPage() {
     <div className="min-h-screen bg-white dark:bg-dark-950 font-sans overflow-x-hidden">
 
       {/* ── Navigation ── */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center transition-all duration-500 ${
+      <nav
+        role="navigation"
+        aria-label="Main navigation"
+        className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center transition-all duration-500 ${
         scrolled
           ? 'bg-white/90 dark:bg-dark-950/90 backdrop-blur-xl border-b border-gray-200/80 dark:border-violet-900/20'
           : 'bg-transparent'
@@ -122,7 +236,7 @@ export default function LandingPage() {
               <a
                 key={item}
                 href={`#${item.toLowerCase().replace(/ /g, '-')}`}
-                className="text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white text-sm font-medium transition-colors duration-200"
+                className="text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 rounded-md px-1 py-0.5"
               >
                 {item}
               </a>
@@ -134,13 +248,13 @@ export default function LandingPage() {
             <ThemeToggle theme={theme} onCycle={cycleTheme} />
             <Link
               to="/login"
-              className="text-sm font-medium text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white transition-colors hidden sm:block"
+              className="text-sm font-medium text-gray-500 dark:text-white/50 hover:text-gray-900 dark:hover:text-white transition-colors hidden sm:block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 rounded-md px-1 py-0.5"
             >
               Sign In
             </Link>
             <Link
               to="/login"
-              className="bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] shadow-glow-sm"
+              className="bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-glow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950"
             >
               Get Started
             </Link>
@@ -170,31 +284,36 @@ export default function LandingPage() {
           <div className="animate-fade-in-up">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/25 text-primary-600 dark:text-primary-300 px-4 py-2 rounded-full text-sm font-medium mb-8">
-              <span className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-pulse-soft" />
-              Trusted by 2,400+ photographers
+              <span className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-pulse-soft" aria-hidden="true" />
+              Trusted by 2,400+ photographers worldwide
             </div>
 
             <h1 className="text-5xl lg:text-7xl font-display font-bold text-gray-900 dark:text-white leading-[1.05] mb-6 tracking-tight">
-              Built for{' '}
+              The AI-Powered
               <br />
+              Studio for{' '}
               <span className="bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent">
                 <TypewriterText />
               </span>
             </h1>
 
             <p className="text-lg text-gray-600 dark:text-white/55 mb-10 leading-relaxed max-w-lg">
-              WeddingSnap streamlines your entire wedding photography workflow — from shoot to delivery — in one elegant platform.
+              WeddingSnap's AI culls, organises, and delivers your wedding galleries — so you spend less time in front of a screen and more time behind a lens.
             </p>
 
             <div className="flex flex-wrap gap-4">
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-8 py-4 rounded-xl font-semibold text-base hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] shadow-glow"
+                aria-label="Start your free 14-day trial"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-8 py-4 rounded-xl font-semibold text-base hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950"
               >
-                Start Free Trial <FiArrowRight className="w-4 h-4" />
+                Start Free Trial <FiArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
-              <button className="inline-flex items-center gap-3 border border-gray-300 dark:border-white/15 text-gray-700 dark:text-white px-8 py-4 rounded-xl font-semibold text-base hover:bg-gray-100 dark:hover:bg-white/5 hover:border-gray-400 dark:hover:border-white/30 transition-all">
-                <div className="w-8 h-8 rounded-full bg-primary-500/20 border border-primary-500/30 flex items-center justify-center">
+              <button
+                aria-label="Watch a product demo"
+                className="inline-flex items-center gap-3 border border-gray-300 dark:border-white/15 text-gray-700 dark:text-white px-8 py-4 rounded-xl font-semibold text-base hover:bg-gray-100 dark:hover:bg-white/5 hover:border-gray-400 dark:hover:border-white/30 active:scale-[0.98] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950"
+              >
+                <div className="w-8 h-8 rounded-full bg-primary-500/20 border border-primary-500/30 flex items-center justify-center" aria-hidden="true">
                   <FiPlay className="w-3 h-3 text-primary-400 ml-0.5" />
                 </div>
                 Watch Demo
@@ -313,21 +432,54 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features Section ── */}
-      <section id="features" className="py-28 bg-white dark:bg-dark-950">
+      <section id="features" className="py-28 bg-white dark:bg-dark-950" aria-labelledby="features-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div ref={featuresRef} className="text-center mb-16 reveal">
             <span className="text-primary-500/70 dark:text-primary-400/70 font-medium text-xs uppercase tracking-[0.25em]">Features</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-3 mb-4 tracking-tight">
+            <h2 id="features-heading" className="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mt-3 mb-4 tracking-tight">
               Everything You Need to{' '}
               <span className="gradient-text-silver">Succeed</span>
             </h2>
             <p className="text-lg text-gray-500 dark:text-white/40 max-w-2xl mx-auto leading-relaxed">
-              A complete toolkit for wedding photographers, editors, and clients — all in one elegant platform.
+              A complete AI-powered toolkit for wedding photographers, editors, and clients — all in one elegant platform.
             </p>
           </div>
 
+          {/* AI features highlight row */}
+          <div className="grid md:grid-cols-3 gap-4 mb-4">
+            {FEATURES.filter(f => f.ai).map((feature, i) => {
+              const Icon = feature.icon
+              const aiColors = [
+                { bg: 'bg-secondary-600/10', border: 'border-secondary-600/25', text: 'text-secondary-400', glow: 'hover:shadow-ai-purple' },
+                { bg: 'bg-blue-500/10', border: 'border-blue-500/25', text: 'text-blue-400', glow: 'hover:shadow-ai-blue' },
+                { bg: 'bg-secondary-500/10', border: 'border-secondary-500/25', text: 'text-secondary-300', glow: 'hover:shadow-ai-purple' },
+              ]
+              const colors = aiColors[i % aiColors.length]
+              return (
+                <div
+                  key={i}
+                  className={`reveal group p-6 rounded-2xl glass-ai border border-violet-900/20 hover:border-violet-500/40 hover:-translate-y-1.5 transition-all duration-300 cursor-default ${colors.glow}`}
+                  style={{ transitionDelay: `${i * 60}ms` }}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`w-11 h-11 rounded-xl ${colors.bg} border ${colors.border} flex items-center justify-center transition-colors`}>
+                      <Icon className={`w-5 h-5 ${colors.text}`} aria-hidden="true" />
+                    </div>
+                    <span className="ai-badge" aria-label="AI-powered feature">
+                      <span className="ai-badge-dot" aria-hidden="true" />
+                      AI
+                    </span>
+                  </div>
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
+                  <p className="text-gray-500 dark:text-white/40 text-sm leading-relaxed">{feature.description}</p>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Standard features grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {FEATURES.map((feature, i) => {
+            {FEATURES.filter(f => !f.ai).map((feature, i) => {
               const Icon = feature.icon
               const iconColors = [
                 { bg: 'bg-primary-500/15', border: 'border-primary-500/20', text: 'text-primary-500 dark:text-primary-400' },
@@ -345,7 +497,7 @@ export default function LandingPage() {
                   style={{ transitionDelay: `${i * 60}ms` }}
                 >
                   <div className={`w-11 h-11 rounded-xl ${colors.bg} border ${colors.border} flex items-center justify-center mb-4 transition-colors`}>
-                    <Icon className={`w-5 h-5 ${colors.text}`} />
+                    <Icon className={`w-5 h-5 ${colors.text}`} aria-hidden="true" />
                   </div>
                   <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
                   <p className="text-gray-500 dark:text-white/40 text-sm leading-relaxed">{feature.description}</p>
@@ -412,18 +564,18 @@ export default function LandingPage() {
                 className="reveal p-6 rounded-2xl bg-gray-50 dark:bg-dark-800 border border-gray-200 dark:border-violet-900/20 hover:border-violet-400/35 dark:hover:border-violet-700/35 hover:-translate-y-1 transition-all duration-300"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <div className="flex text-accent-500 dark:text-accent-400 mb-4 gap-0.5">
+                <div className="flex text-accent-500 dark:text-accent-400 mb-4 gap-0.5" role="img" aria-label={`${t.rating} out of 5 stars`}>
                   {[...Array(t.rating)].map((_, j) => (
-                    <FiStar key={j} className="w-3.5 h-3.5 fill-current" />
+                    <FiStar key={j} className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
                   ))}
                 </div>
-                <p className="text-gray-600 dark:text-white/55 text-sm leading-relaxed mb-6 italic">"{t.quote}"</p>
+                <blockquote className="text-gray-600 dark:text-white/55 text-sm leading-relaxed mb-6 italic">"{t.quote}"</blockquote>
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${
                     i === 0 ? 'from-primary-500 to-secondary-600' :
                     i === 1 ? 'from-secondary-600 to-secondary-800' :
                     'from-accent-500 to-primary-500'
-                  } flex items-center justify-center text-white text-sm font-semibold flex-shrink-0`}>
+                  } flex items-center justify-center text-white text-sm font-semibold flex-shrink-0`} aria-hidden="true">
                     {t.initials}
                   </div>
                   <div>
@@ -501,59 +653,65 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="py-24 bg-white dark:bg-dark-950 border-t border-gray-200 dark:border-violet-900/15 relative overflow-hidden">
+      <section className="py-24 bg-white dark:bg-dark-950 border-t border-gray-200 dark:border-violet-900/15 relative overflow-hidden" aria-labelledby="cta-heading">
         {/* Background orbs */}
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-primary-500/8 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-secondary-600/8 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-primary-500/8 rounded-full blur-3xl" aria-hidden="true" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-secondary-600/8 rounded-full blur-3xl" aria-hidden="true" />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <div className="reveal">
-            <h2 className="text-4xl lg:text-6xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
-              Ready to Transform
+            <h2 id="cta-heading" className="text-4xl lg:text-6xl font-display font-bold text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
+              Your Next Wedding Gallery
               <br />
               <span className="bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent">
-                Your Photography Business?
+                Deserves to Be Perfect
               </span>
             </h2>
-            <p className="text-lg text-gray-500 dark:text-white/40 mb-10">
-              Join 2,400+ photographers who've already switched to WeddingSnap.
+            <p className="text-lg text-gray-500 dark:text-white/40 mb-2">
+              Join 2,400+ photographers who deliver faster, earn more, and wow every client.
+            </p>
+            <p className="text-sm text-gray-400 dark:text-white/30 mb-10 italic">
+              "Switched to WeddingSnap and cut delivery time from 3 days to 4 hours." — Marcus Chen, San Francisco
             </p>
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-10 py-4 rounded-xl font-bold text-base hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] shadow-glow"
+              aria-label="Start your free 14-day trial, no credit card required"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-600 text-white px-10 py-4 rounded-xl font-bold text-base hover:from-primary-400 hover:to-secondary-500 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950"
             >
-              Start Your Free Trial <FiArrowRight className="w-4 h-4" />
+              Start Your Free Trial <FiArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
-            <p className="text-gray-400 dark:text-white/25 text-sm mt-4">No credit card required. 14-day free trial.</p>
+            <p className="text-gray-400 dark:text-white/25 text-sm mt-4">No credit card required · 14-day free trial · Cancel anytime</p>
           </div>
         </div>
       </section>
 
       {/* ── Footer ── */}
-      <footer className="bg-gray-100 dark:bg-dark-900 border-t border-gray-200 dark:border-violet-900/15 py-12">
+      <footer className="bg-gray-100 dark:bg-dark-900 border-t border-gray-200 dark:border-violet-900/15 py-12" role="contentinfo">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-600 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-600 flex items-center justify-center" aria-hidden="true">
                 <FiCamera className="w-4 h-4 text-white" />
               </div>
               <span className="font-display font-bold text-gray-900 dark:text-white text-lg">WeddingSnap</span>
             </div>
-            <div className="flex flex-wrap gap-6 text-sm">
-              {['Features', 'Pricing', 'Privacy', 'Terms'].map((item) => (
-                <a key={item} href="#" className="text-gray-400 dark:text-white/35 hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
-                  {item}
-                </a>
-              ))}
-              <Link to="/login" className="text-gray-400 dark:text-white/35 hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Sign In</Link>
-            </div>
+            <nav aria-label="Footer navigation">
+              <div className="flex flex-wrap gap-6 text-sm">
+                {['Features', 'Pricing', 'Privacy', 'Terms'].map((item) => (
+                  <a key={item} href="#" className="text-gray-400 dark:text-white/35 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 rounded">
+                    {item}
+                  </a>
+                ))}
+                <Link to="/login" className="text-gray-400 dark:text-white/35 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 rounded">Sign In</Link>
+              </div>
+            </nav>
             <div className="flex items-center gap-4">
               {[
-                { Icon: FiInstagram, color: 'hover:text-primary-500 dark:hover:text-primary-400' },
-                { Icon: FiTwitter, color: 'hover:text-secondary-600 dark:hover:text-secondary-400' },
-                { Icon: FiFacebook, color: 'hover:text-secondary-500 dark:hover:text-secondary-300' },
-              ].map(({ Icon, color }, i) => (
-                <a key={i} href="#" className={`text-gray-400 dark:text-white/30 ${color} transition-colors duration-200`}>
-                  <Icon className="w-4 h-4" />
+                { Icon: FiInstagram, color: 'hover:text-primary-500 dark:hover:text-primary-400', label: 'WeddingSnap on Instagram' },
+                { Icon: FiTwitter, color: 'hover:text-secondary-600 dark:hover:text-secondary-400', label: 'WeddingSnap on Twitter' },
+                { Icon: FiFacebook, color: 'hover:text-secondary-500 dark:hover:text-secondary-300', label: 'WeddingSnap on Facebook' },
+              ].map(({ Icon, color, label }, i) => (
+                <a key={i} href="#" aria-label={label} className={`text-gray-400 dark:text-white/30 ${color} transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 rounded`}>
+                  <Icon className="w-4 h-4" aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -564,6 +722,9 @@ export default function LandingPage() {
           </p>
         </div>
       </footer>
+
+      {/* ── In-app Feedback Widget ── */}
+      <FeedbackWidget />
     </div>
   )
 }
