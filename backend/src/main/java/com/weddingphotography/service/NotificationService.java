@@ -1,5 +1,8 @@
 package com.weddingphotography.service;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import com.weddingphotography.model.Event;
 import com.weddingphotography.model.Notification;
 import com.weddingphotography.model.User;
@@ -14,6 +17,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -36,6 +40,36 @@ public class NotificationService {
 
     @Value("${notification.console.enabled:false}")
     private boolean consoleEnabled;
+
+    @Value("${twilio.account-sid:}")
+    private String twilioAccountSid;
+
+    @Value("${twilio.auth-token:}")
+    private String twilioAuthToken;
+
+    @Value("${twilio.phone-number:}")
+    private String twilioPhoneNumber;
+
+    @Value("${twilio.whatsapp-number:whatsapp:+14155238886}")
+    private String twilioWhatsAppNumber;
+
+    private boolean twilioEnabled = false;
+
+    @PostConstruct
+    public void initTwilio() {
+        if (twilioAccountSid != null && !twilioAccountSid.isBlank()
+                && twilioAuthToken != null && !twilioAuthToken.isBlank()) {
+            try {
+                Twilio.init(twilioAccountSid, twilioAuthToken);
+                twilioEnabled = true;
+                logger.info("Twilio initialized successfully.");
+            } catch (Exception e) {
+                logger.warn("Failed to initialize Twilio: {}. SMS/WhatsApp delivery will be disabled.", e.getMessage());
+            }
+        } else {
+            logger.info("Twilio credentials not configured. SMS/WhatsApp will use console output in dev mode.");
+        }
+    }
 
     public Notification createNotification(User user, Event event,
                                            Notification.NotificationType type, String message) {
@@ -95,7 +129,20 @@ public class NotificationService {
             logger.info("=== DEV SMS ===\nTo: {}\n{}\n===============", phone, message);
             return;
         }
-        logger.info("SMS to {}: {}", phone, message);
+        if (twilioEnabled && twilioPhoneNumber != null && !twilioPhoneNumber.isBlank()) {
+            try {
+                Message.creator(
+                    new PhoneNumber(phone),
+                    new PhoneNumber(twilioPhoneNumber),
+                    message
+                ).create();
+                logger.info("SMS sent via Twilio to: {}", phone);
+            } catch (Exception e) {
+                logger.error("Failed to send SMS via Twilio to: {}", phone, e);
+            }
+        } else {
+            logger.warn("Twilio not configured. Cannot send SMS to: {}. Set TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_PHONE_NUMBER.", phone);
+        }
     }
 
     @Async
@@ -104,7 +151,21 @@ public class NotificationService {
             logger.info("=== DEV WHATSAPP ===\nTo: {}\n{}\n====================", phone, message);
             return;
         }
-        logger.info("WhatsApp to {}: {}", phone, message);
+        if (twilioEnabled && twilioWhatsAppNumber != null && !twilioWhatsAppNumber.isBlank()) {
+            try {
+                String whatsappTo = phone.startsWith("whatsapp:") ? phone : "whatsapp:" + phone;
+                Message.creator(
+                    new PhoneNumber(whatsappTo),
+                    new PhoneNumber(twilioWhatsAppNumber),
+                    message
+                ).create();
+                logger.info("WhatsApp message sent via Twilio to: {}", phone);
+            } catch (Exception e) {
+                logger.error("Failed to send WhatsApp message via Twilio to: {}", phone, e);
+            }
+        } else {
+            logger.warn("Twilio not configured. Cannot send WhatsApp to: {}. Set TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_WHATSAPP_NUMBER.", phone);
+        }
     }
 
     public void sendGalleryLink(Event event, String method) {
@@ -136,3 +197,4 @@ public class NotificationService {
         }
     }
 }
+

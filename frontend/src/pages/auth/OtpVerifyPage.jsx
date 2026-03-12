@@ -50,22 +50,33 @@ export default function OtpVerifyPage() {
     setError('')
     try {
       const response = await authService.verifyOtp(contact, otp)
-      const { token, user } = response.data
+      const { token, userId, role: userRole, name } = response.data
+      const userData = { id: userId, role: userRole, name }
 
       setSuccess(true)
       toast.success('Verified successfully!')
 
       setTimeout(() => {
-        login(user, token)
+        login(userData, token)
         const redirectMap = {
           PHOTOGRAPHER: '/photographer',
           EDITOR: '/editor',
           CLIENT: '/login',
         }
-        navigate(redirectMap[user.role] || '/login')
+        navigate(redirectMap[userRole] || '/login')
       }, 800)
     } catch (err) {
-      const msg = err.response?.data?.message || 'Invalid OTP. Please try again.'
+      let msg = err.response?.data?.message
+      if (!msg) {
+        if (err.response?.status === 400) {
+          msg = 'Invalid or expired OTP. Please try again.'
+        } else if (err.response?.status === 404) {
+          msg = 'No account found for this contact.'
+        } else {
+          msg = 'Failed to verify OTP. Please try again.'
+        }
+      }
+
       setError(msg)
       toast.error(msg)
       setShake(true)
@@ -86,7 +97,8 @@ export default function OtpVerifyPage() {
       setOtp('')
       setError('')
     } catch (err) {
-      toast.error('Failed to resend OTP')
+      const msg = err.response?.data?.message || 'Failed to resend OTP. Please check your contact and try again.'
+      toast.error(msg)
     }
   }
 
