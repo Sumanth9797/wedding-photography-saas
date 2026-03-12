@@ -111,7 +111,7 @@ export default function AssignmentDetailPage() {
 
       <main className="pt-16 lg:pl-64">
         <div className="p-6 max-w-7xl mx-auto">
-          <Link to="/editor" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 mb-6">
+          <Link to="/editor" className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 mb-6">
             <FiArrowLeft className="w-4 h-4" /> Back to Dashboard
           </Link>
 
@@ -136,7 +136,7 @@ export default function AssignmentDetailPage() {
             {/* Left: Photo Grid (65%) */}
             <div className="lg:col-span-3 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="font-bold text-gray-900">Original Photos ({photos.length})</h2>
+                <h2 className="font-bold text-white">Original Photos ({photos.length})</h2>
               </div>
 
               {photos.length === 0 ? (
@@ -215,7 +215,7 @@ export default function AssignmentDetailPage() {
                             </div>
                           )}
                         </div>
-                        {f.done && <FiCheck className="w-4 h-4 text-white/65 flex-shrink-0" />}
+                        {f.done && <FiCheck className="w-4 h-4 text-emerald-500 flex-shrink-0" />}
                         {f.error && <FiX className="w-4 h-4 text-red-500 flex-shrink-0" />}
                         {!f.done && !f.error && <FiLoader className="w-4 h-4 text-gray-400 animate-spin flex-shrink-0" />}
                       </div>
@@ -275,7 +275,7 @@ export default function AssignmentDetailPage() {
                 </button>
               )}
               {(assignment.status === 'REVIEW' || assignment.status === 'COMPLETED') && (
-                <div className="flex items-center justify-center gap-2 py-3 rounded-xl bg-white/8 text-white/65 font-medium text-sm border border-white/15">
+                <div className="flex items-center justify-center gap-2 py-3 rounded-xl bg-gray-100 text-gray-500 font-medium text-sm border border-gray-200">
                   <FiCheckCircle className="w-4 h-4" /> Submitted for Review
                 </div>
               )}

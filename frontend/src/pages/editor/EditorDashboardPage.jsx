@@ -61,14 +61,14 @@ function AssignmentCard({ assignment }) {
           </div>
           <div className="w-full h-1.5 bg-gray-100 rounded-full">
             <div
-              className="h-full bg-gradient-to-r from-white/90 to-white/70 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-primary-400 to-secondary-500 rounded-full transition-all duration-500"
               style={{ width: `${info.progress}%` }}
             />
           </div>
         </div>
 
         {status === 'COMPLETED' ? (
-          <div className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/8 text-white/50 text-sm font-medium">
+          <div className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gray-100 text-gray-500 text-sm font-medium">
             <FiCheckCircle className="w-4 h-4" /> Completed
           </div>
         ) : (
@@ -129,13 +129,13 @@ export default function EditorDashboardPage() {
           {/* Summary Stats */}
           <div className="grid grid-cols-3 gap-4 mb-8">
             {[
-              { label: 'Total', value: assignments.length, color: 'text-gray-700', bg: 'bg-gray-50' },
-              { label: 'Active', value: activeCount, color: 'text-white/65', bg: 'bg-white/8' },
-              { label: 'Completed', value: completedCount, color: 'text-white/65', bg: 'bg-white/8' },
+              { label: 'Total', value: assignments.length, color: 'text-white', bg: 'bg-white/8' },
+              { label: 'Active', value: activeCount, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+              { label: 'Completed', value: completedCount, color: 'text-primary-400', bg: 'bg-primary-500/10' },
             ].map((s, i) => (
-              <div key={i} className={`${s.bg} rounded-2xl p-4 text-center`}>
+              <div key={i} className={`${s.bg} rounded-2xl p-4 text-center border border-white/8`}>
                 <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-                <p className="text-sm text-gray-500 mt-1">{s.label}</p>
+                <p className="text-sm text-white/40 mt-1">{s.label}</p>
               </div>
             ))}
           </div>

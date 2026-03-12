@@ -85,7 +85,7 @@ export default function EventDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gray-50">
         <Sidebar role="PHOTOGRAPHER" />
         <Navbar title="Event Detail" />
         <main className="pt-16 lg:pl-64 p-6">
@@ -101,7 +101,7 @@ export default function EventDetailPage() {
   if (!event) return null
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       <Sidebar role="PHOTOGRAPHER" />
       <Navbar title={event.title} />
 
@@ -176,11 +176,11 @@ export default function EventDetailPage() {
                 <div className="bg-white rounded-xl p-4 shadow-card">
                   <div className="flex items-center justify-between text-sm mb-2">
                     <span className="text-gray-600 font-medium">Uploading...</span>
-                    <span className="text-white/70 font-semibold">{uploadProgress}%</span>
+                    <span className="text-primary-600 font-semibold">{uploadProgress}%</span>
                   </div>
                   <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-white/90 to-white/70 rounded-full transition-all duration-300"
+                      className="h-full bg-gradient-to-r from-primary-500 to-secondary-600 rounded-full transition-all duration-300"
                       style={{ width: `${uploadProgress}%` }}
                     />
                   </div>
@@ -266,7 +266,7 @@ export default function EventDetailPage() {
                   <p className="text-xs text-gray-400 mb-2">Progress</p>
                   <div className="w-full h-2 bg-gray-100 rounded-full">
                     <div
-                      className="h-full bg-gradient-to-r from-white/90 to-white/70 rounded-full"
+                      className="h-full bg-gradient-to-r from-primary-500 to-secondary-600 rounded-full"
                       style={{ width: `${event.status === 'COMPLETED' ? 100 : event.status === 'REVIEW' ? 85 : event.status === 'EDITING' ? 65 : event.status === 'ACTIVE' ? 40 : 10}%` }}
                     />
                   </div>
@@ -283,7 +283,7 @@ export default function EventDetailPage() {
                   </div>
                   <button
                     onClick={copyGalleryLink}
-                    className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-white/10 text-white text-sm font-medium hover:bg-white/10 transition-colors"
+                    className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-primary-50 text-primary-700 text-sm font-medium hover:bg-primary-100 transition-colors"
                   >
                     <FiSend className="w-4 h-4" /> Copy & Share
                   </button>
