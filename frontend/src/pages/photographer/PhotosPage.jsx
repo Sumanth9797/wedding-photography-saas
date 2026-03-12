@@ -83,7 +83,7 @@ export default function PhotosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
       <Sidebar role="PHOTOGRAPHER" />
       <main className="pt-16 md:pl-56">
