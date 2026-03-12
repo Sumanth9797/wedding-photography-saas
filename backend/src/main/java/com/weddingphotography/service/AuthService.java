@@ -1,6 +1,7 @@
 package com.weddingphotography.service;
 
 import com.weddingphotography.config.JwtConfig;
+import com.weddingphotography.exception.OtpDeliveryException;
 import com.weddingphotography.exception.ResourceNotFoundException;
 import com.weddingphotography.model.Event;
 import com.weddingphotography.model.User;
@@ -31,7 +32,12 @@ public class AuthService {
     /**
      * Send OTP to the given contact (email or phone).
      * Creates user if not exists.
+     * <p>
+     * {@link OtpDeliveryException} is excluded from rollback so that the user record
+     * and OTP are persisted even when delivery fails — the user can retry immediately
+     * without losing their account or needing a new sign-up flow.
      */
+    @Transactional(noRollbackFor = OtpDeliveryException.class)
     public void sendOtp(String contact, User.UserRole role) {
         Optional<User> existing = userRepository.findByEmailOrPhone(contact, contact);
         User user = existing.orElseGet(() -> {
